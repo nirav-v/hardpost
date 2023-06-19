@@ -6,6 +6,7 @@ const path = require("path");
 const sequelize = require("./util/database");
 const User = require("./models/User");
 const Item = require("./models/Item");
+const Cart = require("./models/Cart");
 
 const app = express();
 const port = 3000;
@@ -40,6 +41,12 @@ app.use("*", (req, res, next) =>
 Item.belongsTo(User);
 // users and items have a one to many association
 User.hasMany(Item);
+// One to one relation between a Cart and User
+Cart.belongsTo(User);
+User.hasOne(Cart);
+
+// see available magic methods on User instances based on the model associations we defined
+console.log(Object.keys(User.prototype));
 
 // create db connection before starting up server
 sequelize
@@ -52,6 +59,9 @@ sequelize
       return User.create({ name: "Nirav", email: "test@test.com" });
     }
     return user;
+  })
+  .then((user) => {
+    return user.createCart(); // use magic method to immediately create a cart for the associated user
   })
   .then(() => {
     app.listen(port, () =>

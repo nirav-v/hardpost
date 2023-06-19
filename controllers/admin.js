@@ -3,9 +3,16 @@ const Item = require("../models/Item");
 const Cart = require("../models/Cart");
 
 router.post("/add-item", async (req, res, next) => {
-  console.log(req.body);
   const { name, category, price, description, image } = req.body;
-  const item = await Item.create({ name, category, price, description, image });
+  const userId = req.user.id; // add the id of the  logged in user to as the userId foreign key
+  const item = await Item.create({
+    name,
+    category,
+    price,
+    description,
+    image,
+    userId,
+  });
   res.json(item);
 });
 
@@ -26,10 +33,9 @@ router.post("/edit-item", async (req, res, next) => {
   res.json(updatedItem);
 });
 
-router.get("/cart", (req, res, next) => {
-  Cart.getCart((items) => {
-    res.send(items);
-  });
+router.get("/cart", async (req, res, next) => {
+  const cart = await req.user.getCart(); //magic method from one  to one association between User and Cart
+  res.json(cart);
 });
 
 // adding item to cart
