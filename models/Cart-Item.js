@@ -1,21 +1,23 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = require("../util/database");
 
-class Cart extends Model {}
+class CartItem extends Model {}
 
-Cart.init(
+CartItem.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
+      allowNull: false,
       primaryKey: true,
     },
+    quantity: DataTypes.INTEGER,
   },
   {
     // Other model options go here
     sequelize, // We need to pass the connection instance
-    modelName: "cart", // We need to choose the model name
+    modelName: "cart-item", // We need to choose the model name
   }
 );
 
-module.exports = Cart;
+module.exports = CartItem;

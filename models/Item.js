@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, Model } = require("sequelize");
+const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = require("../util/database");
 
 class Item extends Model {}
@@ -28,7 +28,9 @@ Item.init(
   {
     // Other model options go here
     sequelize, // We need to pass the connection instance
-    modelName: "Item", // We need to choose the model name
+    timestamps: false,
+    underscored: false,
+    modelName: "item", // We need to choose the model name
   }
 );
 

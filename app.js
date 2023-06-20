@@ -4,9 +4,11 @@ const path = require("path");
 
 // import database connection
 const sequelize = require("./util/database");
+// import models to map to db tables
 const User = require("./models/User");
 const Item = require("./models/Item");
 const Cart = require("./models/Cart");
+const CartItem = require("./models/Cart-Item");
 
 const app = express();
 const port = 3000;
@@ -38,19 +40,19 @@ app.use("*", (req, res, next) =>
 );
 
 // define model associations
-Item.belongsTo(User);
-// users and items have a one to many association
-User.hasMany(Item);
-// One to one relation between a Cart and User
+Item.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
+User.hasMany(Item); // users and items have a one to many association
+User.hasOne(Cart); // One to one relation between a Cart and User
 Cart.belongsTo(User);
-User.hasOne(Cart);
+Cart.belongsToMany(Item, { through: CartItem });
+Item.belongsToMany(Cart, { through: CartItem }); // many to many relation between Cart and Item, junction table is CartItem
 
 // see available magic methods on User instances based on the model associations we defined
-console.log(Object.keys(User.prototype));
+// console.log(Object.keys(Cart.prototype));
 
 // create db connection before starting up server
 sequelize
-  .sync()
+  .sync({ force: true })
   .then((result) => {
     return User.findByPk(1);
   })
@@ -63,7 +65,13 @@ sequelize
   .then((user) => {
     return user.createCart(); // use magic method to immediately create a cart for the associated user
   })
-  .then(() => {
+  .then((cart) => {
+    Item.create({
+      name: "test item",
+      category: "decks",
+      price: 12,
+      description: "cool",
+    });
     app.listen(port, () =>
       console.log(`Server running on http://localhost:${port}/`)
     );

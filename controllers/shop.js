@@ -5,6 +5,7 @@ const Item = require("../models/Item");
 router.get("/shop", (req, res, next) => {
   Item.findAll()
     .then((items) => {
+      console.log(items);
       res.send(items);
     })
     .catch((err) => console.log(err));

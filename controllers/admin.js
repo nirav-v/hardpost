@@ -34,18 +34,20 @@ router.post("/edit-item", async (req, res, next) => {
 });
 
 router.get("/cart", async (req, res, next) => {
-  const cart = await req.user.getCart(); //magic method from one  to one association between User and Cart
+  const cart = await req.user.getCart(); //magic method from one to one association between User and Cart
+
+  console.log(cart);
   res.json(cart);
 });
 
 // adding item to cart
-router.post("/cart", (req, res, next) => {
-  console.log(Cart);
-  const itemId = req.body.id;
-  Item.findById(itemId, (item) => {
-    Cart.addItem(itemId, item.price);
-    res.send(`Added: ${JSON.stringify(item)}`);
+router.post("/cart", async (req, res, next) => {
+  const itemId = req.body.itemId;
+  const cart = await req.user.getCart();
+  const items = await cart.getItems({
+    where: { id: itemId },
   });
+  console.log(items);
 });
 
 router.post("/cart/delete-item", (req, res, next) => {
