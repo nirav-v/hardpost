@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Item = require("../models/Item");
 const Cart = require("../models/Cart");
+const CartItem = require("../models/Cart-Item");
 
 router.post("/add-item", async (req, res, next) => {
   const { name, category, price, description, image } = req.body;
@@ -44,15 +45,21 @@ router.get("/cart", async (req, res, next) => {
 // adding item to cart
 router.post("/cart", async (req, res, next) => {
   const itemId = req.body.itemId;
-  const cart = await req.user.getCart();
-  // for updating quantity of an existing cart item
-  const items = await cart.getItems({
-    where: { id: itemId }, //returns array of item in cart with that id
+  const cart = await req.user.getCart(); // fetch the users cart
+  let itemQuantity = 1; // default the quantity to one for cases where item is not in cart
+  const existingItems = await cart.getItems({
+    where: { id: itemId }, //should return array of of one or zero items in cart with that id
   });
-  // for adding a new item
-  const newItem = await Item.findByPk(itemId);
-  cart.addItem(newItem, { through: { quantity: 1 } });
-  res.json(newItem);
+  // for updating quantity of an existing cart item
+  if (existingItems.length > 0) {
+    const currentQuantity = existingItems[0].cartItem.quantity;
+    itemQuantity = currentQuantity + 1;
+  }
+  // find the item and add it with a the correct quantity
+  const itemToAdd = await Item.findByPk(itemId);
+  cart.addItem(itemToAdd, { through: { quantity: itemQuantity } }); // specify value for extra fields that were created in the cart-item junction table
+  // respond with the updated cart items
+  res.redirect("/api/cart");
 });
 
 router.post("/cart/delete-item", (req, res, next) => {
