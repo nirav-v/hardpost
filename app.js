@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 });
 
 // using modular route files
-app.use(adminRoutes);
+app.use("/api", adminRoutes);
 app.use(shopRoutes);
 
 app.use("*", (req, res, next) =>
@@ -48,11 +48,11 @@ Cart.belongsToMany(Item, { through: CartItem });
 Item.belongsToMany(Cart, { through: CartItem }); // many to many relation between Cart and Item, junction table is CartItem
 
 // see available magic methods on User instances based on the model associations we defined
-// console.log(Object.keys(Cart.prototype));
+console.log("magic cart methods", Object.keys(Cart.prototype));
 
 // create db connection before starting up server
 sequelize
-  .sync({ force: true })
+  .sync()
   .then((result) => {
     return User.findByPk(1);
   })
