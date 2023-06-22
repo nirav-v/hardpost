@@ -57,15 +57,22 @@ router.post("/cart", async (req, res, next) => {
   }
   // find the item and add it with a the correct quantity
   const itemToAdd = await Item.findByPk(itemId);
-  cart.addItem(itemToAdd, { through: { quantity: itemQuantity } }); // specify value for extra fields that were created in the cart-item junction table
+  const addedItem = await cart.addItem(itemToAdd, {
+    through: { quantity: itemQuantity },
+  }); // specify value for extra fields that were created in the cart-item junction table
   // respond with the updated cart items
   res.redirect("/api/cart");
 });
 
-router.post("/cart/delete-item", (req, res, next) => {
+router.post("/cart/delete-item", async (req, res, next) => {
   const itemId = req.body.id;
-  Cart.deleteItem(itemId);
-  res.send(itemId);
+  const cart = await req.user.getCart(); // get the users cart
+  const cartItems = await cart.getItems({ where: { id: itemId } }); // get items from user's cart matching the req body id
+  // delete that item from the cartItems table
+  if (cartItems.length > 0) {
+    const deletedItem = await cartItems[0].cartItem.destroy();
+  }
+  res.redirect("/api/cart");
 });
 
 module.exports = router;
