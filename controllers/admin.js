@@ -100,12 +100,8 @@ router.post("/create-order", async (req, res, next) => {
       return item;
     })
   );
-  res.json(
-    items.map((item) => {
-      item.orderItem = { quantity: item.cartItem.quantity };
-      return item;
-    })
-  );
+  await cart.setItems(null); //clear user's cart after order is placed
+  res.json(cart);
 });
 
 module.exports = router;
