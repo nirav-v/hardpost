@@ -11,10 +11,9 @@ router.get("/shop", (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/shop/:itemId", (req, res, next) => {
-  Item.findById(req.params.itemId, (item) => {
-    res.send(item);
-  });
+router.get("/shop/:itemId", async (req, res, next) => {
+  const item = await Item.findByPk(req.params.itemId);
+  res.json(item);
 });
 
 module.exports = router;
