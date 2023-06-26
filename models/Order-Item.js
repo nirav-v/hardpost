@@ -1,24 +1,23 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = require("../util/database");
 
-// Order will serve as a junction table between Users and the Items they ordered
+class OrderItem extends Model {}
 
-class Order extends Model {}
-
-Order.init(
+OrderItem.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
+    quantity: DataTypes.INTEGER,
   },
   {
     // Other model options go here
     sequelize, // We need to pass the connection instance
     underscored: false,
-    modelName: "order", // We need to choose the model name
+    modelName: "orderItem", // We need to choose the model name
   }
 );
 
-module.exports = Order;
+module.exports = OrderItem;
