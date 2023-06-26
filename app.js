@@ -9,6 +9,8 @@ const User = require("./models/User");
 const Item = require("./models/Item");
 const Cart = require("./models/Cart");
 const CartItem = require("./models/Cart-Item");
+const Order = require("./models/Order");
+const OrderItem = require("./models/Order-Item");
 
 const app = express();
 const port = 3000;
@@ -46,11 +48,16 @@ User.hasOne(Cart); // One to one relation between a Cart and User
 Cart.belongsTo(User);
 Cart.belongsToMany(Item, { through: CartItem });
 Item.belongsToMany(Cart, { through: CartItem }); // many to many relation between Cart and Item, junction table is CartItem
+Order.belongsTo(User); // one-to-many relation between users and orders
+User.hasMany(Order);
+Order.belongsToMany(Item, { through: OrderItem }); // sets many-to-many relationship between Orders and Items
+Item.belongsToMany(Order, { through: OrderItem });
 
 // see available magic methods on User instances based on the model associations we defined
 console.log("magic user methods", Object.keys(User.prototype));
 console.log("magic cart methods", Object.keys(Cart.prototype));
 
+let testUser; // initialize and reassign later to make user instance globally accessible to all callbacks inside .then promise chain
 // create db connection before starting up server
 sequelize
   .sync()
@@ -64,9 +71,16 @@ sequelize
     return user;
   })
   .then((user) => {
-    return user.createCart(); // use magic method to immediately create a cart for the associated user
+    testUser = user;
+    return user.getCart();
   })
   .then((cart) => {
+    if (!cart) {
+      return testUser.createCart(); // use magic method to immediately create a cart for the associated user
+    }
+    return cart;
+  })
+  .then(() => {
     app.listen(port, () =>
       console.log(`Server running on http://localhost:${port}/`)
     );
