@@ -89,6 +89,11 @@ router.post("/cart/delete-item", async (req, res, next) => {
   res.redirect("/api/cart");
 });
 
+router.get("/orders", async (req, res, next) => {
+  const orders = await req.user.getOrders({ include: ["items"] }); // tells sequelize to also load all items associated with each order
+  res.json(orders);
+});
+
 router.post("/create-order", async (req, res, next) => {
   const cart = await req.user.getCart();
   const items = await cart.getItems();
