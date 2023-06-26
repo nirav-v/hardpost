@@ -89,4 +89,23 @@ router.post("/cart/delete-item", async (req, res, next) => {
   res.redirect("/api/cart");
 });
 
+router.post("/create-order", async (req, res, next) => {
+  const cart = await req.user.getCart();
+  const items = await cart.getItems();
+  const order = await req.user.createOrder();
+  // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
+  await order.addItems(
+    items.map((item) => {
+      item.orderItem = { quantity: item.cartItem.quantity };
+      return item;
+    })
+  );
+  res.json(
+    items.map((item) => {
+      item.orderItem = { quantity: item.cartItem.quantity };
+      return item;
+    })
+  );
+});
+
 module.exports = router;

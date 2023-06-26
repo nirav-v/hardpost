@@ -56,6 +56,7 @@ Item.belongsToMany(Order, { through: OrderItem });
 // see available magic methods on User instances based on the model associations we defined
 console.log("magic user methods", Object.keys(User.prototype));
 console.log("magic cart methods", Object.keys(Cart.prototype));
+console.log("magic Order methods", Object.keys(Order.prototype));
 
 let testUser; // initialize and reassign later to make user instance globally accessible to all callbacks inside .then promise chain
 // create db connection before starting up server
