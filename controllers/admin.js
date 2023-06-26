@@ -67,7 +67,7 @@ router.post("/cart", async (req, res, next) => {
 router.post("/cart/delete-item", async (req, res, next) => {
   const itemId = req.body.id;
   const cart = await req.user.getCart(); // get the users cart
-  const cartItems = await cart.getItems({ where: { id: itemId } }); // get items from user's cart matching the req body id
+  const cartItems = await cart.getItems({ where: { id: itemId } }); // get items from user's cart matching the req body id - returns array of matching items
   // delete that item from the cartItems table
   if (cartItems.length > 0) {
     const deletedItem = await cartItems[0].cartItem.destroy();
