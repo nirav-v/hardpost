@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const User = require("../models/User");
 const Item = require("../models/Item");
 const Cart = require("../models/Cart");
 const CartItem = require("../models/Cart-Item");
@@ -33,6 +34,19 @@ router.post("/edit-item", async (req, res, next) => {
   // call the save method on the created item which will know to replace the existing item with the same id
   updatedItem.save();
   res.json(updatedItem);
+});
+
+router.post("/delete-item", async (req, res, next) => {
+  const itemId = req.body.id;
+  // get all items of the logged in user and find one where the id is in the req.body
+  const userItems = await req.user.getItems();
+  for (item of userItems) {
+    if (item.id === itemId) {
+      const deletedItem = await item.destroy();
+      return res.json(deletedItem);
+    }
+  }
+  res.send("cannot find item with that id");
 });
 
 router.get("/cart", async (req, res, next) => {

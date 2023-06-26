@@ -48,6 +48,7 @@ Cart.belongsToMany(Item, { through: CartItem });
 Item.belongsToMany(Cart, { through: CartItem }); // many to many relation between Cart and Item, junction table is CartItem
 
 // see available magic methods on User instances based on the model associations we defined
+console.log("magic user methods", Object.keys(User.prototype));
 console.log("magic cart methods", Object.keys(Cart.prototype));
 
 // create db connection before starting up server
@@ -66,12 +67,6 @@ sequelize
     return user.createCart(); // use magic method to immediately create a cart for the associated user
   })
   .then((cart) => {
-    Item.create({
-      name: "test item",
-      category: "decks",
-      price: 12,
-      description: "cool",
-    });
     app.listen(port, () =>
       console.log(`Server running on http://localhost:${port}/`)
     );
