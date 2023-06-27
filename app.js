@@ -16,7 +16,7 @@ const app = express();
 const port = 3000;
 
 // modular route imports
-const adminRoutes = require("./controllers/admin");
+const apiRoutes = require("./controllers/api");
 const shopRoutes = require("./controllers/shop");
 
 app.use(bodyParser.urlencoded({ extended: false })); // to parse incoming req body
@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 });
 
 // using modular route files
-app.use("/api", adminRoutes);
+app.use("/api", apiRoutes);
 app.use(shopRoutes);
 
 app.use("*", (req, res, next) =>
