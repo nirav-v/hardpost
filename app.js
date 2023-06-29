@@ -5,12 +5,7 @@ const path = require("path");
 // import database connection
 const sequelize = require("./util/database");
 // import models to map to db tables
-const User = require("./models/User");
-const Item = require("./models/Item");
-const Cart = require("./models/Cart");
-const CartItem = require("./models/Cart-Item");
-const Order = require("./models/Order");
-const OrderItem = require("./models/Order-Item");
+const { User, Cart, Order } = require("./models");
 
 const app = express();
 const port = 3000;
@@ -40,18 +35,6 @@ app.use(shopRoutes);
 app.use("*", (req, res, next) =>
   res.send("navigate to one of the existing routes in your controller")
 );
-
-// define model associations
-Item.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
-User.hasMany(Item); // users and items have a one to many association
-User.hasOne(Cart); // One to one relation between a Cart and User
-Cart.belongsTo(User);
-Cart.belongsToMany(Item, { through: CartItem });
-Item.belongsToMany(Cart, { through: CartItem }); // many to many relation between Cart and Item, junction table is CartItem
-Order.belongsTo(User); // one-to-many relation between users and orders
-User.hasMany(Order);
-Order.belongsToMany(Item, { through: OrderItem }); // sets many-to-many relationship between Orders and Items
-Item.belongsToMany(Order, { through: OrderItem });
 
 // see available magic methods on User instances based on the model associations we defined
 console.log("magic user methods", Object.keys(User.prototype));

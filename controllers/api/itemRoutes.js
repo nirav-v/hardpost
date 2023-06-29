@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Item = require("../../models/Item");
+const { Item } = require("../../models/");
 
 router.post("/add-item", async (req, res, next) => {
   const { name, category, price, description, image } = req.body;

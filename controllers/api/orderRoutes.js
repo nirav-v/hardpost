@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const Order = require("../../models/Order");
 
 router.get("/orders", async (req, res, next) => {
   const orders = await req.user.getOrders({ include: ["items"] }); // tells sequelize to also load all items associated with each order

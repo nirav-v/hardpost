@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Item = require("../../models/Item");
+const { Item } = require("../../models");
 
 router.get("/cart", async (req, res, next) => {
   const cart = await req.user.getCart(); //magic method from one to one association between User and Cart
