@@ -1,8 +1,9 @@
 const router = require("express").Router();
-const { Item } = require("../../models");
+const { Cart, Item, User } = require("../../models");
 
 router.get("/cart", async (req, res, next) => {
-  const cart = await req.user.getCart(); //magic method from one to one association between User and Cart
+  const loggedInUser = await User.findByPk(req.session.userId);
+  const cart = await loggedInUser.getCart();
   const cartItems = await cart.getItems(); //magic method from many to many association between Cart and Item
   // console.log(cart);
   res.json(cartItems);
@@ -11,7 +12,11 @@ router.get("/cart", async (req, res, next) => {
 // adding item to cart
 router.post("/cart", async (req, res, next) => {
   const itemId = req.body.itemId;
-  const cart = await req.user.getCart(); // fetch the users cart
+  const cart = await Cart.findOne({
+    where: {
+      userId: req.session.userId,
+    },
+  }); // fetch the users cart
   let itemQuantity = 1; // default the quantity to one for cases where item is not in cart
   const existingItems = await cart.getItems({
     where: { id: itemId }, //should return array of of one or zero items in cart with that id
@@ -31,8 +36,9 @@ router.post("/cart", async (req, res, next) => {
 });
 
 router.post("/cart/delete-item", async (req, res, next) => {
+  const loggedInUser = await User.findByPk(req.session.userId);
   const itemId = req.body.id;
-  const cart = await req.user.getCart(); // get the users cart
+  const cart = await loggedInUser.getCart(); // get the users cart
   const cartItems = await cart.getItems({ where: { id: itemId } }); // get items from user's cart matching the req body id - returns array of matching items
   // delete that item from the cartItems table
   if (cartItems.length > 0) {

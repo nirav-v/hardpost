@@ -2,8 +2,11 @@ const router = require("express").Router();
 const { Item } = require("../../models/");
 
 router.post("/add-item", async (req, res, next) => {
+  if (!req.session.userId)
+    return res.send("you must be logged in to create a new item");
+
   const { name, category, price, description, image } = req.body;
-  const userId = req.user.id; // add the id of the  logged in user to as the userId foreign key
+  const userId = req.session.userId; // add the id of the  logged in user to as the userId foreign key
   const item = await Item.create({
     name,
     category,
@@ -21,7 +24,7 @@ router.post("/edit-item", async (req, res, next) => {
   const { id, name, category, price, description, image } = req.body;
   // return row from database as an Item object and re-assign its properties to our updated data
   const updatedItem = await Item.findByPk(id);
-  updatedItem.userId = req.user.id;
+  updatedItem.userId = req.session.userId;
   updatedItem.id = id;
   updatedItem.name = name;
   updatedItem.category = category;

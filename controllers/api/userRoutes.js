@@ -23,9 +23,13 @@ router.post("/signup", async (req, res) => {
   // create a cart to associate with the new user
   const userCart = await newUser.createCart();
 
-  req.session.user = newUser;
-
-  return res.json(req.session.user);
+  // set and save the user's id on the session. Won't save whole user instance because we lose all sequelize magic methods and other meta data when the object is stringified before being saved on session
+  req.session.userId = newUser.id;
+  req.session.save(function (err) {
+    if (err) return next(err);
+  });
+  console.log("user id:", req.session.userId);
+  return res.json(req.session);
 });
 
 router.post("/login", async (req, res) => {
@@ -38,11 +42,16 @@ router.post("/login", async (req, res) => {
   });
 
   if (!existingUser) return res.send("incorrect credentials");
-  req.session.user = existingUser;
 
+  // set and save logged in user on session object
+  req.session.userId = existingUser.id;
+  req.session.save(function (err) {
+    if (err) return next(err);
+  });
   // compare password using instance method defined on user model
   if (existingUser.checkPassword(req.body.password, existingUser.password)) {
-    return res.json(req.session.user);
+    console.log("user id:", req.session.userId);
+    return res.json(req.session.userId);
   }
   return res.send("Incorrect credentials");
 });

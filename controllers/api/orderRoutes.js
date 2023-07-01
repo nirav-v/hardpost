@@ -1,14 +1,17 @@
 const router = require("express").Router();
+const { User } = require("../../models");
 
 router.get("/orders", async (req, res, next) => {
-  const orders = await req.user.getOrders({ include: ["items"] }); // tells sequelize to also load all items associated with each order
+  const loggedInUser = await User.findByPk(req.session.userId);
+  const orders = await loggedInUser.getOrders({ include: ["items"] }); // tells sequelize to also load all items associated with each order
   res.json(orders);
 });
 
 router.post("/create-order", async (req, res, next) => {
-  const cart = await req.user.getCart();
+  const loggedInUser = await User.findByPk(req.session.userId);
+  const cart = await loggedInUser.getCart();
   const items = await cart.getItems();
-  const order = await req.user.createOrder();
+  const order = await loggedInUser.createOrder();
   // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
   await order.addItems(
     items.map((item) => {
