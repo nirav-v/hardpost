@@ -44,7 +44,7 @@ console.log("magic Order methods", Object.keys(Order.prototype));
 let testUser; // initialize and reassign later to make user instance globally accessible to all callbacks inside .then promise chain
 // create db connection before starting up server
 sequelize
-  .sync({ force: true })
+  .sync()
   .then((result) => {
     return User.findByPk(1);
   })
