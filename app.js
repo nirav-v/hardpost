@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const session = require("express-session");
 
 // import database connection
 const sequelize = require("./util/database");
@@ -17,6 +18,12 @@ const shopRoutes = require("./controllers/shop");
 app.use(bodyParser.urlencoded({ extended: false })); // to parse incoming req body
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json()); // needed to send json req.body in insomnia post requests
+// use the express session middleware providing options
+app.use(
+  session({
+    secret: "temporary secret key",
+  })
+);
 
 // finding the first user instance and storing it as user property on all incoming requests
 app.use((req, res, next) => {

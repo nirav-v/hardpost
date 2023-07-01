@@ -20,7 +20,9 @@ router.post("/signup", async (req, res) => {
     password,
   });
 
-  return res.json(newUser);
+  req.session.user = newUser;
+
+  return res.json(req.session.user);
 });
 
 router.post("/login", async (req, res) => {
@@ -32,9 +34,12 @@ router.post("/login", async (req, res) => {
     },
   });
 
+  if (!existingUser) return res.send("incorrect credentials");
+  req.session.user = existingUser;
+
   // compare password using instance method defined on user model
   if (existingUser.checkPassword(req.body.password, existingUser.password)) {
-    return res.send("correct pw");
+    return res.json(req.session.user);
   }
   return res.send("Incorrect credentials");
 });
