@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../../models/");
+const { User, Cart } = require("../../models/");
 
 router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
@@ -19,6 +19,9 @@ router.post("/signup", async (req, res) => {
     email,
     password,
   });
+
+  // create a cart to associate with the new user
+  const userCart = await newUser.createCart();
 
   req.session.user = newUser;
 
@@ -42,6 +45,12 @@ router.post("/login", async (req, res) => {
     return res.json(req.session.user);
   }
   return res.send("Incorrect credentials");
+});
+
+// get user by id
+router.get("/:id", async (req, res) => {
+  const user = await User.findByPk(req.params.id, { include: Cart });
+  res.json(user);
 });
 
 module.exports = router;
