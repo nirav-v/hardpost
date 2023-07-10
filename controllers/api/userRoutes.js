@@ -28,7 +28,7 @@ router.post("/signup", async (req, res) => {
   req.session.save(function (err) {
     if (err) return next(err);
   });
-  console.log("user id:", req.session.userId);
+  console.log(req.session);
   return res.json(req.session);
 });
 
@@ -43,15 +43,15 @@ router.post("/login", async (req, res) => {
 
   if (!existingUser) return res.send("incorrect credentials");
 
-  // set and save logged in user on session object
-  req.session.userId = existingUser.id;
-  req.session.save(function (err) {
-    if (err) return next(err);
-  });
   // compare password using instance method defined on user model
   if (existingUser.checkPassword(req.body.password, existingUser.password)) {
-    console.log("user id:", req.session.userId);
-    return res.json(req.session.userId);
+    // set and save logged in user on session object
+    req.session.userId = existingUser.id;
+    req.session.save(function (err) {
+      if (err) return next(err);
+    });
+    console.log(req.session);
+    return res.json(req.session);
   }
   return res.send("Incorrect credentials");
 });
