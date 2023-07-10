@@ -13,7 +13,7 @@ const port = 3000;
 
 // modular route imports
 const apiRoutes = require("./controllers/api");
-const shopRoutes = require("./controllers/shop");
+const shopRoutes = require("./controllers/shop-routes");
 
 app.use(bodyParser.urlencoded({ extended: false })); // to parse incoming req body
 app.use(express.static(path.join(__dirname, "public")));
