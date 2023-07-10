@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User, Cart } = require("../../models/");
 
+// SIGNUP
 router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
   //   check if user exists already
@@ -32,6 +33,7 @@ router.post("/signup", async (req, res) => {
   return res.json(req.session);
 });
 
+// LOGIN
 router.post("/login", async (req, res) => {
   // check db for matching username
 
@@ -50,13 +52,24 @@ router.post("/login", async (req, res) => {
     req.session.save(function (err) {
       if (err) return next(err);
     });
-    console.log(req.session);
+    console.log("session: ", req.session);
     return res.json(req.session);
   }
   return res.send("Incorrect credentials");
 });
 
-// get user by id
+// LOGOUT
+router.get("/logout", async (req, res, next) => {
+  if (req.session.userId) {
+    await req.session.destroy((err) => console.log(err));
+    console.log("session:", req.session);
+    return res.send("logged out");
+  } else {
+    return res.send("how can you log out if you're not logged in?");
+  }
+});
+
+// GET USER BY ID
 router.get("/:id", async (req, res) => {
   const user = await User.findByPk(req.params.id, { include: Cart });
   res.json(user);
