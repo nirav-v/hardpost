@@ -5,12 +5,12 @@ const path = require("path");
 const session = require("express-session");
 
 // import database connection
-const sequelize = require("./util/database");
+const sequelize = require("./config/database");
 // import models to map to db tables
 const { User, Cart, Order } = require("./models");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // modular route imports
 const apiRoutes = require("./controllers/api");

@@ -1,5 +1,5 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
-const sequelize = require("../util/database");
+const sequelize = require("../config/database");
 
 // Order will serve as a junction table between Users and the Items they ordered
 
