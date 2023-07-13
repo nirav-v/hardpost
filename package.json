@@ -1,11 +1,11 @@
 {
   "name": "sequelize-hardpost-backend",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "start-server": "node app.js"
+    "start": "node server.js",
+    "start-server": "node server.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
