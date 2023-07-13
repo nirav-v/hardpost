@@ -7,9 +7,6 @@
     "start": "nodemon app.js",
     "start-server": "node app.js"
   },
-  "devDependencies": {
-    "nodemon": "^1.18.3"
-  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.18.3",
@@ -19,5 +16,8 @@
     "express-session": "^1.17.3",
     "mysql2": "^3.3.3",
     "sequelize": "^6.3.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
