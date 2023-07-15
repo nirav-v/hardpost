@@ -13,7 +13,7 @@ router.post("/signup", async (req, res) => {
   });
 
   if (existingUser) {
-    return res.send("An account with this email already exists");
+    return res.status(400).send("An account with this email already exists");
   }
 
   const newUser = await User.create({
@@ -30,8 +30,7 @@ router.post("/signup", async (req, res) => {
   req.session.save(function (err) {
     if (err) return next(err);
   });
-  console.log(req.session);
-  return res.json(req.session);
+  return res.status(201).send(req.session);
 });
 
 // LOGIN
@@ -47,9 +46,6 @@ router.post("/login", async (req, res) => {
   if (!existingUser) {
     return res.status(404).send({ error: "incorrect credentials" });
   }
-
-  console.log("correct email");
-
   // compare password using instance method defined on user model
   if (existingUser.checkPassword(req.body.password, existingUser.password)) {
     // set and save logged in user on session object
@@ -57,9 +53,9 @@ router.post("/login", async (req, res) => {
     req.session.save(function (err) {
       if (err) return next(err);
     });
-    console.log("session: ", req.session);
     return res.status(200).send(req.session);
   }
+  // if wrong password
   return res.status(404).send({ error: "incorrect credentials" });
 });
 
