@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function LoginForm() {
+function LoginForm({ loggedIn, setLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,9 +12,8 @@ function LoginForm() {
       email: email,
       password: password,
     }); // request body can only be sent as a string, parsed back to object by the server
-    console.log("body: ", body);
     // send post request to server
-    const request = await fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       body: body,
       headers: {
@@ -22,9 +21,10 @@ function LoginForm() {
       },
     });
 
-    const response = await request;
     console.log(response);
-
+    if (response.status === 200) setLoggedIn(true);
+    const loginResult = await response.json();
+    console.log(loginResult.cookie);
     setEmail("");
     setPassword("");
 

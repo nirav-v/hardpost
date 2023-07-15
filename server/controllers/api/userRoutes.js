@@ -44,7 +44,11 @@ router.post("/login", async (req, res) => {
     },
   });
 
-  if (!existingUser) return res.send("incorrect credentials");
+  if (!existingUser) {
+    return res.status(404).send({ error: "incorrect credentials" });
+  }
+
+  console.log("correct email");
 
   // compare password using instance method defined on user model
   if (existingUser.checkPassword(req.body.password, existingUser.password)) {
@@ -54,9 +58,9 @@ router.post("/login", async (req, res) => {
       if (err) return next(err);
     });
     console.log("session: ", req.session);
-    return res.send("logged in");
+    return res.status(200).send(req.session);
   }
-  return res.status(404);
+  return res.status(404).send({ error: "incorrect credentials" });
 });
 
 // LOGOUT
