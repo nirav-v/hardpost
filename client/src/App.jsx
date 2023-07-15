@@ -6,11 +6,11 @@ import { useState } from "react";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  console.log(loggedIn);
+  console.log("loggedIn ", loggedIn);
 
   return (
     <div>
-      <SignUpForm />
+      <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <ShopPage />;
     </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function SignUpForm() {
+function SignUpForm({ loggedIn, setLoggedIn }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,6 +34,8 @@ function SignUpForm() {
       setUserName("");
 
       console.log(response);
+      if (response.status === 201) setLoggedIn(true);
+      console.log("loggedIn: ", loggedIn);
       console.log("signup request sent");
     }
   };
