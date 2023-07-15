@@ -54,9 +54,9 @@ router.post("/login", async (req, res) => {
       if (err) return next(err);
     });
     console.log("session: ", req.session);
-    return res.json(req.session);
+    return res.send("logged in");
   }
-  return res.send("Incorrect credentials");
+  return res.status(404);
 });
 
 // LOGOUT

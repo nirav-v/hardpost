@@ -20,7 +20,7 @@ function SignUpForm() {
       }); // request body can only be sent as a string, parsed back to object by the server
       console.log("body: ", body);
       // send post request to server
-      const request = await fetch(url, {
+      const response = await fetch(url, {
         method: "POST",
         body: body,
         headers: {
@@ -28,6 +28,12 @@ function SignUpForm() {
         },
       });
 
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setUserName("");
+
+      console.log(response);
       console.log("signup request sent");
     }
   };
@@ -58,7 +64,7 @@ function SignUpForm() {
         />
         <label>Password</label>
         <input
-          type="text"
+          type="password"
           name="password"
           value={password}
           onChange={() => {
@@ -67,7 +73,7 @@ function SignUpForm() {
         />
         <label>confirm password</label>
         <input
-          type="text"
+          type="password"
           value={confirmPassword}
           onChange={() => {
             handleInputChange(event, setConfirmPassword);
