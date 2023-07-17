@@ -28,12 +28,15 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
         },
       });
 
+      console.log(response);
+      const result = await response.json();
+      console.log(result);
+
       setEmail("");
       setPassword("");
       setConfirmPassword("");
       setUserName("");
 
-      console.log(response);
       if (response.status === 201) setLoggedIn(true);
       console.log("loggedIn: ", loggedIn);
       console.log("signup request sent");
@@ -66,7 +69,7 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
         />
         <label>Password</label>
         <input
-          type="password"
+          type="text"
           name="password"
           value={password}
           onChange={() => {
@@ -75,7 +78,7 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
         />
         <label>confirm password</label>
         <input
-          type="password"
+          type="text"
           value={confirmPassword}
           onChange={() => {
             handleInputChange(event, setConfirmPassword);

@@ -7,7 +7,7 @@ function LoginForm({ loggedIn, setLoggedIn }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const url = "http://localhost:3000/api/user/login";
+    const url = "/api/user/login";
     const body = JSON.stringify({
       email: email,
       password: password,
@@ -22,12 +22,12 @@ function LoginForm({ loggedIn, setLoggedIn }) {
     });
 
     console.log(response);
-    if (response.status === 200) setLoggedIn(true);
     const loginResult = await response.json();
-    console.log(loginResult.cookie);
+    console.log(loginResult);
     setEmail("");
     setPassword("");
 
+    if (response.status === 200) setLoggedIn(true);
     console.log("login request sent");
   };
 

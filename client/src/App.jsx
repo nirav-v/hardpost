@@ -3,11 +3,21 @@ import SignUpForm from "./components/forms/SignUpForm";
 import LoginForm from "./components/forms/LoginForm";
 import AddItemForm from "./components/forms/AddItemForm1";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   console.log("loggedIn ", loggedIn);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const response = await fetch("/api/user/login");
+      const result = await response.json();
+      console.log(result);
+      if (result.data.userId) setLoggedIn(true);
+    };
+    checkAuth();
+  }, []);
 
   // conditionally render login and sign up forms based on loggedIn state
   let loginForm;

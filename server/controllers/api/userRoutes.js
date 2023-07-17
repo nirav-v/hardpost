@@ -1,6 +1,11 @@
 const router = require("express").Router();
 const { User, Cart } = require("../../models/");
 
+// GET Logged in user
+router.get("/login", async (req, res) => {
+  res.send({ data: req.session });
+});
+
 // SIGNUP
 router.post("/signup", async (req, res) => {
   console.log("BODY ", req.body);
@@ -13,7 +18,7 @@ router.post("/signup", async (req, res) => {
   });
 
   if (existingUser) {
-    return res.status(400).send("An account with this email already exists");
+    return res.status(401).send({ error: "account already exists" });
   }
 
   const newUser = await User.create({
@@ -53,6 +58,7 @@ router.post("/login", async (req, res) => {
     req.session.save(function (err) {
       if (err) return next(err);
     });
+    console.log(req.session);
     return res.status(200).send(req.session);
   }
   // if wrong password

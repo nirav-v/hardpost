@@ -9,7 +9,7 @@ function addItemForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = "http://localhost:3000/api/add-item";
+    const url = "/api/add-item";
     const body = JSON.stringify({ name, category, price, description, image });
     const response = await fetch(url, {
       method: "POST",
@@ -19,7 +19,8 @@ function addItemForm() {
       },
     });
 
-    console.log(await response);
+    const result = await response.json();
+    console.log(result);
   };
 
   return (

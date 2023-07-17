@@ -3,7 +3,9 @@ const { Item } = require("../../models/");
 
 router.post("/add-item", async (req, res, next) => {
   if (!req.session.userId)
-    return res.send("you must be logged in to create a new item");
+    return res
+      .status(401)
+      .send({ error: "you must be logged in to create a new item" });
 
   const { name, category, price, description, image } = req.body;
   const userId = req.session.userId; // add the id of the  logged in user as the items userId foreign key

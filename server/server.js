@@ -20,10 +20,19 @@ app.use(cors()); //allow for client side requests without getting CORS error
 app.use(bodyParser.urlencoded({ extended: false })); // to parse incoming req body
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json()); // needed to send json req.body in insomnia post requests
+
+// Create a new sequelize store using the express-session package
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 // use the express session middleware providing options
 app.use(
   session({
     secret: "temporary secret key",
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+      db: sequelize,
+    }),
   })
 );
 
