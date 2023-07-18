@@ -21,6 +21,11 @@ function addItemForm() {
 
     const result = await response.json();
     console.log(result);
+    setName(""),
+      setCategory(""),
+      setPrice(null),
+      setDescription(""),
+      setImage(null);
   };
 
   return (
