@@ -12,7 +12,7 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
     event.preventDefault();
     // validate form inputs
     if (password.length > 0 && password === confirmPassword) {
-      const url = "http://localhost:3000/api/user/signup";
+      const url = "/api/user/signup";
       const body = JSON.stringify({
         username: userName,
         email: email,
