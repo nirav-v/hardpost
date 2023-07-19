@@ -16,7 +16,7 @@ function ShopPage() {
         // Handle any errors
         console.error(error);
       });
-  }, [items]);
+  }, []);
 
   return (
     <div>

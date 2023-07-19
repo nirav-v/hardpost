@@ -26,6 +26,8 @@ function addItemForm() {
       setPrice(null),
       setDescription(""),
       setImage(null);
+
+    window.location.reload(); // to show the new items?
   };
 
   return (
