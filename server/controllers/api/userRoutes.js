@@ -70,7 +70,7 @@ router.get("/logout", async (req, res, next) => {
   if (req.session.userId) {
     await req.session.destroy((err) => console.log(err));
     console.log("session:", req.session);
-    return res.send("logged out");
+    return res.redirect("/");
   } else {
     return res.send("how can you log out if you're not logged in?");
   }
