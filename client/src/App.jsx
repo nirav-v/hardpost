@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div>
-      {loggedIn ? <p>logged in</p> : null}
+      {loggedIn ? <a href="api/user/logout">Logout</a> : null}
       {loginForm}
       {signUpForm}
       <AddItemForm />
