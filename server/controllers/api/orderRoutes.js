@@ -3,8 +3,11 @@ const { User } = require("../../models");
 
 router.get("/orders", async (req, res, next) => {
   const loggedInUser = await User.findByPk(req.session.userId);
-  const orders = await loggedInUser.getOrders({ include: ["items"] }); // tells sequelize to also load all items associated with each order
-  res.json(orders);
+  const orders = await loggedInUser.getOrders({
+    include: ["items"],
+  }); // tells sequelize to also load all items associated with each order
+  console.log(orders);
+  res.send(orders);
 });
 
 router.post("/create-order", async (req, res, next) => {

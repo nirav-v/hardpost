@@ -3,6 +3,7 @@ import SignUpForm from "./components/forms/SignUpForm";
 import LoginForm from "./components/forms/LoginForm";
 import AddItemForm from "./components/forms/AddItemForm1";
 import CartPage from "./components/pages/CartPage";
+import OrdersPage from "./components/pages/OrdersPage";
 
 import { useEffect, useState } from "react";
 
@@ -32,6 +33,7 @@ function App() {
           <a href="api/user/logout">Logout</a>
           <AddItemForm />
           <CartPage />
+          <OrdersPage />
         </div>
       )}
       <ShopPage />;
