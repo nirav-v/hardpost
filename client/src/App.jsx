@@ -2,6 +2,7 @@ import ShopPage from "./components/pages/ShopPage";
 import SignUpForm from "./components/forms/SignUpForm";
 import LoginForm from "./components/forms/LoginForm";
 import AddItemForm from "./components/forms/AddItemForm1";
+import CartPage from "./components/pages/CartPage";
 
 import { useEffect, useState } from "react";
 
@@ -19,20 +20,20 @@ function App() {
     checkAuth();
   }, []);
 
-  // conditionally render login and sign up forms based on loggedIn state
-  let loginForm;
-  let signUpForm;
-  if (!loggedIn) {
-    loginForm = <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />;
-    signUpForm = <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />;
-  }
-
   return (
     <div>
-      {loggedIn ? <a href="api/user/logout">Logout</a> : null}
-      {loginForm}
-      {signUpForm}
-      <AddItemForm />
+      {!loggedIn ? (
+        <div>
+          <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+          <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+        </div>
+      ) : (
+        <div>
+          <a href="api/user/logout">Logout</a>
+          <AddItemForm />
+          <CartPage />
+        </div>
+      )}
       <ShopPage />;
     </div>
   );
