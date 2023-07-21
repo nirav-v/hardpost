@@ -18,7 +18,19 @@ function CartPage() {
       },
     })
       .then((res) => res.json())
-      .then((data) => setCart(data));
+      .then((updatedItems) => setCart(updatedItems));
+  };
+
+  const handleOrderClick = () => {
+    console.log("click");
+    fetch("/api/create-order", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((updatedItems) => {
+        console.log(updatedItems);
+        setCart(updatedItems);
+      });
   };
 
   return (
@@ -38,6 +50,7 @@ function CartPage() {
               );
             })}
           </ul>
+          <button onClick={handleOrderClick}>Place Order</button>
         </div>
       ) : (
         "no items in cart"

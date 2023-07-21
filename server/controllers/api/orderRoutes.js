@@ -20,7 +20,9 @@ router.post("/create-order", async (req, res, next) => {
     })
   );
   await cart.setItems(null); //clear user's cart after order is placed
-  res.json(cart);
+  const updatedItems = await cart.getItems();
+  console.log(updatedItems);
+  res.status(201).send(updatedItems);
 });
 
 module.exports = router;
