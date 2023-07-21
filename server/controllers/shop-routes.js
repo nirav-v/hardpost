@@ -13,7 +13,8 @@ router.get("/shop", async (req, res, next) => {
 
 router.get("/shop/:itemId", async (req, res, next) => {
   const item = await Item.findByPk(req.params.itemId);
-  res.json(item);
+  console.log(item);
+  res.status(200).json(item);
 });
 
 module.exports = router;

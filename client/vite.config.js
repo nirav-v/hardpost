@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": "http://localhost:3000/", // Replace with your backend server URL
+      "/shop": "http://localhost:3000/",
     },
   },
 });
