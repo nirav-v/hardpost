@@ -11,6 +11,8 @@ router.get("/cart", async (req, res, next) => {
 
 // adding item to cart
 router.post("/cart", async (req, res, next) => {
+  if (!req.session.userId)
+    return res.status(401).send({ unauthorized: "please log in first" });
   const itemId = req.body.itemId;
   const cart = await Cart.findOne({
     where: {

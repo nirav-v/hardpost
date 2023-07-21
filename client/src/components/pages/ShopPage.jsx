@@ -20,14 +20,19 @@ function ShopPage() {
       });
   }, []);
 
+  const handleItemClick = (itemId) => {
+    console.log("click");
+  };
+
   return (
     <div>
       <h1>ShopPage</h1>
       <p>Items:</p>
       {items.map((item) => (
-        <div key={item.id}>
+        <div key={item.id} onClick={() => handleItemClick(item.id)}>
           <p>{item.name}</p>
           {/* <a href={`/shop/${item.id}`}>see details</a> */}
+          <ItemPage itemId={item.id} />
         </div>
       ))}
     </div>
