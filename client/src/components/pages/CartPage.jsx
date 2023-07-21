@@ -9,6 +9,18 @@ function CartPage() {
       .then((data) => setCart(data));
   }, []);
 
+  const handleCartDelete = (itemId) => {
+    fetch("/api/cart/delete-item", {
+      method: "POST",
+      body: JSON.stringify({ itemId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setCart(data));
+  };
+
   return (
     <div>
       <h2>your cart: </h2>
@@ -19,6 +31,9 @@ function CartPage() {
               return (
                 <li key={item.id}>
                   {item.name} ${item.price}
+                  <button onClick={() => handleCartDelete(item.id)}>
+                    delete from cart
+                  </button>
                 </li>
               );
             })}
