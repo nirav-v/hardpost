@@ -1,19 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-function ItemPage({ itemId }) {
-  const [item, setItem] = useState(null);
-
-  useEffect(() => {
-    fetch(`/shop/${itemId}`)
-      .then((response) => response.json())
-      .then((data) => setItem(data))
-      .catch((error) => {
-        // Handle any errors
-        console.error(error);
-      });
-  }, []);
-
+function ItemPage({ itemId, name, category, description, price }) {
   const handleAddCartClick = (itemId) => {
     fetch("/api/cart", {
       method: "POST",
@@ -30,16 +18,14 @@ function ItemPage({ itemId }) {
   return (
     <div>
       <p>ItemPage</p>
-      {item ? (
-        <div>
-          <p>description: {item.description}</p>
-          <p>category: {item.category}</p>
-          <p>${item.price}</p>
-          <button onClick={() => handleAddCartClick(item.id)}>
-            Add to Cart
-          </button>
-        </div>
-      ) : null}
+
+      <div>
+        <p>name: {name}</p>
+        <p>description: {description}</p>
+        <p>category: {category}</p>
+        <p>${price}</p>
+        <button onClick={() => handleAddCartClick(itemId)}>Add to Cart</button>
+      </div>
     </div>
   );
 }

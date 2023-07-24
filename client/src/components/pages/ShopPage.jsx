@@ -28,13 +28,22 @@ function ShopPage() {
     <div>
       <h1>ShopPage</h1>
       <p>Items:</p>
-      {items.map((item) => (
-        <div key={item.id} onClick={() => handleItemClick(item.id)}>
-          <p>{item.name}</p>
-          {/* <a href={`/shop/${item.id}`}>see details</a> */}
-          <ItemPage itemId={item.id} />
+      {items.length ? (
+        <div>
+          {items.map((item) => (
+            <div key={item.id} onClick={() => handleItemClick(item.id)}>
+              {/* <a href={`/shop/${item.id}`}>see details</a> */}
+              <ItemPage
+                itemId={item.id}
+                name={item.name}
+                category={item.category}
+                description={item.description}
+                price={item.price}
+              />
+            </div>
+          ))}
         </div>
-      ))}
+      ) : null}
     </div>
   );
 }
