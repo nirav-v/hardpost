@@ -4,6 +4,7 @@ import LoginForm from "./components/forms/LoginForm";
 import AddItemForm from "./components/forms/AddItemForm1";
 import CartPage from "./components/pages/CartPage";
 import OrdersPage from "./components/pages/OrdersPage";
+import UserItems from "./components/pages/UserItems";
 
 import { useEffect, useState } from "react";
 
@@ -34,6 +35,7 @@ function App() {
           <AddItemForm />
           <CartPage />
           <OrdersPage />
+          <UserItems />
         </div>
       )}
       <ShopPage />;

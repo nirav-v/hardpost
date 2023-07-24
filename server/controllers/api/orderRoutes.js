@@ -6,7 +6,6 @@ router.get("/orders", async (req, res, next) => {
   const orders = await loggedInUser.getOrders({
     include: ["items"],
   }); // tells sequelize to also load all items associated with each order
-  console.log(orders);
   res.send(orders);
 });
 

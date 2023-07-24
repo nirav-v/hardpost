@@ -1,12 +1,12 @@
 const router = require("express").Router();
-const { Item } = require("../../models/");
+const { Item, User } = require("../../models/");
 
 router.get("/get-items", async (req, res) => {
   // find all items that have a userId matching req.session.userId
   const userItems = await Item.findAll({
     where: { userId: req.session.userId },
   });
-  res.status(200).send({ userItems: userItems });
+  res.status(200).send(userItems);
 });
 
 router.post("/add-item", async (req, res, next) => {
@@ -47,13 +47,14 @@ router.post("/edit-item", async (req, res, next) => {
 });
 
 router.post("/delete-item", async (req, res, next) => {
-  const itemId = req.body.id;
+  const itemId = req.body.itemId;
+  const user = await User.findByPk(req.session.userId);
   // get all items of the logged in user and find one where the id is in the req.body
-  const userItems = await req.user.getItems();
+  const userItems = await user.getItems();
   for (item of userItems) {
     if (item.id === itemId) {
       const deletedItem = await item.destroy();
-      return res.json(deletedItem);
+      return res.status(201).json(deletedItem);
     }
   }
   res.send("cannot find item with that id");
