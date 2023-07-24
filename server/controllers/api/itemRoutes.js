@@ -1,6 +1,14 @@
 const router = require("express").Router();
 const { Item } = require("../../models/");
 
+router.get("/get-items", async (req, res) => {
+  // find all items that have a userId matching req.session.userId
+  const userItems = await Item.findAll({
+    where: { userId: req.session.userId },
+  });
+  res.status(200).send({ userItems: userItems });
+});
+
 router.post("/add-item", async (req, res, next) => {
   if (!req.session.userId)
     return res
