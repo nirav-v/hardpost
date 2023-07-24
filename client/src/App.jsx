@@ -6,6 +6,7 @@ import CartPage from "./components/pages/CartPage";
 import OrdersPage from "./components/pages/OrdersPage";
 import UserItems from "./components/pages/UserItems";
 
+import { Routes, Route, Outlet, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -33,9 +34,11 @@ function App() {
         <div>
           <a href="api/user/logout">Logout</a>
           <AddItemForm />
-          <CartPage />
-          <OrdersPage />
-          <UserItems />
+          <Routes>
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/user-items" element={<UserItems />} />
+          </Routes>
         </div>
       )}
       <ShopPage />;
