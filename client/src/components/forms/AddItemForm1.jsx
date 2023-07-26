@@ -43,7 +43,7 @@ function addItemForm() {
           onChange={(event) => setName(event.target.value)}
         />
         <label>
-          Pick your favorite flavor:
+          Category:
           <select
             value={category}
             onChange={(event) => setCategory(event.target.value)}>
