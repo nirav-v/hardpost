@@ -24,6 +24,7 @@ function LoginForm({ loggedIn, setLoggedIn }) {
     console.log(response);
     const loginResult = await response.json();
     console.log(loginResult);
+    localStorage.setItem("currentUserId", loginResult.userId);
     setEmail("");
     setPassword("");
 

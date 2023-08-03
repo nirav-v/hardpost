@@ -14,15 +14,22 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   console.log("loggedIn ", loggedIn);
 
+  const checkAuth = async () => {
+    const response = await fetch("/api/user/login");
+    const result = await response.json();
+    console.log(result);
+    if (result.data.userId) setLoggedIn(true);
+  };
   useEffect(() => {
-    const checkAuth = async () => {
-      const response = await fetch("/api/user/login");
-      const result = await response.json();
-      console.log(result);
-      if (result.data.userId) setLoggedIn(true);
-    };
+    if (localStorage.getItem("currentUserId")) setLoggedIn(true);
     checkAuth();
   }, []);
+
+  const handleLogoutClick = () => {
+    localStorage.removeItem("currentUserId");
+    fetch("/api/user/logout").then((res) => res.json());
+    window.location.reload();
+  };
 
   return (
     <div>
@@ -34,7 +41,7 @@ function App() {
         </div>
       ) : (
         <div>
-          <a href="api/user/logout">Logout</a>
+          <button onClick={handleLogoutClick}>Logout</button>
 
           <Routes>
             <Route path="/" element={<ShopPage />} />

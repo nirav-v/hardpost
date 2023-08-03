@@ -27,12 +27,16 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 app.use(
   session({
     secret: "temporary secret key",
-    cookie: {},
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: new SequelizeStore({
       db: sequelize,
     }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 12,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
+    },
   })
 );
 
