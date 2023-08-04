@@ -3,7 +3,7 @@ const { User, Cart } = require("../../models/");
 
 // GET Logged in user
 router.get("/login", async (req, res) => {
-  res.send({ data: req.session });
+  res.send(req.session);
 });
 
 // SIGNUP
