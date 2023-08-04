@@ -18,7 +18,7 @@ function App() {
     const response = await fetch("/api/user/login");
     const result = await response.json();
     console.log(result);
-    if (result.data.userId) setLoggedIn(true);
+    if (result.userId) setLoggedIn(true);
   };
   useEffect(() => {
     if (localStorage.getItem("currentUserId")) setLoggedIn(true);

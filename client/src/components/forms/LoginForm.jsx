@@ -6,13 +6,13 @@ function LoginForm({ loggedIn, setLoggedIn }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const url = "/api/user/login";
     const body = JSON.stringify({
       email: email,
       password: password,
     }); // request body can only be sent as a string, parsed back to object by the server
     // send post request to server
+
     const response = await fetch(url, {
       method: "POST",
       body: body,
