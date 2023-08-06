@@ -33,7 +33,7 @@ app.use(
       db: sequelize,
     }),
     cookie: {
-      maxAge: 1000 * 60 * 60 * 12,
+      // maxAge: 1000 * 60 * 60 * 12, // no maxAge bc using also using localStorage to persist logged in status
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       secure: process.env.NODE_ENV === "production",
     },
