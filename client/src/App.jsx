@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar loggedIn={loggedIn} />
       {!loggedIn ? (
         <div>
           <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
@@ -52,6 +52,7 @@ function App() {
           </Routes>
         </div>
       )}
+      <ShopPage />
     </div>
   );
 }
