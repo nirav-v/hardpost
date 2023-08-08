@@ -3,6 +3,7 @@ import SignUpForm from "./components/forms/SignUpForm";
 import LoginForm from "./components/forms/LoginForm";
 import AddItemForm from "./components/forms/AddItemForm1";
 import CartPage from "./components/pages/CartPage";
+import CheckoutPage from "./components/pages/CheckoutPage";
 import OrdersPage from "./components/pages/OrdersPage";
 import UserItems from "./components/pages/UserItems";
 import NavBar from "./components/NavBar";
@@ -38,6 +39,7 @@ function App() {
         <div>
           <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+          <ShopPage />
         </div>
       ) : (
         <div>
@@ -47,12 +49,12 @@ function App() {
             <Route path="/" element={<ShopPage />} />
             <Route path="/add-item" element={<AddItemForm />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/user-items" element={<UserItems />} />
           </Routes>
         </div>
       )}
-      <ShopPage />
     </div>
   );
 }
