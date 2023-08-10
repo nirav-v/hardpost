@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
+import ShippingForm from "../forms/ShippingForm";
 
 function CheckoutPage() {
   const [items, setItems] = useState([]);
+
+  const [shippingInfo, setShippingInfo] = useState({
+    name: "",
+    address: "",
+    city: "",
+    state: "",
+    zipcode: "",
+  });
+
   // making another fetch for cart items as CartPage is not rendering CheckoutPage so cannot pass down state
   // not most efficient solution, duplicating code from CartPage can resolve later
   useEffect(() => {
@@ -9,8 +19,6 @@ function CheckoutPage() {
       .then((res) => res.json())
       .then((data) => setItems(data));
   }, []);
-
-  console.log(items);
 
   const handleOrderClick = () => {
     console.log("click");
@@ -20,6 +28,15 @@ function CheckoutPage() {
       .then((res) => res.json())
       .then((updatedItems) => {
         console.log(updatedItems);
+        // You can implement your own logic here, such as sending the shippingInfo to the server
+        console.log("Shipping Info:", shippingInfo);
+        setShippingInfo({
+          name: "",
+          address: "",
+          city: "",
+          state: "",
+          zipcode: "",
+        });
         setItems(updatedItems);
       });
   };
@@ -38,6 +55,10 @@ function CheckoutPage() {
           );
         })}
       </ul>
+      <ShippingForm
+        shippingInfo={shippingInfo}
+        setShippingInfo={setShippingInfo}
+      />
       <button onClick={handleOrderClick}>Place Order</button>
     </div>
   );
