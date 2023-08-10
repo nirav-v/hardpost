@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ShippingForm from "../forms/ShippingForm";
+import PaymentForm from "../forms/PaymentForm";
 
 function CheckoutPage() {
   const [items, setItems] = useState([]);
@@ -10,6 +11,13 @@ function CheckoutPage() {
     city: "",
     state: "",
     zipcode: "",
+  });
+
+  const [paymentInfo, setPaymentInfo] = useState({
+    cardNumber: "",
+    cardName: "",
+    expirationDate: "",
+    cvv: "",
   });
 
   // making another fetch for cart items as CartPage is not rendering CheckoutPage so cannot pass down state
@@ -28,8 +36,11 @@ function CheckoutPage() {
       .then((res) => res.json())
       .then((updatedItems) => {
         console.log(updatedItems);
+        // updated empty items array returned by order request so update the items state to no items
+        setItems(updatedItems);
         // You can implement your own logic here, such as sending the shippingInfo to the server
         console.log("Shipping Info:", shippingInfo);
+        // access shipping info and clear shipping form
         setShippingInfo({
           name: "",
           address: "",
@@ -37,7 +48,14 @@ function CheckoutPage() {
           state: "",
           zipcode: "",
         });
-        setItems(updatedItems);
+        // access payment info and clear form by resetting state
+        console.log("Payment Info: ", paymentInfo);
+        setPaymentInfo({
+          cardNumber: "",
+          cardName: "",
+          expirationDate: "",
+          cvv: "",
+        });
       });
   };
 
@@ -59,6 +77,7 @@ function CheckoutPage() {
         shippingInfo={shippingInfo}
         setShippingInfo={setShippingInfo}
       />
+      <PaymentForm paymentInfo={paymentInfo} setPaymentInfo={setPaymentInfo} />
       <button onClick={handleOrderClick}>Place Order</button>
     </div>
   );
