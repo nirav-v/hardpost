@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const { User } = require("../../models");
 
-router.get("/orders", async (req, res, next) => {
+const withAuth = require("../../util/withAuth");
+
+router.get("/orders", withAuth, async (req, res, next) => {
   const loggedInUser = await User.findByPk(req.session.userId);
   const orders = await loggedInUser.getOrders({
     include: ["items"],

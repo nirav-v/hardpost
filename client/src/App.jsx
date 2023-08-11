@@ -19,10 +19,19 @@ function App() {
     const response = await fetch("/api/user/login");
     const result = await response.json();
     console.log(result);
-    if (result.userId) setLoggedIn(true);
+    if (result.userId) {
+      setLoggedIn(true);
+    } else {
+      localStorage.removeItem("currentUserId");
+    }
   };
+
   useEffect(() => {
-    if (localStorage.getItem("currentUserId")) setLoggedIn(true);
+    if (localStorage.getItem("currentUserId")) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
     checkAuth();
   }, []);
 
