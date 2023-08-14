@@ -49,7 +49,7 @@ router.post("/add-item", async (req, res, next) => {
     category,
     price,
     description,
-    // image,
+    imagePath: req.file.path, // store path to the image in the database
     userId,
   });
   res.json(item);

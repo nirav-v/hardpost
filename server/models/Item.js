@@ -24,6 +24,9 @@ Item.init(
     description: {
       type: DataTypes.STRING,
     },
+    imagePath: {
+      type: DataTypes.STRING,
+    },
   },
   {
     // Other model options go here
