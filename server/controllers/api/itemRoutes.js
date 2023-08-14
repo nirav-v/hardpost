@@ -2,7 +2,18 @@ const router = require("express").Router();
 const { Item, User } = require("../../models/");
 
 const multer = require("multer");
-const upload = multer({ dest: "images/" });
+// configure multer file storage options, store in images folder under unique name of date + filename
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + "-" + file.originalname);
+  },
+});
+const upload = multer({ storage: fileStorage });
+// use multer middleware for parsing and storing files
+router.use(upload.single("image"));
 
 router.get("/get-items", async (req, res) => {
   // find all items that have a userId matching req.session.userId
@@ -12,7 +23,7 @@ router.get("/get-items", async (req, res) => {
   res.status(200).send(userItems);
 });
 
-router.post("/add-item", upload.single("image"), async (req, res, next) => {
+router.post("/add-item", async (req, res, next) => {
   console.log("Body", req.body);
   console.log("req.file", req.file);
   if (!req.session.userId)
