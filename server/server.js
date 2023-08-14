@@ -40,16 +40,6 @@ app.use(
   })
 );
 
-// finding the first user instance and storing it as user property on all incoming requests
-// app.use((req, res, next) => {
-//   User.findByPk(1)
-//     .then((user) => {
-//       req.user = user;
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
-
 // using modular route files
 app.use("/api", apiRoutes);
 app.use(shopRoutes);
@@ -67,29 +57,6 @@ let testUser; // initialize and reassign later to make user instance globally ac
 // create db connection before starting up server
 sequelize
   .sync()
-  .then((result) => {
-    return User.findByPk(1);
-  })
-  .then((user) => {
-    if (!user) {
-      return User.create({
-        username: "Nirav",
-        email: "test@test.com",
-        password: "123456",
-      });
-    }
-    return user;
-  })
-  .then((user) => {
-    testUser = user;
-    return user.getCart();
-  })
-  .then((cart) => {
-    if (!cart) {
-      return testUser.createCart(); // use magic method to immediately create a cart for the associated user
-    }
-    return cart;
-  })
   .then(() => {
     app.listen(port, () =>
       console.log(`Server running on http://localhost:${port}/`)
