@@ -17,7 +17,7 @@ const apiRoutes = require("./controllers/api");
 const shopRoutes = require("./controllers/shop-routes");
 
 app.use(cors()); //allow for client side requests without getting CORS error
-app.use(bodyParser.urlencoded({ extended: false })); // to parse incoming req body
+app.use(bodyParser.urlencoded({ extended: true })); // to parse incoming req body
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json()); // needed to send json req.body in insomnia post requests
 

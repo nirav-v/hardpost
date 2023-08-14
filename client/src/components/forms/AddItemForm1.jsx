@@ -9,14 +9,22 @@ function addItemForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const formData = new FormData(); // used to send image with rest of form data
+
     const url = "/api/add-item";
-    const body = JSON.stringify({ name, category, price, description, image });
+    // const body = JSON.stringify({ name, category, price, description });
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("description", description);
+    console.log(formData);
     const response = await fetch(url, {
       method: "POST",
-      body: body,
-      headers: {
-        "Content-Type": "application/json", // tells server that data is in json format
-      },
+      body: formData,
+      // headers: {
+      //   "Content-Type": "multipart/form-data", // tells server that request can include image data from form upload
+      // },
     });
 
     const result = await response.json();
@@ -71,7 +79,7 @@ function addItemForm() {
           onChange={(event) => setDescription(event.target.value)}
         />
         <label> Image</label>
-        <input type="file" id="img" name="img" accept="image/*" />
+        <input type="file" id="image" name="image" accept="image/*" />
         <input type="submit" />
       </form>
     </div>

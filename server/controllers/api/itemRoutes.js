@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const { Item, User } = require("../../models/");
 
+const multer = require("multer");
+const upload = multer({ dest: "images/" });
+
 router.get("/get-items", async (req, res) => {
   // find all items that have a userId matching req.session.userId
   const userItems = await Item.findAll({
@@ -9,7 +12,9 @@ router.get("/get-items", async (req, res) => {
   res.status(200).send(userItems);
 });
 
-router.post("/add-item", async (req, res, next) => {
+router.post("/add-item", upload.single("image"), async (req, res, next) => {
+  console.log("Body", req.body);
+
   if (!req.session.userId)
     return res
       .status(401)
