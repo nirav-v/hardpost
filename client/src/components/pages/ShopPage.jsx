@@ -39,6 +39,7 @@ function ShopPage() {
                 category={item.category}
                 description={item.description}
                 price={item.price}
+                imagePath={item.imagePath}
               />
             </div>
           ))}

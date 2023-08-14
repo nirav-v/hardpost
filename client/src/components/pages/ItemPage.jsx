@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-function ItemPage({ itemId, name, category, description, price }) {
+function ItemPage({ itemId, name, category, description, price, imagePath }) {
   const handleAddCartClick = (itemId) => {
     fetch("/api/cart", {
       method: "POST",
@@ -24,6 +24,7 @@ function ItemPage({ itemId, name, category, description, price }) {
         <p>description: {description}</p>
         <p>category: {category}</p>
         <p>${price}</p>
+        <img src={imagePath} />
         <button onClick={() => handleAddCartClick(itemId)}>Add to Cart</button>
       </div>
     </div>
