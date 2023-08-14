@@ -14,20 +14,20 @@ router.get("/get-items", async (req, res) => {
 
 router.post("/add-item", upload.single("image"), async (req, res, next) => {
   console.log("Body", req.body);
-
+  console.log("req.file", req.file);
   if (!req.session.userId)
     return res
       .status(401)
       .send({ error: "you must be logged in to create a new item" });
 
-  const { name, category, price, description, image } = req.body;
+  const { name, category, price, description } = req.body;
   const userId = req.session.userId; // add the id of the  logged in user as the items userId foreign key
   const item = await Item.create({
     name,
     category,
     price,
     description,
-    image,
+    // image,
     userId,
   });
   res.json(item);

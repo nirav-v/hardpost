@@ -18,6 +18,7 @@ function addItemForm() {
     formData.append("price", price);
     formData.append("category", category);
     formData.append("description", description);
+    formData.append("image", image);
     console.log(formData);
     const response = await fetch(url, {
       method: "POST",
@@ -79,7 +80,13 @@ function addItemForm() {
           onChange={(event) => setDescription(event.target.value)}
         />
         <label> Image</label>
-        <input type="file" id="image" name="image" accept="image/*" />
+        <input
+          type="file"
+          id="image"
+          name="image"
+          accept="image/*"
+          onChange={(event) => setImage(event.target.files[0])}
+        />
         <input type="submit" />
       </form>
     </div>
