@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function addItemForm() {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
+  const imageInput = useRef(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,8 +18,10 @@ function addItemForm() {
     formData.append("price", price);
     formData.append("category", category);
     formData.append("description", description);
-    formData.append("image", image);
+    formData.append("image", imageInput.current.files[0]);
+
     console.log(formData);
+
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -27,7 +29,7 @@ function addItemForm() {
       //   "Content-Type": "multipart/form-data", // tells server that request can include image data from form upload
       // },
     });
-
+    console.log(response);
     const result = await response.json();
     console.log(result);
     setName(""),
@@ -36,7 +38,7 @@ function addItemForm() {
       setDescription(""),
       setImage(null);
 
-    window.location.reload(); // to show the new items?
+    // window.location.reload(); // to show the new items?
   };
 
   return (
@@ -71,7 +73,6 @@ function addItemForm() {
           value={price}
           onChange={(event) => setPrice(event.target.value)}
         />
-
         <label>Description</label>
         <input
           type="text"
@@ -80,12 +81,13 @@ function addItemForm() {
           onChange={(event) => setDescription(event.target.value)}
         />
         <label> Image</label>
+        {/* from react docs for file inputs: In React, an <input type="file" /> is always an uncontrolled component because its value can only be set by a user, and not programmatically. */}
         <input
           type="file"
           id="image"
           name="image"
           accept="image/*"
-          onChange={(event) => setImage(event.target.files[0])}
+          ref={imageInput}
         />
         <input type="submit" />
       </form>
