@@ -22,10 +22,10 @@ const usersData = [
 const seedDB = async () => {
   await sequelize.sync();
 
-  const users = await User.bulkCreate(usersData, {
-    individualHooks: true,
-    returning: true,
-  });
+  // const users = await User.bulkCreate(usersData, {
+  //   individualHooks: true,
+  //   returning: true,
+  // });
 
   process.exit(0);
 };
