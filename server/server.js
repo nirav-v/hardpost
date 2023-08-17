@@ -39,8 +39,6 @@ app.use(
     }),
     cookie: {
       // maxAge: 1000 * 60 * 60 * 12, // no maxAge bc using also using localStorage to persist logged in status
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      secure: process.env.NODE_ENV === "production",
     },
   })
 );
@@ -63,7 +61,7 @@ app.use("*", (req, res, next) =>
 let testUser; // initialize and reassign later to make user instance globally accessible to all callbacks inside .then promise chain
 // create db connection before starting up server
 sequelize
-  .sync()
+  .sync({ force: false })
   .then(() => {
     app.listen(port, () =>
       console.log(`Server running on http://localhost:${port}/`)
