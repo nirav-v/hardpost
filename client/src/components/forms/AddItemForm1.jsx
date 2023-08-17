@@ -13,7 +13,6 @@ function addItemForm() {
     const formData = new FormData(); // used to send image with rest of form data
 
     const url = "/api/add-item";
-    // const body = JSON.stringify({ name, category, price, description });
     formData.append("name", name);
     formData.append("price", price);
     formData.append("category", category);
@@ -25,9 +24,6 @@ function addItemForm() {
     const response = await fetch(url, {
       method: "POST",
       body: formData,
-      // headers: {
-      //   "Content-Type": "multipart/form-data", // tells server that request can include image data from form upload
-      // },
     });
     console.log(response);
     const result = await response.json();
@@ -36,9 +32,9 @@ function addItemForm() {
       setCategory(""),
       setPrice(null),
       setDescription(""),
-      setImage(null);
-
-    // window.location.reload(); // to show the new items?
+      // redirect to shop page
+      console.log(location.host);
+    location.replace("/");
   };
 
   return (
@@ -87,6 +83,7 @@ function addItemForm() {
           id="image"
           name="image"
           accept="image/*"
+          defaultValue=""
           ref={imageInput}
         />
         <input type="submit" />

@@ -24,12 +24,7 @@ function ItemPage({ itemId, name, category, description, price, imagePath }) {
         <p>description: {description}</p>
         <p>category: {category}</p>
         <p>${price}</p>
-        <img
-          src={imagePath}
-          alt={imagePath.split("+")[1]}
-          width="275"
-          height="275"
-        />
+        <img src={imagePath} alt={`${name} image`} width="275" height="275" />
         <button onClick={() => handleAddCartClick(itemId)}>Add to Cart</button>
       </div>
     </div>

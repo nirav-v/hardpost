@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "kill": "killall node",
     "start": "cd server && npm run start & cd client && npm run dev",
     "seed": "cd server && node seeds.js"
   },

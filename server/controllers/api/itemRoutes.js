@@ -52,7 +52,7 @@ router.post("/add-item", async (req, res, next) => {
     imagePath: req.file.path, // store path to the image in the database
     userId,
   });
-  res.json(item);
+  res.json({ createdItem: item });
 });
 
 router.post("/edit-item", async (req, res, next) => {
