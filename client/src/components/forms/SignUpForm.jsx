@@ -5,13 +5,18 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   //   console.log(`username: ${userName}, email: ${email}, password: ${password}`);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // validate form inputs
-    if (password.length > 0 && password === confirmPassword) {
+    if (password.length < 8) {
+      setErrorMessage("password must be more than 8 characters");
+    } else if (password !== confirmPassword) {
+      setErrorMessage("passwords do not match");
+    } else {
       const url = "/api/user/signup";
       const body = JSON.stringify({
         username: userName,
@@ -37,7 +42,13 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
       setConfirmPassword("");
       setUserName("");
 
-      if (response.status === 201) setLoggedIn(true);
+      if (response.status === 201) {
+        setLoggedIn(true);
+      } else {
+        setErrorMessage(
+          "Account creation failed, please ensure you used a valid email and that your passwords match"
+        );
+      }
       console.log("loggedIn: ", loggedIn);
       console.log("signup request sent");
     }
@@ -48,6 +59,7 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
   return (
     <div>
       <p>SignUpForm</p>
+      <p style={{ color: "red" }}>{errorMessage}</p>
       <form>
         <label>Username</label>
         <input
