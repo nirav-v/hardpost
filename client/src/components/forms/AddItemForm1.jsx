@@ -10,6 +10,17 @@ function addItemForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // make sure name and image were provided for product
+    if (imageInput.current.files.length < 1) {
+      alert("must include an image");
+      return;
+    }
+
+    if (name.length < 1) {
+      alert("must fill in the item name field");
+      return;
+    }
+
     const formData = new FormData(); // used to send image with rest of form data
 
     const url = "/api/add-item";
