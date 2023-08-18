@@ -4,6 +4,8 @@ function LoginForm({ loggedIn, setLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loginSuccess, setLoginSuccess] = useState(true);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const url = "/api/user/login";
@@ -22,13 +24,17 @@ function LoginForm({ loggedIn, setLoggedIn }) {
     });
 
     console.log(response);
-    const loginResult = await response.json();
-    console.log(loginResult);
-    localStorage.setItem("currentUserId", loginResult.userId);
-    setEmail("");
-    setPassword("");
+    if (response.status === 200) {
+      setLoggedIn(true);
+      const loginResult = await response.json();
+      console.log(loginResult);
+      localStorage.setItem("currentUserId", loginResult.userId);
+      setEmail("");
+      setPassword("");
+    } else {
+      setLoginSuccess(false);
+    }
 
-    if (response.status === 200) setLoggedIn(true);
     console.log("login request sent");
   };
 
@@ -37,6 +43,7 @@ function LoginForm({ loggedIn, setLoggedIn }) {
   return (
     <div>
       <p> LoginForm</p>
+      {!loginSuccess && <p style={{ color: "red" }}>Incorrect credentials</p>}
       <form>
         <label>Email</label>
         <input
