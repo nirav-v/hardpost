@@ -23,8 +23,6 @@ const fileFilter = (req, file, cb) => {
   }
 };
 const upload = multer({ storage: fileStorage, fileFilter });
-// use multer middleware for parsing and storing files
-router.use(upload.single("image"));
 
 router.get("/get-items", async (req, res) => {
   // find all items that have a userId matching req.session.userId
@@ -34,7 +32,8 @@ router.get("/get-items", async (req, res) => {
   res.status(200).send(userItems);
 });
 
-router.post("/add-item", async (req, res, next) => {
+// use multer middleware for parsing and storing files
+router.post("/add-item", upload.single("image"), async (req, res, next) => {
   console.log("Body", req.body);
   console.log("req.file", req.file);
   if (!req.session.userId)
