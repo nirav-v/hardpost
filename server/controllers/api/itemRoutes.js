@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const { Item, User } = require("../../models/");
 
+const { uploadFile } = require("../../util/S3");
+
 const multer = require("multer");
 // configure multer file storage options, store in images folder under unique name of date + filename
 const fileStorage = multer.diskStorage({
@@ -36,10 +38,15 @@ router.get("/get-items", async (req, res) => {
 router.post("/add-item", upload.single("image"), async (req, res, next) => {
   console.log("Body", req.body);
   console.log("req.file", req.file);
+
   if (!req.session.userId)
     return res
       .status(401)
       .send({ error: "you must be logged in to create a new item" });
+
+  // attempt to upload image to S3 bucket
+  const s3UploadResult = await uploadFile(req.file);
+  console.log(s3UploadResult);
 
   const { name, category, price, description } = req.body;
   const userId = req.session.userId; // add the id of the  logged in user as the items userId foreign key
