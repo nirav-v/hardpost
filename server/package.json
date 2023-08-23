@@ -8,6 +8,7 @@
     "start-server": "killall node || true && npm start"
   },
   "dependencies": {
+    "aws-sdk": "^2.1443.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.18.3",
     "connect-session-sequelize": "^7.1.7",
