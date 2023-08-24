@@ -43,6 +43,7 @@ function UserItems() {
                 <p>{item.name}</p>
                 {item.category}
                 <p>${item.price}</p>
+                <img src={item.imagePath} alt="img" />
                 <p>{item.description}</p>
                 <button onClick={() => handleRemoveItemClick(item.id)}>
                   Remove Item
