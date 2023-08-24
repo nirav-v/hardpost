@@ -5,14 +5,14 @@ const { uploadFile } = require("../../util/S3");
 
 const multer = require("multer");
 // configure multer file storage options, store in images folder under unique name of date + filename
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + "+" + file.originalname);
-  },
-});
+// const fileStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "images");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, new Date().toISOString() + "+" + file.originalname);
+//   },
+// });
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === "image/png" ||
