@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const { Item, User } = require("../../models/");
 
+const { uploadFile } = require("../../util/S3");
+
 const multer = require("multer");
 // configure multer file storage options, store in images folder under unique name of date + filename
 const fileStorage = multer.diskStorage({
@@ -22,7 +24,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-const upload = multer({ storage: fileStorage, fileFilter });
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.get("/get-items", async (req, res) => {
   // find all items that have a userId matching req.session.userId
@@ -34,12 +36,16 @@ router.get("/get-items", async (req, res) => {
 
 // use multer middleware for parsing and storing files
 router.post("/add-item", upload.single("image"), async (req, res, next) => {
-  console.log("Body", req.body);
   console.log("req.file", req.file);
   if (!req.session.userId)
     return res
       .status(401)
       .send({ error: "you must be logged in to create a new item" });
+
+  // upload file using the util function from s3 sdk
+  const uploadedFile = await uploadFile(req.file);
+
+  console.log(uploadedFile);
 
   const { name, category, price, description } = req.body;
   const userId = req.session.userId; // add the id of the  logged in user as the items userId foreign key
@@ -48,7 +54,7 @@ router.post("/add-item", upload.single("image"), async (req, res, next) => {
     category,
     price,
     description,
-    imagePath: req.file.path, // store path to the image in the database
+    imagePath: `https://public-hardpost-bucket.s3.amazonaws.com/${uploadedFile.filename}`, // store path to the image in the database
     userId,
   });
   res.json({ createdItem: item });
