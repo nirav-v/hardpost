@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "kill": "killall node",
-    "start": "node server.js",
+    "start": "node server/server.js",
     "develop": "cd server && npm run start & cd client && npm run dev",
     "seed": "cd server && node seeds.js"
   },
