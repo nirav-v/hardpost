@@ -20,12 +20,22 @@ const uploadFile = async function (file) {
   const generateRandomFileName = (bytes = 32) =>
     crypto.randomBytes(bytes).toString("hex");
 
+  // rename file to original name + the randomly generated sequence
   const filename = file.originalname + generateRandomFileName();
+
+  // function to resize the incoming image buffer stream using sharp npm package
+  const resizedBuffer = await sharp(file.buffer)
+    .resize({
+      height: 1920,
+      width: 1080,
+      fit: "contain",
+    })
+    .toBuffer();
 
   const command = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: filename,
-    Body: file.buffer,
+    Body: resizedBuffer,
     ContentType: file.mimetype,
   });
 
