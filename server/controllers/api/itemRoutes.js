@@ -24,7 +24,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ storage: multer.memoryStorage(), fileFilter });
 
 router.get("/get-items", async (req, res) => {
   // find all items that have a userId matching req.session.userId
@@ -41,23 +41,26 @@ router.post("/add-item", upload.single("image"), async (req, res, next) => {
     return res
       .status(401)
       .send({ error: "you must be logged in to create a new item" });
+  try {
+    // upload file using the util function from s3 sdk
+    const uploadedFile = await uploadFile(req.file);
 
-  // upload file using the util function from s3 sdk
-  const uploadedFile = await uploadFile(req.file);
+    console.log(uploadedFile);
 
-  console.log(uploadedFile);
-
-  const { name, category, price, description } = req.body;
-  const userId = req.session.userId; // add the id of the  logged in user as the items userId foreign key
-  const item = await Item.create({
-    name,
-    category,
-    price,
-    description,
-    imagePath: `https://public-hardpost-bucket.s3.amazonaws.com/${uploadedFile.filename}`, // store path to the image in the database
-    userId,
-  });
-  res.json({ createdItem: item });
+    const { name, category, price, description } = req.body;
+    const userId = req.session.userId; // add the id of the  logged in user as the items userId foreign key
+    const item = await Item.create({
+      name,
+      category,
+      price,
+      description,
+      imagePath: `https://public-hardpost-bucket.s3.amazonaws.com/${uploadedFile.filename}`, // store path to the image in the database
+      userId,
+    });
+    res.json({ createdItem: item });
+  } catch (err) {
+    console.log(err, "something went wrong");
+  }
 });
 
 router.post("/edit-item", async (req, res, next) => {
