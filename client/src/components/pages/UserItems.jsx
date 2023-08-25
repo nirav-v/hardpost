@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ItemPage from "./ItemPage";
 
 function UserItems() {
   const [userItems, setUserItems] = useState([]);
@@ -19,7 +20,7 @@ function UserItems() {
 
   const handleRemoveItemClick = async (itemId) => {
     // grab the item id and send a fetch request to the delete-item route
-    console.log(itemId);
+    console.log("id removed: ", itemId);
     const deleteItem = await fetch("/api/delete-item", {
       method: "POST",
       body: JSON.stringify({ itemId }),
@@ -39,16 +40,17 @@ function UserItems() {
         <ul>
           {userItems.map((item) => (
             <li key={item.id}>
-              <div>
-                <p>{item.name}</p>
-                {item.category}
-                <p>${item.price}</p>
-                <img src={item.imagePath} alt="img" />
-                <p>{item.description}</p>
-                <button onClick={() => handleRemoveItemClick(item.id)}>
-                  Remove Item
-                </button>
-              </div>
+              <ItemPage
+                itemId={item.id}
+                name={item.name}
+                category={item.category}
+                description={item.description}
+                price={item.price}
+                imagePath={item.imagePath}
+              />
+              <button onClick={() => handleRemoveItemClick(item.id)}>
+                Remove Item
+              </button>
             </li>
           ))}
         </ul>
