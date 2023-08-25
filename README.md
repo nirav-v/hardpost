@@ -1,6 +1,6 @@
 This project is still in development
 
-[deployment #nocss](https://hardpost-f79ecee5b44d.herokuapp.com/)
+Deployed site: [deployment #nocss](https://hardpost-f79ecee5b44d.herokuapp.com/)
 
 ## usage
 
