@@ -6,6 +6,7 @@ function addItemForm() {
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const imageInput = useRef(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,6 +21,8 @@ function addItemForm() {
       alert("must fill in the item name field");
       return;
     }
+
+    setLoading(true);
 
     const formData = new FormData(); // used to send image with rest of form data
 
@@ -43,13 +46,15 @@ function addItemForm() {
       setCategory(""),
       setPrice(null),
       setDescription(""),
-      // redirect to shop page
-      console.log(location.host);
+      setLoading(false);
+
+    // redirect to shop page
     location.replace("/");
   };
 
   return (
     <div>
+      {loading ? <h1>LOADING....</h1> : null}
       <p>addItemForm</p>
       <form onSubmit={handleSubmit}>
         {/* inputs for item name, price category, description */}
