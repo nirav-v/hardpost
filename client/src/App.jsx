@@ -7,6 +7,7 @@ import CheckoutPage from "./components/pages/CheckoutPage";
 import OrdersPage from "./components/pages/OrdersPage";
 import UserItems from "./components/pages/UserItems";
 import NavBar from "./components/UI/NavBar";
+import Header from "./components/UI/Header";
 
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -43,6 +44,7 @@ function App() {
 
   return (
     <div>
+      <Header />
       <NavBar loggedIn={loggedIn} />
       {!loggedIn ? (
         <div>

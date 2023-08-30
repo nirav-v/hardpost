@@ -1,18 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import hardpostLogo from "../../images/hardpost-logo.png";
-
 function NavBar({ loggedIn }) {
   return (
     <div>
       <nav>
         <ul>
-          <li>
-            <Link to="/">
-              {" "}
-              <img src={hardpostLogo} />
-            </Link>
-          </li>
           {loggedIn ? (
             <>
               <li>
