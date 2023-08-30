@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import hardpostLogo from "../images/hardpost-logo.png";
+import hardpostLogo from "../../images/hardpost-logo.png";
 
 function NavBar({ loggedIn }) {
   return (
