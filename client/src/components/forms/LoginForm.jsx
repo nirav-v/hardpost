@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import LoginButton from "../UI/LoginButton";
 function LoginForm({ loggedIn, setLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -64,9 +64,7 @@ function LoginForm({ loggedIn, setLoggedIn }) {
           }}
         />
 
-        <button type="submit" onClick={handleSubmit}>
-          Submit
-        </button>
+        <LoginButton onClick={handleSubmit}>Login</LoginButton>
       </form>
     </div>
   );
