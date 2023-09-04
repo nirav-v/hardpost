@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ItemPage from "./ItemPage";
+import ItemPage from "./ItemCard";
 
 function UserItems() {
   const [userItems, setUserItems] = useState([]);

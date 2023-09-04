@@ -1,4 +1,4 @@
-import ItemPage from "./ItemPage";
+import ItemCard from "./ItemCard";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useItemsContext } from "../../util/ItemsContext";
@@ -35,7 +35,7 @@ function ShopPage() {
           {items.map((item) => (
             <div key={item.id} onClick={() => handleItemClick(item.id)}>
               <Link to={`/single-item/${item.id}`}>see details</Link>
-              <ItemPage item={item} />
+              <ItemCard item={item} />
             </div>
           ))}
         </div>

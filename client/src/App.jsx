@@ -11,7 +11,7 @@ import Header from "./components/UI/Header";
 
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ItemPage from "./components/pages/ItemPage";
+import ItemPage from "./components/pages/ItemCard";
 import { ItemsProvider } from "./util/ItemsContext";
 
 function App() {
