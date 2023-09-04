@@ -13,6 +13,7 @@ import SingleItemPage from "./components/pages/SingleItemPage";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ItemsProvider } from "./util/ItemsContext";
+import LogoutButton from "./components/UI/LogoutButton";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -57,7 +58,7 @@ function App() {
           </div>
         ) : (
           <div>
-            <button onClick={handleLogoutClick}>Logout</button>
+            <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
 
             <Routes>
               <Route path="/" element={<ShopPage />} />
