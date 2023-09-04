@@ -11,6 +11,8 @@ import Header from "./components/UI/Header";
 
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ItemPage from "./components/pages/ItemPage";
+import { ItemsProvider } from "./util/ItemsContext";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -46,26 +48,29 @@ function App() {
     <div>
       <Header />
       <NavBar loggedIn={loggedIn} />
-      {!loggedIn ? (
-        <div>
-          <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-          <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-          <ShopPage />
-        </div>
-      ) : (
-        <div>
-          <button onClick={handleLogoutClick}>Logout</button>
+      <ItemsProvider>
+        {!loggedIn ? (
+          <div>
+            <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+            <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+            <ShopPage />
+          </div>
+        ) : (
+          <div>
+            <button onClick={handleLogoutClick}>Logout</button>
 
-          <Routes>
-            <Route path="/" element={<ShopPage />} />
-            <Route path="/add-item" element={<AddItemForm />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/user-items" element={<UserItems />} />
-          </Routes>
-        </div>
-      )}
+            <Routes>
+              <Route path="/" element={<ShopPage />} />
+              <Route path="/add-item" element={<AddItemForm />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/user-items" element={<UserItems />} />
+              <Route path="/single-item/:itemId" element={<ItemPage />} />
+            </Routes>
+          </div>
+        )}
+      </ItemsProvider>
     </div>
   );
 }
