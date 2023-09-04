@@ -1,17 +1,13 @@
 import { Link } from "react-router-dom";
 import hardpostLogo from "../../images/hardpost-logo.png";
-
+import "../../styles/header.css";
 import React from "react";
 
 function Header() {
   return (
-    <div>
-      <Link to="/">
-        {" "}
-        <img src={hardpostLogo} />
-      </Link>
-      ;
-    </div>
+    <Link to="/">
+      <header className="header"></header>
+    </Link>
   );
 }
 
