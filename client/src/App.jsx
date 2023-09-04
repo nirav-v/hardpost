@@ -8,10 +8,10 @@ import OrdersPage from "./components/pages/OrdersPage";
 import UserItems from "./components/pages/UserItems";
 import NavBar from "./components/UI/NavBar";
 import Header from "./components/UI/Header";
-
+import ItemPage from "./components/pages/ItemCard";
+import SingleItemPage from "./components/pages/SingleItemPage";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ItemPage from "./components/pages/ItemCard";
 import { ItemsProvider } from "./util/ItemsContext";
 
 function App() {
@@ -66,7 +66,7 @@ function App() {
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/orders" element={<OrdersPage />} />
               <Route path="/user-items" element={<UserItems />} />
-              <Route path="/single-item/:itemId" element={<ItemPage />} />
+              <Route path="/single-item/:itemId" element={<SingleItemPage />} />
             </Routes>
           </div>
         )}

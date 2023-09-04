@@ -34,8 +34,8 @@ function ShopPage() {
         <div>
           {items.map((item) => (
             <div key={item.id} onClick={() => handleItemClick(item.id)}>
-              <Link to={`/single-item/${item.id}`}>see details</Link>
               <ItemCard item={item} />
+              <Link to={`/single-item/${item.id}`}>see details</Link>
             </div>
           ))}
         </div>
