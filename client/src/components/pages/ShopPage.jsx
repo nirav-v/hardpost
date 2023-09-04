@@ -1,9 +1,11 @@
 import ItemPage from "./ItemPage";
-
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useItemsContext } from "../../util/ItemsContext";
 
 function ShopPage() {
-  const [items, setItems] = useState([]);
+  console.log(useItemsContext());
+  const [items, setItems] = useItemsContext();
 
   useEffect(() => {
     // Make the fetch request here
@@ -32,15 +34,8 @@ function ShopPage() {
         <div>
           {items.map((item) => (
             <div key={item.id} onClick={() => handleItemClick(item.id)}>
-              {/* <a href={`/shop/${item.id}`}>see details</a> */}
-              <ItemPage
-                itemId={item.id}
-                name={item.name}
-                category={item.category}
-                description={item.description}
-                price={item.price}
-                imagePath={item.imagePath}
-              />
+              <Link to={`/single-item/${item.id}`}>see details</Link>
+              <ItemPage item={item} />
             </div>
           ))}
         </div>
