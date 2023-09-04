@@ -4,7 +4,7 @@ import React from "react";
 
 const LoginButton = ({ onClick, children }) => {
   return (
-    <Button onClick={onClick} colorScheme="green">
+    <Button onClick={onClick} colorScheme="blue">
       {children}
     </Button>
   );
