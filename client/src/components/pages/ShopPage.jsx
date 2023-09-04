@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useItemsContext } from "../../util/ItemsContext";
 
 function ShopPage() {
-  console.log(useItemsContext());
   const [items, setItems] = useItemsContext();
 
   useEffect(() => {
@@ -13,7 +12,6 @@ function ShopPage() {
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
-        console.log(data);
         setItems(data);
       })
       .catch((error) => {
@@ -22,10 +20,6 @@ function ShopPage() {
       });
   }, []);
 
-  const handleItemClick = (itemId) => {
-    console.log("click");
-  };
-
   return (
     <div>
       <h1>ShopPage</h1>
@@ -33,7 +27,7 @@ function ShopPage() {
       {items.length ? (
         <div>
           {items.map((item) => (
-            <div key={item.id} onClick={() => handleItemClick(item.id)}>
+            <div key={item.id}>
               <ItemCard item={item} />
               <Link to={`/single-item/${item.id}`}>see details</Link>
             </div>
