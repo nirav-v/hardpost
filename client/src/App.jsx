@@ -14,10 +14,12 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ItemsProvider } from "./util/ItemsContext";
 import LogoutButton from "./components/UI/LogoutButton";
-
+import { Button } from "@chakra-ui/react";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   console.log("loggedIn ", loggedIn);
+
+  const [showSignUpForm, setShowSignUpForm] = useState(false);
 
   const checkAuth = async () => {
     const response = await fetch("/api/user/login");
@@ -52,8 +54,16 @@ function App() {
       <ItemsProvider>
         {!loggedIn ? (
           <div className="login">
-            <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-            <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+            {!showSignUpForm ? (
+              <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+            ) : (
+              <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+            )}
+            <Button onClick={() => setShowSignUpForm(!showSignUpForm)}>
+              {!showSignUpForm
+                ? "New User? Click here to create an account"
+                : "Already have an account? Click here to log in"}
+            </Button>
             <ShopPage />
           </div>
         ) : (

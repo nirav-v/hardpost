@@ -7,14 +7,13 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 
-export default function PasswordInput({ value, onChange }) {
+export default function PasswordInput({ value, onChange, label }) {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
   return (
     <InputGroup size="md">
-      <FormLabel>Password</FormLabel>
-
+      <FormLabel>{label}</FormLabel>
       <Input
         value={value}
         onChange={onChange}

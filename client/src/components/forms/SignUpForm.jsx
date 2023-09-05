@@ -1,5 +1,7 @@
 import { useState } from "react";
 import LoginButton from "../UI/LoginButton";
+import PasswordInput from "../UI/PasswordInput";
+import EmailInput from "../UI/EmailInput";
 
 function SignUpForm({ loggedIn, setLoggedIn }) {
   const [userName, setUserName] = useState("");
@@ -59,7 +61,7 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
 
   return (
     <div>
-      <p>SignUpForm</p>
+      <p>Sign up with the form below</p>
       <p style={{ color: "red" }}>{errorMessage}</p>
       <form>
         <label>Username</label>
@@ -72,26 +74,22 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
           }}
         />
         <label>Email</label>
-        <input
-          type="text"
-          name="email"
+        <EmailInput
           value={email}
           onChange={() => {
             handleInputChange(event, setEmail);
           }}
         />
-        <label>Password</label>
-        <input
-          type="text"
-          name="password"
+        <PasswordInput
+          label="Password"
           value={password}
           onChange={() => {
             handleInputChange(event, setPassword);
           }}
         />
         <label>confirm password</label>
-        <input
-          type="text"
+        <PasswordInput
+          label="Confirm Password"
           value={confirmPassword}
           onChange={() => {
             handleInputChange(event, setConfirmPassword);

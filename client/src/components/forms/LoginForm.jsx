@@ -45,7 +45,7 @@ function LoginForm({ loggedIn, setLoggedIn }) {
 
   return (
     <div>
-      <p> LoginForm</p>
+      <p>please log in</p>
       {!loginSuccess && <p style={{ color: "red" }}>Incorrect credentials</p>}
       <form>
         <EmailInput
@@ -55,6 +55,7 @@ function LoginForm({ loggedIn, setLoggedIn }) {
           }}
         />
         <PasswordInput
+          label="Password"
           type="password"
           name="password"
           value={password}
