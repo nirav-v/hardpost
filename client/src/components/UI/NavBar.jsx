@@ -1,31 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@chakra-ui/react";
 function NavBar({ loggedIn }) {
+  const [currentPage, setCurrentPage] = useState("Home");
+
+  const tabs = [
+    { title: "Home", path: "/" },
+    { title: "Post Item", path: "/add-item" },
+    { title: "My Orders", path: "/orders" },
+  ];
+
   return (
-    <div>
-      <nav>
-        <ul>
-          {loggedIn ? (
-            <>
-              <li>
-                <Link to="/add-item">Post Item</Link>
-              </li>
-              <li>
-                <Link to="/orders">My Orders</Link>
-              </li>
-              <li>
-                <Link to="/user-items">My Items</Link>
-              </li>
-              <li>
-                <Link to="/cart">Cart</Link>
-              </li>
-            </>
-          ) : (
-            <h1>must have an account to buy and post items</h1>
-          )}
-        </ul>
-      </nav>
-    </div>
+    <Breadcrumb separator="-">
+      {tabs.map((tab, i) => (
+        <BreadcrumbItem
+          key={i}
+          onClick={() => setCurrentPage(tab.title)}
+          isCurrentPage={currentPage === tab.title}>
+          <BreadcrumbLink as={Link} to={tab.path}>
+            {tab.title}
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+      ))}
+    </Breadcrumb>
   );
 }
 

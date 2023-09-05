@@ -49,8 +49,8 @@ function App() {
 
   return (
     <div>
-      <Header />
       <NavBar loggedIn={loggedIn} />
+      <Header />
       <ItemsProvider>
         {!loggedIn ? (
           <div>
