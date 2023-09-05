@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import LogoutButton from "./LogoutButton";
 import { Link } from "react-router-dom";
 import {
   Breadcrumb,
@@ -7,10 +8,11 @@ import {
   Image,
   Container,
   Center,
+  Box,
 } from "@chakra-ui/react";
 import hardpostLogo from "../../images/hardpost-logo.png";
 
-function NavBar({ loggedIn }) {
+function NavBar({ loggedIn, handleLogoutClick }) {
   const [currentPage, setCurrentPage] = useState("Home");
 
   const tabs = [
@@ -20,10 +22,15 @@ function NavBar({ loggedIn }) {
   ];
 
   return (
-    <Container>
-      {" "}
-      <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
-      <Center>
+    <div position="relative">
+      {loggedIn ? (
+        <Box position="absolute" right="0">
+          {" "}
+          <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
+        </Box>
+      ) : null}
+      <Container centerContent>
+        <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
         <Breadcrumb separator="-">
           {tabs.map((tab, i) => (
             <BreadcrumbItem
@@ -36,8 +43,8 @@ function NavBar({ loggedIn }) {
             </BreadcrumbItem>
           ))}
         </Breadcrumb>
-      </Center>
-    </Container>
+      </Container>
+    </div>
   );
 }
 

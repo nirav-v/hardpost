@@ -47,7 +47,7 @@ function App() {
 
   return (
     <div>
-      <NavBar loggedIn={loggedIn} />
+      <NavBar loggedIn={loggedIn} handleLogoutClick={handleLogoutClick} />
       {/* <Header /> */}
       <ItemsProvider>
         {!loggedIn ? (
@@ -68,7 +68,7 @@ function App() {
           </div>
         ) : (
           <div>
-            <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
+            {/* <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton> */}
 
             <Routes>
               <Route path="/" element={<ShopPage />} />
