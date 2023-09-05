@@ -1,3 +1,4 @@
+import { SimpleGrid } from "@chakra-ui/react";
 import ItemCard from "./ItemCard";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -26,12 +27,14 @@ function ShopPage() {
       <p>Items:</p>
       {items.length ? (
         <div>
-          {items.map((item) => (
-            <div key={item.id}>
-              <ItemCard item={item} />
-              <Link to={`/single-item/${item.id}`}>see details</Link>
-            </div>
-          ))}
+          <SimpleGrid columns={[2, null, 3]} spacing={10}>
+            {items.map((item) => (
+              <div key={item.id}>
+                <ItemCard item={item} />
+                <Link to={`/single-item/${item.id}`}>see details</Link>
+              </div>
+            ))}
+          </SimpleGrid>
         </div>
       ) : null}
     </div>
