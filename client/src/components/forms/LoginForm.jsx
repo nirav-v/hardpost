@@ -1,5 +1,8 @@
 import { useState } from "react";
 import LoginButton from "../UI/LoginButton";
+import PasswordInput from "../UI/PasswordInput";
+import EmailInput from "../UI/EmailInput";
+
 function LoginForm({ loggedIn, setLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,17 +48,13 @@ function LoginForm({ loggedIn, setLoggedIn }) {
       <p> LoginForm</p>
       {!loginSuccess && <p style={{ color: "red" }}>Incorrect credentials</p>}
       <form>
-        <label>Email</label>
-        <input
-          type="text"
-          name="email"
+        <EmailInput
           value={email}
           onChange={() => {
             handleInputChange(event, setEmail);
           }}
         />
-        <label>Password</label>
-        <input
+        <PasswordInput
           type="password"
           name="password"
           value={password}

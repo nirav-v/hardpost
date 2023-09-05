@@ -51,7 +51,7 @@ function App() {
       <NavBar loggedIn={loggedIn} />
       <ItemsProvider>
         {!loggedIn ? (
-          <div>
+          <div className="login">
             <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             <ShopPage />

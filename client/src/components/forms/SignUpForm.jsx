@@ -1,4 +1,5 @@
 import { useState } from "react";
+import LoginButton from "../UI/LoginButton";
 
 function SignUpForm({ loggedIn, setLoggedIn }) {
   const [userName, setUserName] = useState("");
@@ -96,9 +97,9 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
             handleInputChange(event, setConfirmPassword);
           }}
         />
-        <button type="submit" onClick={handleSubmit}>
-          Submit
-        </button>
+        <LoginButton type="submit" onClick={handleSubmit}>
+          Sign Up
+        </LoginButton>
       </form>
     </div>
   );
