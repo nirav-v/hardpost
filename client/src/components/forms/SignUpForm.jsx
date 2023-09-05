@@ -64,7 +64,6 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
       <p>Sign up with the form below</p>
       <p style={{ color: "red" }}>{errorMessage}</p>
       <form>
-        <label>Username</label>
         <input
           type="text"
           name="name"
@@ -73,7 +72,6 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
             handleInputChange(event, setUserName);
           }}
         />
-        <label>Email</label>
         <EmailInput
           value={email}
           onChange={() => {

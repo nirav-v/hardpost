@@ -14,7 +14,7 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ItemsProvider } from "./util/ItemsContext";
 import LogoutButton from "./components/UI/LogoutButton";
-import { Button } from "@chakra-ui/react";
+import { Button, Container } from "@chakra-ui/react";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   console.log("loggedIn ", loggedIn);
@@ -53,17 +53,19 @@ function App() {
       <NavBar loggedIn={loggedIn} />
       <ItemsProvider>
         {!loggedIn ? (
-          <div className="login">
-            {!showSignUpForm ? (
-              <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-            ) : (
-              <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-            )}
-            <Button onClick={() => setShowSignUpForm(!showSignUpForm)}>
-              {!showSignUpForm
-                ? "New User? Click here to create an account"
-                : "Already have an account? Click here to log in"}
-            </Button>
+          <div>
+            <Container centerContent>
+              {!showSignUpForm ? (
+                <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              ) : (
+                <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              )}
+              <Button onClick={() => setShowSignUpForm(!showSignUpForm)}>
+                {!showSignUpForm
+                  ? "New User? Click here to create an account"
+                  : "Already have an account? Click here to log in"}
+              </Button>
+            </Container>
             <ShopPage />
           </div>
         ) : (
