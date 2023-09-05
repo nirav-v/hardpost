@@ -27,7 +27,7 @@ function ShopPage() {
       <p>Items:</p>
       {items.length ? (
         <div>
-          <SimpleGrid columns={[2, null, 3]} spacing={10}>
+          <SimpleGrid columns={[2, null, 4]} spacing={10}>
             {items.map((item) => (
               <div key={item.id}>
                 <ItemCard item={item} />
