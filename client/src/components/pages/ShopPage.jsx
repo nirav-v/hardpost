@@ -23,8 +23,6 @@ function ShopPage() {
 
   return (
     <div>
-      <h1>ShopPage</h1>
-      <p>Items:</p>
       {items.length ? (
         <div>
           <SimpleGrid columns={[2, null, 4]} spacing={10}>

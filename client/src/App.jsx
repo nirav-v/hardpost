@@ -64,7 +64,10 @@ function App() {
                   : "Already have an account? Click here to log in"}
               </Button>
             </Container>
-            <ShopPage />
+            <Routes>
+              <Route path="/" element={<ShopPage />} />
+              <Route path="/single-item/:itemId" element={<SingleItemPage />} />
+            </Routes>
           </div>
         ) : (
           <div>
