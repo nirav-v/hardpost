@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function CartPage() {
   const [cart, setCart] = useState([]);
@@ -38,9 +39,9 @@ function CartPage() {
               );
             })}
           </ul>
-          <a href="/checkout">
+          <Link href="/checkout">
             <button>Checkout</button>
-          </a>
+          </Link>
         </div>
       ) : (
         "no items in cart"
