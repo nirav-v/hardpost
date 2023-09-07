@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useCartContext } from "../../util/CartContext";
 import ShippingForm from "../forms/ShippingForm";
 import PaymentForm from "../forms/PaymentForm";
 
 function CheckoutPage() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useCartContext();
 
   const [shippingInfo, setShippingInfo] = useState({
     name: "",
@@ -19,14 +20,6 @@ function CheckoutPage() {
     expirationDate: "",
     cvv: "",
   });
-
-  // making another fetch for cart items as CartPage is not rendering CheckoutPage so cannot pass down state
-  // not most efficient solution, duplicating code from CartPage can resolve later
-  useEffect(() => {
-    fetch("/api/cart")
-      .then((res) => res.json())
-      .then((data) => setItems(data));
-  }, []);
 
   const handleOrderClick = () => {
     console.log("click");

@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useCartContext } from "../../util/CartContext";
 import { Link } from "react-router-dom";
 
 function CartPage() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useCartContext();
 
-  useEffect(() => {
-    fetch("/api/cart")
-      .then((res) => res.json())
-      .then((data) => setCart(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/cart")
+  //     .then((res) => res.json())
+  //     .then((data) => setCart(data));
+  // }, []);
 
   const handleCartDelete = (itemId) => {
     fetch("/api/cart/delete-item", {
@@ -39,7 +40,7 @@ function CartPage() {
               );
             })}
           </ul>
-          <Link href="/checkout">
+          <Link to="/checkout">
             <button>Checkout</button>
           </Link>
         </div>
