@@ -18,6 +18,7 @@ function NavBar({ loggedIn, handleLogoutClick }) {
   const tabs = [
     { title: "Home", path: "/" },
     { title: "Post Item", path: "/add-item" },
+    { title: "Cart", path: "/cart" },
     { title: "My Orders", path: "/orders" },
   ];
 
