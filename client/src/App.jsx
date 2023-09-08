@@ -9,13 +9,15 @@ import UserItems from "./components/pages/UserItems";
 import NavBar from "./components/UI/NavBar";
 import SingleItemPage from "./components/pages/SingleItemPage";
 import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { ItemsProvider } from "./util/ItemsContext";
 import LogoutButton from "./components/UI/LogoutButton";
-import { Button, Container } from "@chakra-ui/react";
+import { Button, Container, useColorMode, Flex } from "@chakra-ui/react";
 import CartProvider from "./util/CartContext";
 
 function App() {
+  const { colorMode, toggleColorMode } = useColorMode();
+
   const [loggedIn, setLoggedIn] = useState(false);
   console.log("loggedIn ", loggedIn);
 
@@ -50,8 +52,13 @@ function App() {
   console.log("showSignUpForm", showSignUpForm);
 
   return (
-    <div>
+    <Fragment>
       <CartProvider>
+        <Flex justifyContent="right">
+          <Button mr={0} onClick={toggleColorMode}>
+            Toggle {colorMode === "light" ? "Dark" : "Light"}
+          </Button>
+        </Flex>
         <NavBar loggedIn={loggedIn} handleLogoutClick={handleLogoutClick} />
         <ItemsProvider>
           {!loggedIn ? (
@@ -99,7 +106,7 @@ function App() {
           )}
         </ItemsProvider>
       </CartProvider>
-    </div>
+    </Fragment>
   );
 }
 
