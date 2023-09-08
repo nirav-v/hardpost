@@ -6,11 +6,11 @@ import {
   FormHelperText,
 } from "@chakra-ui/react";
 
-function EmailInput({ value, onChange }) {
+function EmailInput({ value, handleChange }) {
   return (
     <FormControl>
       <FormLabel>Email address</FormLabel>
-      <Input value={value} type="email" onChange={onChange} />
+      <Input value={value} type="email" onChange={handleChange} />
       <FormHelperText>We'll never share your email.</FormHelperText>
     </FormControl>
   );

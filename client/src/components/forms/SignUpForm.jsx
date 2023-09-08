@@ -1,7 +1,7 @@
 import { useState } from "react";
-import LoginButton from "../UI/LoginButton";
 import PasswordInput from "../UI/PasswordInput";
 import EmailInput from "../UI/EmailInput";
+import { Button, Input, Text } from "@chakra-ui/react";
 
 function SignUpForm({ loggedIn, setLoggedIn }) {
   const [userName, setUserName] = useState("");
@@ -63,10 +63,13 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
     <div>
       <p>Sign up with the form below</p>
       <p style={{ color: "red" }}>{errorMessage}</p>
-      <form>
-        <input
+      <form onSubmit={handleSubmit}>
+        <Text mb="8px">Username: </Text>
+
+        <Input
           type="text"
           name="name"
+          placeholder="username"
           value={userName}
           onChange={() => {
             handleInputChange(event, setUserName);
@@ -74,14 +77,14 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
         />
         <EmailInput
           value={email}
-          onChange={() => {
+          handleChange={() => {
             handleInputChange(event, setEmail);
           }}
         />
         <PasswordInput
           label="Password"
           value={password}
-          onChange={() => {
+          handleChange={() => {
             handleInputChange(event, setPassword);
           }}
         />
@@ -89,13 +92,13 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
         <PasswordInput
           label="Confirm Password"
           value={confirmPassword}
-          onChange={() => {
+          handleChange={() => {
             handleInputChange(event, setConfirmPassword);
           }}
         />
-        <LoginButton type="submit" onClick={handleSubmit}>
+        <Button type="submit" onClick={handleSubmit}>
           Sign Up
-        </LoginButton>
+        </Button>
       </form>
     </div>
   );

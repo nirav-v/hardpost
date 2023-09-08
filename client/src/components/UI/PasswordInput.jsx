@@ -7,7 +7,12 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 
-export default function PasswordInput({ value, onChange, label }) {
+export default function PasswordInput({
+  value,
+  handleChange,
+  handleSubmit,
+  label,
+}) {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -16,7 +21,7 @@ export default function PasswordInput({ value, onChange, label }) {
       <FormLabel>{label}</FormLabel>
       <Input
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         pr="4.5rem"
         type={show ? "text" : "password"}
         placeholder="Enter password"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LoginButton from "../UI/LoginButton";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 import PasswordInput from "../UI/PasswordInput";
 import EmailInput from "../UI/EmailInput";
 
@@ -47,24 +47,26 @@ function LoginForm({ loggedIn, setLoggedIn }) {
     <div>
       <p>please log in</p>
       {!loginSuccess && <p style={{ color: "red" }}>Incorrect credentials</p>}
-      <form>
+      <form onSubmit={handleSubmit}>
         <EmailInput
           value={email}
-          onChange={() => {
+          handleChange={() => {
             handleInputChange(event, setEmail);
           }}
+          handleSubmit={handleSubmit}
         />
         <PasswordInput
           label="Password"
           type="password"
           name="password"
           value={password}
-          onChange={() => {
+          handleChange={() => {
             handleInputChange(event, setPassword);
           }}
         />
-
-        <LoginButton onClick={handleSubmit}>Login</LoginButton>
+        <Button type="submit" colorScheme="blue">
+          Login
+        </Button>
       </form>
     </div>
   );
