@@ -13,6 +13,7 @@ import { Fragment, useEffect, useState } from "react";
 import { ItemsProvider } from "./util/ItemsContext";
 import LogoutButton from "./components/UI/LogoutButton";
 import { Button, Container, useColorMode, Flex } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import CartProvider from "./util/CartContext";
 
 function App() {
@@ -54,9 +55,9 @@ function App() {
   return (
     <Fragment>
       <CartProvider>
-        <Flex justifyContent="right">
+        <Flex justifyContent="right" mr={2}>
           <Button mr={0} onClick={toggleColorMode}>
-            Toggle {colorMode === "light" ? "Dark" : "Light"}
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
         </Flex>
         <NavBar loggedIn={loggedIn} handleLogoutClick={handleLogoutClick} />
