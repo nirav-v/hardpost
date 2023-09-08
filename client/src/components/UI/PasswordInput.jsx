@@ -22,6 +22,7 @@ export default function PasswordInput({
       <Input
         value={value}
         onChange={handleChange}
+        mb="8px"
         pr="4.5rem"
         type={show ? "text" : "password"}
         placeholder="Enter password"

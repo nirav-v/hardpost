@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PasswordInput from "../UI/PasswordInput";
 import EmailInput from "../UI/EmailInput";
-import { Button, Input, Text } from "@chakra-ui/react";
+import { Button, Input, Text, FormLabel } from "@chakra-ui/react";
 
 function SignUpForm({ loggedIn, setLoggedIn }) {
   const [userName, setUserName] = useState("");
@@ -61,15 +61,16 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
 
   return (
     <div>
-      <p>Sign up with the form below</p>
+      <p>Create an account with the form below</p>
       <p style={{ color: "red" }}>{errorMessage}</p>
       <form onSubmit={handleSubmit}>
-        <Text mb="8px">Username: </Text>
+        <FormLabel>Username: </FormLabel>
 
         <Input
           type="text"
           name="name"
           placeholder="username"
+          mb="8px"
           value={userName}
           onChange={() => {
             handleInputChange(event, setUserName);
@@ -88,7 +89,6 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
             handleInputChange(event, setPassword);
           }}
         />
-        <label>confirm password</label>
         <PasswordInput
           label="Confirm Password"
           value={confirmPassword}
