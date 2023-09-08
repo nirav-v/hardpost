@@ -15,12 +15,17 @@ import hardpostLogo from "../../images/hardpost-logo.png";
 function NavBar({ loggedIn, handleLogoutClick }) {
   const [currentPage, setCurrentPage] = useState("Home");
 
-  const tabs = [
-    { title: "Home", path: "/" },
-    { title: "Post Item", path: "/add-item" },
-    { title: "Cart", path: "/cart" },
-    { title: "My Orders", path: "/orders" },
-  ];
+  let navTabs = [];
+  if (loggedIn) {
+    navTabs = [
+      { title: "Home", path: "/" },
+      { title: "Post Item", path: "/add-item" },
+      { title: "Cart", path: "/cart" },
+      { title: "My Orders", path: "/orders" },
+    ];
+  } else {
+    navTabs = [{ title: "Home", path: "/" }];
+  }
 
   return (
     <div position="relative">
@@ -33,7 +38,7 @@ function NavBar({ loggedIn, handleLogoutClick }) {
       <Container centerContent>
         <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
         <Breadcrumb separator="-">
-          {tabs.map((tab, i) => (
+          {navTabs.map((tab, i) => (
             <BreadcrumbItem
               key={i}
               onClick={() => setCurrentPage(tab.title)}
