@@ -1,9 +1,28 @@
 import { useState } from "react";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Divider,
+  FormControl,
+  FormLabel,
+  Heading,
+  HStack,
+  Input,
+  Link,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import PasswordInput from "../UI/PasswordInput";
 import EmailInput from "../UI/EmailInput";
-import { Button, Input, Text } from "@chakra-ui/react";
 
-function SignUpForm({ loggedIn, setLoggedIn }) {
+function SignUpForm({
+  loggedIn,
+  setLoggedIn,
+  showSignUpForm,
+  setShowSignUpForm,
+}) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,47 +79,87 @@ function SignUpForm({ loggedIn, setLoggedIn }) {
   const handleInputChange = (event, setter) => setter(event.target.value);
 
   return (
-    <div>
-      <p>Sign up with the form below</p>
-      <p style={{ color: "red" }}>{errorMessage}</p>
-      <form onSubmit={handleSubmit}>
-        <Text mb="8px">Username: </Text>
-
-        <Input
-          type="text"
-          name="name"
-          placeholder="username"
-          value={userName}
-          onChange={() => {
-            handleInputChange(event, setUserName);
-          }}
-        />
-        <EmailInput
-          value={email}
-          handleChange={() => {
-            handleInputChange(event, setEmail);
-          }}
-        />
-        <PasswordInput
-          label="Password"
-          value={password}
-          handleChange={() => {
-            handleInputChange(event, setPassword);
-          }}
-        />
-        <label>confirm password</label>
-        <PasswordInput
-          label="Confirm Password"
-          value={confirmPassword}
-          handleChange={() => {
-            handleInputChange(event, setConfirmPassword);
-          }}
-        />
-        <Button type="submit" onClick={handleSubmit}>
-          Sign Up
-        </Button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <Container
+        maxW="lg"
+        py={{ base: "12", md: "16" }}
+        px={{ base: "0", sm: "8" }}>
+        <Stack spacing="8">
+          <Stack spacing="6">
+            <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
+              <Heading size={{ base: "xs", md: "sm" }}>
+                Create an account
+              </Heading>
+              <Text color="fg.muted">
+                Already have an account?{" "}
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setShowSignUpForm(!showSignUpForm);
+                  }}>
+                  Log in
+                </button>
+              </Text>
+            </Stack>
+          </Stack>
+          <Box
+            py={{ base: "0", sm: "8" }}
+            px={{ base: "4", sm: "10" }}
+            bg={{ base: "transparent", sm: "bg.surface" }}
+            boxShadow={{ base: "none", sm: "md" }}
+            borderRadius={{ base: "none", sm: "xl" }}>
+            <Stack spacing="6">
+              <Stack spacing="5">
+                <FormLabel>Username: </FormLabel>
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="username"
+                  mb="8px"
+                  value={userName}
+                  onChange={(event) => {
+                    setUserName(event.target.value);
+                  }}
+                />
+                <EmailInput
+                  handleEmailChange={(event) => setEmail(event.target.value)}
+                />
+                <PasswordInput
+                  name="password"
+                  value={password}
+                  handleChange={(event) => setPassword(event.target.value)}
+                />
+                <PasswordInput
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  handleChange={(event) =>
+                    setConfirmPassword(event.target.value)
+                  }
+                />
+              </Stack>
+              <HStack justify="space-between">
+                {/* <Checkbox defaultChecked>Remember me</Checkbox> */}
+                <Button variant="text" size="sm">
+                  Forgot password?
+                </Button>
+              </HStack>
+              <Stack spacing="6">
+                <Text color="red">{errorMessage}</Text>
+                <Button type="submit">Sign Up</Button>
+                <HStack>
+                  <Divider />
+                  {/* <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
+                    or continue with
+                  </Text>
+                  <Divider /> */}
+                </HStack>
+              </Stack>
+            </Stack>
+          </Box>
+        </Stack>
+      </Container>
+    </form>
   );
 }
 

@@ -47,6 +47,8 @@ function App() {
     window.location.reload();
   };
 
+  console.log("showSignUpForm", showSignUpForm);
+
   return (
     <div>
       <CartProvider>
@@ -56,15 +58,20 @@ function App() {
             <div>
               <Container centerContent>
                 {!showSignUpForm ? (
-                  <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+                  <LoginForm
+                    loggedIn={loggedIn}
+                    setLoggedIn={setLoggedIn}
+                    showSignUpForm={showSignUpForm}
+                    setShowSignUpForm={setShowSignUpForm}
+                  />
                 ) : (
-                  <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+                  <SignUpForm
+                    loggedIn={loggedIn}
+                    setLoggedIn={setLoggedIn}
+                    showSignUpForm={showSignUpForm}
+                    setShowSignUpForm={setShowSignUpForm}
+                  />
                 )}
-                <Button onClick={() => setShowSignUpForm(!showSignUpForm)}>
-                  {!showSignUpForm
-                    ? "New User? Click here to create an account"
-                    : "Already have an account? Click here to log in"}
-                </Button>
               </Container>
               <Routes>
                 <Route path="/" element={<ShopPage />} />
