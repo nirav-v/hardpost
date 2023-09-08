@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 function CartPage() {
   const [cart, setCart] = useCartContext();
 
-  // useEffect(() => {
-  //   fetch("/api/cart")
-  //     .then((res) => res.json())
-  //     .then((data) => setCart(data));
-  // }, []);
+  useEffect(() => {
+    fetch("/api/cart")
+      .then((res) => res.json())
+      .then((data) => setCart(data));
+  }, []);
 
   const handleCartDelete = (itemId) => {
     fetch("/api/cart/delete-item", {

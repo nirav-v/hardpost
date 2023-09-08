@@ -7,12 +7,6 @@ export const useCartContext = () => useContext(CartContext);
 function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    fetch("/api/cart")
-      .then((res) => res.json())
-      .then((data) => setCart(data));
-  }, []);
-
   console.log(cart);
 
   return (
