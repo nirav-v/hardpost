@@ -65,13 +65,13 @@ function App() {
                     setShowSignUpForm={setShowSignUpForm}
                   />
                 ) : (
-                  <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+                  <SignUpForm
+                    loggedIn={loggedIn}
+                    setLoggedIn={setLoggedIn}
+                    showSignUpForm={showSignUpForm}
+                    setShowSignUpForm={setShowSignUpForm}
+                  />
                 )}
-                <Button onClick={() => setShowSignUpForm(!showSignUpForm)}>
-                  {!showSignUpForm
-                    ? "New User? Click here to create an account"
-                    : "Already have an account? Click here to log in"}
-                </Button>
               </Container>
               <Routes>
                 <Route path="/" element={<ShopPage />} />
