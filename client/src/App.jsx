@@ -47,6 +47,8 @@ function App() {
     window.location.reload();
   };
 
+  console.log("showSignUpForm", showSignUpForm);
+
   return (
     <div>
       <CartProvider>
@@ -56,7 +58,12 @@ function App() {
             <div>
               <Container centerContent>
                 {!showSignUpForm ? (
-                  <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+                  <LoginForm
+                    loggedIn={loggedIn}
+                    setLoggedIn={setLoggedIn}
+                    showSignUpForm={showSignUpForm}
+                    setShowSignUpForm={setShowSignUpForm}
+                  />
                 ) : (
                   <SignUpForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
                 )}
