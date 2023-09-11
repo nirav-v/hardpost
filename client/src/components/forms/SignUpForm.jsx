@@ -14,8 +14,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import PasswordInput from "../UI/PasswordInput";
-import EmailInput from "../UI/EmailInput";
+import PasswordInput from "../inputs/PasswordInput";
+import EmailInput from "../inputs/EmailInput";
 
 function SignUpForm({
   loggedIn,

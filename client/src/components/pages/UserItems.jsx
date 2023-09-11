@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ItemPage from "./ItemCard";
+import ItemCard from "../cards/ItemCard";
 
 function UserItems() {
   const [userItems, setUserItems] = useState([]);
@@ -40,7 +40,7 @@ function UserItems() {
         <ul>
           {userItems.map((item) => (
             <li key={item.id}>
-              <ItemPage
+              <ItemCard
                 itemId={item.id}
                 name={item.name}
                 category={item.category}
