@@ -1,5 +1,5 @@
 import { SimpleGrid } from "@chakra-ui/react";
-import ItemCard from "./ItemCard";
+import ItemCard from "../cards/ItemCard";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useItemsContext } from "../../util/ItemsContext";
