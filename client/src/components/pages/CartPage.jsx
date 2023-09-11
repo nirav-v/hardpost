@@ -1,6 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
+import {
+  CloseButton,
+  Flex,
+  Link,
+  Select,
+  useColorModeValue as mode,
+  Stack,
+  Box,
+  Heading,
+  HStack,
+} from "@chakra-ui/react";
+import { Link as ReactRouterLink } from "react-router-dom";
+import { CartItem } from "../cards/CartItem";
+import { CartOrderSummary } from "../cards/CartOrderSummary";
 import { useCartContext } from "../../util/CartContext";
-import { Link } from "react-router-dom";
 
 function CartPage() {
   const [cart, setCart] = useCartContext();
@@ -25,28 +38,74 @@ function CartPage() {
 
   return (
     <div>
-      <h2>your cart: </h2>
-      {cart.length ? (
-        <div>
-          <ul>
-            {cart.map((item) => {
-              return (
-                <li key={item.id}>
-                  {item.name} ${item.price}
-                  <button onClick={() => handleCartDelete(item.id)}>
-                    delete from cart
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-          <Link to="/checkout">
-            <button>Checkout</button>
-          </Link>
-        </div>
-      ) : (
-        "no items in cart"
-      )}
+      <div>
+        <Box
+          maxW={{
+            base: "3xl",
+            lg: "7xl",
+          }}
+          mx="auto"
+          px={{
+            base: "4",
+            md: "8",
+            lg: "12",
+          }}
+          py={{
+            base: "6",
+            md: "8",
+            lg: "12",
+          }}>
+          <Stack
+            direction={{
+              base: "column",
+              lg: "row",
+            }}
+            align={{
+              lg: "flex-start",
+            }}
+            spacing={{
+              base: "8",
+              md: "16",
+            }}>
+            <Stack
+              spacing={{
+                base: "8",
+                md: "10",
+              }}
+              flex="2">
+              <Heading fontSize="2xl" fontWeight="extrabold">
+                Shopping Cart ({cart.length} items)
+              </Heading>
+
+              <Stack spacing="6">
+                {cart.map((item) => {
+                  return (
+                    <CartItem
+                      key={item.id}
+                      onClickDelete={() => handleCartDelete(item.id)}
+                      name={item.name}
+                      price={item.price}
+                      imageUrl={item.imagePath}></CartItem>
+                  );
+                })}
+              </Stack>
+            </Stack>
+
+            <Flex direction="column" align="center" flex="1">
+              <CartOrderSummary cartData={cart} />
+              <HStack mt="6" fontWeight="semibold">
+                <p>or</p>
+                <Link
+                  as={ReactRouterLink}
+                  to="/"
+                  color={mode("blue.500", "blue.200")}>
+                  Continue shopping
+                </Link>
+              </HStack>
+            </Flex>
+          </Stack>
+        </Box>
+      </div>
     </div>
   );
 }
