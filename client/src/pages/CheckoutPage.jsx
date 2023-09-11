@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useCartContext } from "../../util/CartContext";
-import ShippingForm from "../forms/ShippingForm";
-import PaymentForm from "../forms/PaymentForm";
+import { useCartContext } from "../context/CartContext";
+import ShippingForm from "../components/forms/ShippingForm";
+import PaymentForm from "../components/forms/PaymentForm";
 
 function CheckoutPage() {
   const [items, setItems] = useCartContext();

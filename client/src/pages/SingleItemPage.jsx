@@ -1,5 +1,5 @@
 import React from "react";
-import { useItemsContext } from "../../util/ItemsContext";
+import { useItemsContext } from "../context/ItemsContext";
 import { useParams } from "react-router-dom";
 
 const SingleItemPage = () => {

@@ -1,8 +1,8 @@
 import { SimpleGrid } from "@chakra-ui/react";
-import ItemCard from "../cards/ItemCard";
+import ItemCard from "../../components/UI/ItemCard";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useItemsContext } from "../../util/ItemsContext";
+import { useItemsContext } from "../../context/ItemsContext";
 
 function ShopPage() {
   const [items, setItems] = useItemsContext();

@@ -1,20 +1,20 @@
-import ShopPage from "./components/pages/ShopPage";
+import ShopPage from "./pages/ShopPage";
 import SignUpForm from "./components/forms/SignUpForm";
 import LoginForm from "./components/forms/LoginForm";
 import AddItemForm from "./components/forms/AddItemForm1";
-import CartPage from "./components/pages/CartPage";
-import CheckoutPage from "./components/pages/CheckoutPage";
-import OrdersPage from "./components/pages/OrdersPage";
-import UserItems from "./components/pages/UserItems";
+import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import OrdersPage from "./pages/OrdersPage";
+import UserItems from "./pages/UserItems";
 import NavBar from "./components/UI/NavBar";
-import SingleItemPage from "./components/pages/SingleItemPage";
+import SingleItemPage from "./pages/SingleItemPage";
 import { Routes, Route } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
-import { ItemsProvider } from "./util/ItemsContext";
+import { ItemsProvider } from "./context/ItemsContext";
 import LogoutButton from "./components/UI/LogoutButton";
 import { Button, Container, useColorMode, Flex } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import CartProvider from "./util/CartContext";
+import CartProvider from "./context/CartContext";
 
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();

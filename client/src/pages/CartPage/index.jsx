@@ -11,9 +11,9 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
-import { CartItem } from "../cards/CartItem";
-import { CartOrderSummary } from "../cards/CartOrderSummary";
-import { useCartContext } from "../../util/CartContext";
+import { CartItem } from "./CartItem";
+import { CartOrderSummary } from "./CartOrderSummary";
+import { useCartContext } from "../../context/CartContext";
 
 function CartPage() {
   const [cart, setCart] = useCartContext();
