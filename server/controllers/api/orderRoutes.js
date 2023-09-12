@@ -1,7 +1,40 @@
 const router = require("express").Router();
 const { User } = require("../../models");
-
+const stripe = require("stripe")(
+  "sk_test_51NpbteEHf8A5rB272MXubLChNt0T0U3C7t7Wkbh1awcniMeNsSowZKBBAjkdBBsM9UL92TpfQyo2ljUq8JamzYYQ00R5jZJxBx"
+);
 const withAuth = require("../../util/withAuth");
+
+router.post("/create-checkout-session", async (req, res) => {
+  const { domain } = req.body;
+  const { cart } = req.body;
+
+  const line_items = [];
+  for (const item of cart) {
+    line_items.push({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: item.name,
+          images: [`${domain}/images/${item.imagePath}`],
+        },
+        unit_amount: item.price * 100,
+      },
+      quantity: 1,
+    });
+  }
+
+  console.log(line_items);
+
+  const session = await stripe.checkout.sessions.create({
+    line_items: line_items,
+    mode: "payment",
+    success_url: `${domain}/orders`,
+    cancel_url: `${domain}?canceled=true`,
+  });
+
+  res.json({ id: session.id });
+});
 
 router.get("/orders", withAuth, async (req, res, next) => {
   const loggedInUser = await User.findByPk(req.session.userId);
