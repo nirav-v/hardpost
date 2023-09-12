@@ -33,7 +33,7 @@ const OrderSummaryItem = (props) => {
   );
 };
 
-export const CartOrderSummary = ({ cartData }) => {
+export const CartOrderSummary = ({ cartData, onCheckoutSubmit }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const getTotalPrice = (cartArr) => {
     if (cartArr.length) {
@@ -71,15 +71,17 @@ export const CartOrderSummary = ({ cartData }) => {
             Total
           </Text>
           <Text fontSize="xl" fontWeight="extrabold">
-            {formatPrice(597)}
+            {formatPrice(totalPrice)}
           </Text>
         </Flex>
       </Stack>
-      <Link as={ReactRouterLink} to="/checkout">
-        <Button colorScheme="blue" size="lg" fontSize="md">
-          Checkout
-        </Button>
-      </Link>
+      <Button
+        onClick={onCheckoutSubmit}
+        colorScheme="blue"
+        size="lg"
+        fontSize="md">
+        Checkout
+      </Button>
     </Stack>
   );
 };
