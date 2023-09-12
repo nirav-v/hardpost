@@ -1,8 +1,6 @@
 const router = require("express").Router();
 const { User } = require("../../models");
-const stripe = require("stripe")(
-  "sk_test_51NpbteEHf8A5rB272MXubLChNt0T0U3C7t7Wkbh1awcniMeNsSowZKBBAjkdBBsM9UL92TpfQyo2ljUq8JamzYYQ00R5jZJxBx"
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const withAuth = require("../../util/withAuth");
 
 router.post("/create-checkout-session", async (req, res) => {
