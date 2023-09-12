@@ -6,7 +6,20 @@ const stripe = require("stripe")(
 const withAuth = require("../../util/withAuth");
 
 router.post("/create-checkout-session", async (req, res) => {
-  const { domain } = req.body;
+  const loggedInUser = await User.findByPk(req.session.userId);
+  const userCart = await loggedInUser.getCart();
+  const items = await userCart.getItems();
+  const order = await loggedInUser.createOrder();
+  // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
+  await order.addItems(
+    items.map((item) => {
+      item.orderItem = { quantity: item.cartItem.quantity };
+      return item;
+    })
+  );
+  await userCart.setItems(null); //clear user's cart after order is placed
+
+  let { domain } = req.body;
   const { cart } = req.body;
 
   const line_items = [];
@@ -24,7 +37,7 @@ router.post("/create-checkout-session", async (req, res) => {
     });
   }
 
-  console.log(line_items);
+  console.log("line_items: ", line_items);
 
   const session = await stripe.checkout.sessions.create({
     line_items: line_items,
@@ -59,7 +72,7 @@ router.post("/create-order", async (req, res, next) => {
   await cart.setItems(null); //clear user's cart after order is placed
   const updatedItems = await cart.getItems();
   console.log(updatedItems);
-  res.status(201).send(updatedItems);
+  res.status(201).redirect("/orders");
 });
 
 module.exports = router;
