@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import PasswordInput from "../inputs/PasswordInput";
 import EmailInput from "../inputs/EmailInput";
+import Auth from "../../util/auth";
 
 function LoginForm({
   loggedIn,
@@ -47,9 +48,11 @@ function LoginForm({
 
     if (response.status === 200) {
       setLoggedIn(true);
-      const loginResult = await response.json();
-      console.log(loginResult);
-      localStorage.setItem("currentUserId", loginResult.userId);
+      const token = await response.json();
+      console.log(token);
+      // sets token in local storage
+      Auth.login(token);
+      // localStorage.setItem("currentUserId", loginResult.userId);
       setEmail("");
       setPassword("");
     } else {
