@@ -45,7 +45,6 @@ function LoginForm({
       },
     });
 
-    console.log(response);
     if (response.status === 200) {
       setLoggedIn(true);
       const loginResult = await response.json();
@@ -56,8 +55,6 @@ function LoginForm({
     } else {
       setLoginSuccess(false);
     }
-
-    console.log("login request sent");
   };
 
   const handleInputChange = (event, setState) => setState(event.target.value);

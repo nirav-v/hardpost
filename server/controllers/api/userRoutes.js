@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
 const { User, Cart } = require("../../models/");
 
 // GET Logged in user
@@ -30,12 +31,17 @@ router.post("/signup", async (req, res) => {
   // create a cart to associate with the new user
   const userCart = await newUser.createCart();
 
+  // create jwt
+  const token = jwt.sign({ username, email }, "jwt-super secrettt", {
+    expiresIn: "24h",
+  });
+
   // set and save the user's id on the session. Won't save whole user instance because we lose all sequelize magic methods and other meta data when the object is stringified before being saved on session
   req.session.userId = newUser.id;
   req.session.save(function (err) {
     if (err) return next(err);
   });
-  return res.status(201).send(req.session);
+  return res.status(201).json(token);
 });
 
 // LOGIN
@@ -53,13 +59,22 @@ router.post("/login", async (req, res) => {
   }
   // compare password using instance method defined on user model
   if (existingUser.checkPassword(req.body.password, existingUser.password)) {
+    // create jwt
+    const token = jwt.sign(
+      { username: existingUser.username, email: existingUser.email },
+      "jwt-super secrettt",
+      {
+        expiresIn: "24h",
+      }
+    );
+
     // set and save logged in user on session object
     req.session.userId = existingUser.id;
     req.session.save(function (err) {
       if (err) return next(err);
     });
-    console.log(req.session);
-    return res.status(200).send(req.session);
+    // console.log(req.session);
+    return res.status(200).json(token);
   }
   // if wrong password
   return res.status(404).send({ error: "incorrect credentials" });
