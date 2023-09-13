@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
   const userCart = await newUser.createCart();
 
   // create jwt
-  const token = jwt.sign({ username, email }, "jwt-super secrettt", {
+  const token = jwt.sign({ username, email }, process.env.JWT_SECRET, {
     expiresIn: "24h",
   });
 

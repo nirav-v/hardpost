@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { User } = require("../../models");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const withAuth = require("../../util/withAuth");
+const Auth = require("../../util/serverAuth");
 
 router.post("/create-checkout-session", async (req, res) => {
   const loggedInUser = await User.findByPk(req.session.userId);
@@ -47,7 +47,7 @@ router.post("/create-checkout-session", async (req, res) => {
   res.json({ id: session.id });
 });
 
-router.get("/orders", withAuth, async (req, res, next) => {
+router.get("/orders", async (req, res, next) => {
   const loggedInUser = await User.findByPk(req.session.userId);
   const orders = await loggedInUser.getOrders({
     include: ["items"],
