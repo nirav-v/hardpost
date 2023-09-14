@@ -36,6 +36,7 @@ function CartPage() {
       body: JSON.stringify({ itemId }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     })
       .then((res) => res.json())
@@ -54,6 +55,7 @@ function CartPage() {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": domain,
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
     const session = await res.json();

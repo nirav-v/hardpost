@@ -5,12 +5,12 @@ const Auth = require("../../util/serverAuth");
 
 router.get("/cart", async (req, res, next) => {
   try {
+    if (!req.headers.authorization)
+      return res.status(401).send({
+        unauthorized: "no token provided in headers, please log in first",
+      });
     console.log("auth header: ", req.headers.authorization.split(" ")[1]);
-    let token;
-    // grab token from auth headers
-    if (req.headers.authorization) {
-      token = req.headers.authorization.split(" ")[1];
-    }
+    const token = req.headers.authorization.split(" ")[1];
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -29,22 +29,19 @@ router.get("/cart", async (req, res, next) => {
 
 // adding item to cart
 router.post("/cart", async (req, res, next) => {
-  if (!req.headers.authorization)
-    return res.status(401).send({
-      unauthorized: "no token provided in headers, please log in first",
-    });
-  const itemId = req.body.itemId;
-
-  const payload = jwt.verify(token, process.env.JWT_SECRET);
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({
     where: { email: payload.email },
   });
   const cart = await Cart.findOne({
     where: {
-      userId: loggedInUser.userId,
+      userId: loggedInUser.id,
     },
   }); // fetch the users cart
+
+  const itemId = req.body.itemId;
+
   let itemQuantity = 1; // default the quantity to one for cases where item is not in cart
   const existingItems = await cart.getItems({
     where: { id: itemId }, //should return array of of one or zero items in cart with that id
@@ -64,7 +61,9 @@ router.post("/cart", async (req, res, next) => {
 });
 
 router.post("/cart/delete-item", async (req, res, next) => {
-  const loggedInUser = await User.findByPk(req.session.userId);
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+
+  const loggedInUser = await User.findOne({ where: { email: payload.email } });
   const itemId = req.body.itemId;
   const cart = await loggedInUser.getCart(); // get the users cart
   const cartItems = await cart.getItems({ where: { id: itemId } }); // get items from user's cart matching the req body id - returns array of matching items
