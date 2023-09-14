@@ -22,7 +22,6 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
   console.log("loggedIn ", loggedIn);
-
   console.log("Auth", Auth.isLoggedIn());
 
   useEffect(() => {
@@ -31,33 +30,10 @@ function App() {
 
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
-  // const checkAuth = async () => {
-  //   const response = await fetch("/api/user/login");
-  //   const result = await response.json();
-  //   console.log(result);
-  //   if (result.userId) {
-  //     setLoggedIn(true);
-  //   } else {
-  //     localStorage.removeItem("currentUserId");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("currentUserId")) {
-  //     setLoggedIn(true);
-  //   } else {
-  //     setLoggedIn(false);
-  //   }
-  //   checkAuth();
-  // }, []);
-
   const handleLogoutClick = () => {
     localStorage.removeItem("token");
-    // fetch("/api/user/logout").then((res) => res.json());
     window.location.reload();
   };
-
-  console.log("showSignUpForm", showSignUpForm);
 
   return (
     <Fragment>
