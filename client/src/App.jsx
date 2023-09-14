@@ -52,8 +52,8 @@ function App() {
   // }, []);
 
   const handleLogoutClick = () => {
-    localStorage.removeItem("currentUserId");
-    fetch("/api/user/logout").then((res) => res.json());
+    localStorage.removeItem("token");
+    // fetch("/api/user/logout").then((res) => res.json());
     window.location.reload();
   };
 
