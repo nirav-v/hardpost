@@ -15,6 +15,7 @@ import LogoutButton from "./components/UI/LogoutButton";
 import { Button, Container, useColorMode, Flex } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import CartProvider from "./context/CartContext";
+import Auth from "./util/auth";
 
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -22,27 +23,33 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   console.log("loggedIn ", loggedIn);
 
-  const [showSignUpForm, setShowSignUpForm] = useState(false);
-
-  const checkAuth = async () => {
-    const response = await fetch("/api/user/login");
-    const result = await response.json();
-    console.log(result);
-    if (result.userId) {
-      setLoggedIn(true);
-    } else {
-      localStorage.removeItem("currentUserId");
-    }
-  };
+  console.log("Auth", Auth.isLoggedIn());
 
   useEffect(() => {
-    if (localStorage.getItem("currentUserId")) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-    checkAuth();
+    if (Auth.isLoggedIn()) setLoggedIn(true);
   }, []);
+
+  const [showSignUpForm, setShowSignUpForm] = useState(false);
+
+  // const checkAuth = async () => {
+  //   const response = await fetch("/api/user/login");
+  //   const result = await response.json();
+  //   console.log(result);
+  //   if (result.userId) {
+  //     setLoggedIn(true);
+  //   } else {
+  //     localStorage.removeItem("currentUserId");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("currentUserId")) {
+  //     setLoggedIn(true);
+  //   } else {
+  //     setLoggedIn(false);
+  //   }
+  //   checkAuth();
+  // }, []);
 
   const handleLogoutClick = () => {
     localStorage.removeItem("currentUserId");
