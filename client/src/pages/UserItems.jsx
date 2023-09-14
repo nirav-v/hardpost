@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import ItemCard from "../components/UI/ItemCard";
+import Auth from "../util/auth";
 
 function UserItems() {
   const [userItems, setUserItems] = useState([]);
 
   // function to fetch all userItems and update state
   const fetchItems = () => {
-    fetch("/api/get-items")
+    fetch("/api/get-items", {
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setUserItems(data);
@@ -26,6 +31,7 @@ function UserItems() {
       body: JSON.stringify({ itemId }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
 
@@ -40,14 +46,7 @@ function UserItems() {
         <ul>
           {userItems.map((item) => (
             <li key={item.id}>
-              <ItemCard
-                itemId={item.id}
-                name={item.name}
-                category={item.category}
-                description={item.description}
-                price={item.price}
-                imagePath={item.imagePath}
-              />
+              <ItemCard item={item} />
               <button onClick={() => handleRemoveItemClick(item.id)}>
                 Remove Item
               </button>

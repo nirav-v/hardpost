@@ -37,10 +37,10 @@ router.post("/signup", async (req, res) => {
   });
 
   // set and save the user's id on the session. Won't save whole user instance because we lose all sequelize magic methods and other meta data when the object is stringified before being saved on session
-  req.session.userId = newUser.id;
-  req.session.save(function (err) {
-    if (err) return next(err);
-  });
+  // req.session.userId = newUser.id;
+  // req.session.save(function (err) {
+  //   if (err) return next(err);
+  // });
   return res.status(201).json(token);
 });
 
@@ -69,10 +69,10 @@ router.post("/login", async (req, res) => {
     );
 
     // set and save logged in user on session object
-    req.session.userId = existingUser.id;
-    req.session.save(function (err) {
-      if (err) return next(err);
-    });
+    // req.session.userId = existingUser.id;
+    // req.session.save(function (err) {
+    //   if (err) return next(err);
+    // });
     // console.log(req.session);
     return res.status(200).json(token);
   }

@@ -1,6 +1,6 @@
 import { useState, useRef, Fragment } from "react";
 import { ProgressBar } from "react-loader-spinner";
-
+import Auth from "../../util/auth";
 function addItemForm() {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
@@ -39,6 +39,9 @@ function addItemForm() {
     const response = await fetch(url, {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
     });
     console.log(response);
     const result = await response.json();
