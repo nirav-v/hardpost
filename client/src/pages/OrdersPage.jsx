@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import Auth from "../util/auth";
 
 function OrdersPage() {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
-    fetch("/api/orders")
+    fetch("/api/orders", {
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    })
       .then((res) => res.json())
       .then((orders) => setOrders(orders));
   }, []);

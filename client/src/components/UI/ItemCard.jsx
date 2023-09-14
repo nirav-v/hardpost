@@ -12,6 +12,7 @@ import {
   Button,
   ButtonGroup,
 } from "@chakra-ui/react";
+import Auth from "../../util/auth";
 
 function ItemPage({ item }) {
   const handleAddCartClick = (itemId) => {
@@ -20,6 +21,7 @@ function ItemPage({ item }) {
       body: JSON.stringify({ itemId }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     })
       .then((res) => res.json())

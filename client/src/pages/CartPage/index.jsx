@@ -15,12 +15,17 @@ import { CartItem } from "./CartItem";
 import { CartOrderSummary } from "./CartOrderSummary";
 import { useCartContext } from "../../context/CartContext";
 import { loadStripe } from "@stripe/stripe-js";
+import Auth from "../../util/auth";
 
 function CartPage() {
   const [cart, setCart] = useCartContext();
 
   useEffect(() => {
-    fetch("/api/cart")
+    fetch("/api/cart", {
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setCart(data));
   }, []);
@@ -31,6 +36,7 @@ function CartPage() {
       body: JSON.stringify({ itemId }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     })
       .then((res) => res.json())
@@ -49,6 +55,7 @@ function CartPage() {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": domain,
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
     const session = await res.json();

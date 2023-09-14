@@ -1,12 +1,13 @@
 const router = require("express").Router();
 const { User } = require("../../models");
-const stripe = require("stripe")(
-  "sk_test_51NpbteEHf8A5rB272MXubLChNt0T0U3C7t7Wkbh1awcniMeNsSowZKBBAjkdBBsM9UL92TpfQyo2ljUq8JamzYYQ00R5jZJxBx"
-);
-const withAuth = require("../../util/withAuth");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const Auth = require("../../util/serverAuth");
+const jwt = require("jsonwebtoken");
 
 router.post("/create-checkout-session", async (req, res) => {
-  const loggedInUser = await User.findByPk(req.session.userId);
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+
+  const loggedInUser = await User.findOne({ where: { email: payload.email } });
   const userCart = await loggedInUser.getCart();
   const items = await userCart.getItems();
   const order = await loggedInUser.createOrder();
@@ -49,8 +50,14 @@ router.post("/create-checkout-session", async (req, res) => {
   res.json({ id: session.id });
 });
 
-router.get("/orders", withAuth, async (req, res, next) => {
-  const loggedInUser = await User.findByPk(req.session.userId);
+router.get("/orders", async (req, res, next) => {
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+
+  console.log("PAYLOAD: ", payload);
+
+  const loggedInUser = await User.findOne({
+    where: { email: payload.email },
+  });
   const orders = await loggedInUser.getOrders({
     include: ["items"],
   }); // tells sequelize to also load all items associated with each order
@@ -58,7 +65,9 @@ router.get("/orders", withAuth, async (req, res, next) => {
 });
 
 router.post("/create-order", async (req, res, next) => {
-  const loggedInUser = await User.findByPk(req.session.userId);
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+
+  const loggedInUser = await User.findOne({ where: { email: payload.email } });
   const cart = await loggedInUser.getCart();
   const items = await cart.getItems();
   const order = await loggedInUser.createOrder();

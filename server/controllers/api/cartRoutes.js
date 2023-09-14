@@ -1,24 +1,47 @@
 const router = require("express").Router();
 const { Cart, Item, User } = require("../../models");
+const jwt = require("jsonwebtoken");
+const Auth = require("../../util/serverAuth");
 
 router.get("/cart", async (req, res, next) => {
-  const loggedInUser = await User.findByPk(req.session.userId);
-  const cart = await loggedInUser.getCart();
-  const cartItems = await cart.getItems(); //magic method from many to many association between Cart and Item
-  // console.log(cart);
-  res.json(cartItems);
+  try {
+    if (!req.headers.authorization)
+      return res.status(401).send({
+        unauthorized: "no token provided in headers, please log in first",
+      });
+    console.log("auth header: ", req.headers.authorization.split(" ")[1]);
+    const token = req.headers.authorization.split(" ")[1];
+
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+    console.log("payload: ", payload);
+    const loggedInUser = await User.findOne({
+      where: { email: payload.email },
+    });
+    const cart = await loggedInUser.getCart();
+    const cartItems = await cart.getItems(); //magic method from many to many association between Cart and Item
+    // console.log(cart);
+    res.json(cartItems);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // adding item to cart
 router.post("/cart", async (req, res, next) => {
-  if (!req.session.userId)
-    return res.status(401).send({ unauthorized: "please log in first" });
-  const itemId = req.body.itemId;
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+
+  const loggedInUser = await User.findOne({
+    where: { email: payload.email },
+  });
   const cart = await Cart.findOne({
     where: {
-      userId: req.session.userId,
+      userId: loggedInUser.id,
     },
   }); // fetch the users cart
+
+  const itemId = req.body.itemId;
+
   let itemQuantity = 1; // default the quantity to one for cases where item is not in cart
   const existingItems = await cart.getItems({
     where: { id: itemId }, //should return array of of one or zero items in cart with that id
@@ -38,7 +61,9 @@ router.post("/cart", async (req, res, next) => {
 });
 
 router.post("/cart/delete-item", async (req, res, next) => {
-  const loggedInUser = await User.findByPk(req.session.userId);
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+
+  const loggedInUser = await User.findOne({ where: { email: payload.email } });
   const itemId = req.body.itemId;
   const cart = await loggedInUser.getCart(); // get the users cart
   const cartItems = await cart.getItems({ where: { id: itemId } }); // get items from user's cart matching the req body id - returns array of matching items

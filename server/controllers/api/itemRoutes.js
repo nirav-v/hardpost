@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Item, User } = require("../../models/");
-
+const Auth = require("../../util/serverAuth");
 const { uploadFile } = require("../../util/S3");
 
 const multer = require("multer");
@@ -27,9 +27,11 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage: multer.memoryStorage(), fileFilter });
 
 router.get("/get-items", async (req, res) => {
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+  const loggedInUser = await User.findOne({ where: { email: payload.email } });
   // find all items that have a userId matching req.session.userId
   const userItems = await Item.findAll({
-    where: { userId: req.session.userId },
+    where: { userId: loggedInUser.id },
   });
   res.status(200).send(userItems);
 });
@@ -37,18 +39,20 @@ router.get("/get-items", async (req, res) => {
 // use multer middleware for parsing and storing files
 router.post("/add-item", upload.single("image"), async (req, res, next) => {
   console.log("req.file", req.file);
-  if (!req.session.userId)
-    return res
-      .status(401)
-      .send({ error: "you must be logged in to create a new item" });
+
   try {
+    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+    const loggedInUser = await User.findOne({
+      where: { email: payload.email },
+    });
+
     // upload file using the util function from s3 sdk
     const uploadedFile = await uploadFile(req.file);
 
     console.log(uploadedFile);
 
     const { name, category, price, description } = req.body;
-    const userId = req.session.userId; // add the id of the  logged in user as the items userId foreign key
+    const userId = loggedInUser.id; // add the id of the  logged in user as the items userId foreign key
     const item = await Item.create({
       name,
       category,
@@ -82,11 +86,15 @@ router.post("/edit-item", async (req, res, next) => {
 });
 
 router.post("/delete-item", async (req, res, next) => {
-  const itemId = req.body.itemId;
-  const user = await User.findByPk(req.session.userId);
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+
+  const loggedInUser = await User.findOne({ where: { email: payload.email } });
   // get all items of the logged in user and find one where the id is in the req.body
-  const userItems = await user.getItems();
-  for (item of userItems) {
+  const userItems = await loggedInUser.getItems();
+
+  const itemId = req.body.itemId;
+
+  for (let item of userItems) {
     if (item.id === itemId) {
       const deletedItem = await item.destroy();
       return res.status(201).json(deletedItem);
