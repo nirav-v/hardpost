@@ -45,9 +45,11 @@ function App() {
         </Flex>
         <NavBar loggedIn={loggedIn} handleLogoutClick={handleLogoutClick} />
         <ItemsProvider>
+          {/* conditionally render remaining content of App (accessible react-router routes and components) based on loggedIn state */}
           {!loggedIn ? (
             <div>
               <Container centerContent>
+                {/* conditionally render Login form OR Sign up form based on state */}
                 {!showSignUpForm ? (
                   <LoginForm
                     loggedIn={loggedIn}

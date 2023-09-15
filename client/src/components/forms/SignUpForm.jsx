@@ -30,8 +30,6 @@ function SignUpForm({
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  //   console.log(`username: ${userName}, email: ${email}, password: ${password}`);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     // validate form inputs
@@ -40,25 +38,21 @@ function SignUpForm({
     } else if (password !== confirmPassword) {
       setErrorMessage("passwords do not match");
     } else {
-      const url = "/api/user/signup";
-      const body = JSON.stringify({
-        username: userName,
-        email: email,
-        password: password,
-      }); // request body can only be sent as a string, parsed back to object by the server
-      console.log("body: ", body);
-      // send post request to server
-      const response = await fetch(url, {
+      // send sign up post request to server, // request body can only be sent as a string, parsed back to object by the server
+      const response = await fetch("/api/user/signup", {
         method: "POST",
-        body: body,
+        body: JSON.stringify({
+          username: userName,
+          email: email,
+          password: password,
+        }),
         headers: {
           "Content-Type": "application/json", // tells server that data is in json format
         },
       });
 
+      // token sent back from api and set in localStorage
       const token = await response.json();
-      console.log(token);
-      // sets token in localStorage
       Auth.login(token);
       setEmail("");
       setPassword("");
@@ -72,8 +66,6 @@ function SignUpForm({
           "Account creation failed, please ensure you used a valid email and that your passwords match"
         );
       }
-      console.log("loggedIn: ", loggedIn);
-      console.log("signup request sent");
     }
   };
 
