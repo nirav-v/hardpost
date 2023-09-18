@@ -1,13 +1,45 @@
 import { useState, useRef, Fragment } from "react";
 import { ProgressBar } from "react-loader-spinner";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Divider,
+  FormControl,
+  FormLabel,
+  Heading,
+  HStack,
+  Input,
+  Select,
+  Link,
+  Stack,
+  Text,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+} from "@chakra-ui/react";
+
 import Auth from "../../util/auth";
 function addItemForm() {
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const imageInput = useRef(null);
   const [loading, setLoading] = useState(false);
+  const imageInput = useRef(null);
+  // use a single form state object instead of many individual state variable
+  const [formState, setFormState] = useState({
+    name: "",
+    category: "",
+    price: 0,
+    description: "",
+  });
+
+  const handleChange = (event) => {
+    setFormState({
+      ...formState,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,6 +49,8 @@ function addItemForm() {
       alert("must include an image");
       return;
     }
+
+    const { name, price, category, description } = formState;
 
     if (name.length < 1) {
       alert("must fill in the item name field");
@@ -46,11 +80,6 @@ function addItemForm() {
     console.log(response);
     const result = await response.json();
     console.log(result);
-    setName(""),
-      setCategory(""),
-      setPrice(null),
-      setDescription(""),
-      setLoading(false);
 
     // redirect to shop page
     location.replace("/");
@@ -59,7 +88,7 @@ function addItemForm() {
   return (
     <Fragment>
       {loading ? (
-        <div>
+        <Fragment>
           <h3>Uploading your item - please do not refresh or close the page</h3>
           <ProgressBar
             height="80"
@@ -70,59 +99,112 @@ function addItemForm() {
             borderColor="#F4442E"
             barColor="#51E5FF"
           />
-        </div>
+        </Fragment>
       ) : (
-        <div>
-          <p>addItemForm</p>
+        <Fragment>
+          {/* replacement form below */}
           <form onSubmit={handleSubmit}>
-            {/* inputs for item name, price category, description */}
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-            <label>
-              Category:
-              <select
-                value={category}
-                onChange={(event) => setCategory(event.target.value)}>
-                <option value="decks">decks</option>
-                <option value="shoes">shoes</option>
-                <option value="trucks">trucks</option>
-                <option value="wheels">wheels</option>
-                <option value="pants">pants</option>
-                <option value="other">other</option>
-              </select>
-            </label>
-            <label>Price</label>
-            <input
-              type="number"
-              step="any"
-              value={price}
-              onChange={(event) => setPrice(event.target.value)}
-            />
-            <label>Description</label>
-            <input
-              type="text"
-              description="name"
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-            />
-            <label> Image</label>
-            {/* from react docs for file inputs: In React, an <input type="file" /> is always an uncontrolled component because its value can only be set by a user, and not programmatically. */}
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              defaultValue=""
-              ref={imageInput}
-            />
-            <input type="submit" />
+            <Container
+              maxW="lg"
+              py={{ base: "12", md: "16" }}
+              px={{ base: "0", sm: "8" }}>
+              <Stack spacing="8">
+                <Stack spacing="6">
+                  <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
+                    <Heading size={{ base: "xs", md: "sm" }}>
+                      Fill out item details below{" "}
+                    </Heading>
+                  </Stack>
+                </Stack>
+                <Box
+                  py={{ base: "0", sm: "8" }}
+                  px={{ base: "4", sm: "10" }}
+                  bg={{ base: "transparent", sm: "bg.surface" }}
+                  boxShadow={{ base: "none", sm: "md" }}
+                  borderRadius={{ base: "none", sm: "xl" }}>
+                  <Stack spacing="6">
+                    <Stack spacing="2">
+                      <FormLabel>Item Name</FormLabel>
+                      <Input
+                        type="text"
+                        name="name"
+                        value={formState.name}
+                        onChange={handleChange}
+                      />
+                      <FormLabel>Price USD $</FormLabel>
+                      <Input
+                        type="number"
+                        name="price"
+                        value={formState.price}
+                        onChange={handleChange}
+                      />
+
+                      <FormLabel>Category</FormLabel>
+                      <Select
+                        placeholder="Select Category"
+                        onChange={handleChange}>
+                        <option name="category" value="decks">
+                          decks
+                        </option>
+                        <option name="category" value="shoes">
+                          shoes
+                        </option>
+                        <option name="category" value="trucks">
+                          trucks
+                        </option>
+                        <option name="category" value="wheels">
+                          wheels
+                        </option>
+                        <option name="category" value="pants">
+                          pants
+                        </option>
+                        <option name="category" value="other">
+                          other
+                        </option>
+                      </Select>
+                      <FormLabel>Tell us about item you're selling</FormLabel>
+                      <Input
+                        type="text"
+                        name="description"
+                        value={formState.description}
+                        onChange={handleChange}
+                      />
+                      <FormLabel>Upload an Image</FormLabel>
+                      {/* from react docs for file inputs: In React, an <input type="file" /> is always an uncontrolled component because its value can only be set by a user, and not programmatically. */}
+                      <input
+                        type="file"
+                        id="image"
+                        name="image"
+                        accept="image/*"
+                        defaultValue=""
+                        ref={imageInput}
+                      />
+                    </Stack>
+                    <HStack justify="space-between">
+                      {/* <Checkbox defaultChecked>Remember me</Checkbox>
+                    {!loginSuccess && (
+                      <p style={{ color: "red" }}>Incorrect credentials</p>
+                    )} */}
+                      {/* <Button variant="text" size="sm">
+                      Forgot password?
+                    </Button> */}
+                    </HStack>
+                    <Stack spacing="6">
+                      <Button type="submit">Post Item</Button>
+                      <HStack>
+                        <Divider />
+                        {/* <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
+                    or continue with
+                  </Text>
+                  <Divider /> */}
+                      </HStack>
+                    </Stack>
+                  </Stack>
+                </Box>
+              </Stack>
+            </Container>
           </form>
-        </div>
+        </Fragment>
       )}
     </Fragment>
   );

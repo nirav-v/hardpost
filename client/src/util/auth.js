@@ -5,7 +5,6 @@ const Auth = {
     if (!this.getToken()) return false;
     const token = this.getToken();
     const { exp } = jwt_decode(token);
-    console.log(token, exp, Date.now());
     // true if token exists and is not expired yet
     return token && exp > Date.now() / 1000;
   },
