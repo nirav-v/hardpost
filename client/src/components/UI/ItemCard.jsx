@@ -33,7 +33,7 @@ function ItemPage({ item }) {
       <CardBody>
         <Image
           src={item.imagePath}
-          alt="Green double couch with wooden legs"
+          alt={`${item.name} image`}
           borderRadius="lg"
         />
         <Stack mt="6" spacing="3">
@@ -46,12 +46,16 @@ function ItemPage({ item }) {
       </CardBody>
       <Divider />
       <CardFooter>
-        <Button
-          onClick={() => handleAddCartClick(item.id)}
-          variant="ghost"
-          colorScheme="blue">
-          Add to cart
-        </Button>
+        {item.sold ? (
+          "This item has been sold"
+        ) : (
+          <Button
+            onClick={() => handleAddCartClick(item.id)}
+            variant="ghost"
+            colorScheme="blue">
+            Add to cart
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

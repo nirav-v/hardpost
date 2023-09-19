@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../../models");
+const { User, Item } = require("../../models");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Auth = require("../../util/serverAuth");
 const jwt = require("jsonwebtoken");
@@ -46,6 +46,13 @@ router.post("/create-checkout-session", async (req, res) => {
     success_url: `${domain}/orders`,
     cancel_url: `${domain}?canceled=true`,
   });
+
+  // mark all items from the cart as sold
+  for (let item of items) {
+    Item.update({ sold: true }, { where: { id: item.id } });
+  }
+
+  console.log(items);
 
   res.json({ id: session.id });
 });

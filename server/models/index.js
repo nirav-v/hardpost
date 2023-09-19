@@ -19,6 +19,7 @@ Order.belongsToMany(Item, { through: OrderItem }); // sets many-to-many relation
 Item.belongsToMany(Order, { through: OrderItem });
 
 User.hasMany(Comment);
+Comment.belongsTo(User);
 Item.hasMany(Comment);
 
 // export as an object with all models as properties
