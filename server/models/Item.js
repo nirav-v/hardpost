@@ -27,6 +27,10 @@ Item.init(
     imagePath: {
       type: DataTypes.STRING,
     },
+    sold: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     // Other model options go here
