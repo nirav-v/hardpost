@@ -14,7 +14,6 @@ function ShopPage() {
       .then((items) => {
         // sort items in place by available items first
         items.sort((item2, item1) => {
-          console.log(item2, item1);
           if (!item2.sold && item1.sold) return -1;
         });
 

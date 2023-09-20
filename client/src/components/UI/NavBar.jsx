@@ -21,6 +21,7 @@ function NavBar({ loggedIn, handleLogoutClick }) {
       { title: "Home", path: "/" },
       { title: "Post Item", path: "/add-item" },
       { title: "Cart", path: "/cart" },
+      { title: "My items", path: "/user-items" },
       { title: "My Orders", path: "/orders" },
     ];
   } else {
