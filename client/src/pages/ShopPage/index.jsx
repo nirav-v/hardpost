@@ -1,19 +1,25 @@
-import { SimpleGrid } from "@chakra-ui/react";
-import ItemCard from "../../components/UI/ItemCard";
+import { Box } from "@chakra-ui/react";
+import { ProductCard } from "./ProductCard";
+import { ProductGrid } from "./ProductGrid";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useItemsContext } from "../../context/ItemsContext";
 
 function ShopPage() {
   const [items, setItems] = useItemsContext();
-
   useEffect(() => {
     // Make the fetch request here
     fetch("/shop")
       .then((response) => response.json())
-      .then((data) => {
-        // Handle the response data
-        setItems(data);
+      .then((items) => {
+        // sort items in place by available items first
+        items.sort((item2, item1) => {
+          console.log(item2, item1);
+          if (!item2.sold && item1.sold) return -1;
+        });
+
+        // set the global items state
+        setItems(items);
       })
       .catch((error) => {
         // Handle any errors
@@ -24,16 +30,25 @@ function ShopPage() {
   return (
     <div>
       {items.length ? (
-        <div>
-          <SimpleGrid columns={[2, null, 4]} spacing={10}>
+        <Box
+          maxW="7xl"
+          mx="auto"
+          px={{
+            base: "4",
+            md: "8",
+            lg: "12",
+          }}
+          py={{
+            base: "6",
+            md: "8",
+            lg: "12",
+          }}>
+          <ProductGrid>
             {items.map((item) => (
-              <div key={item.id}>
-                <ItemCard item={item} />
-                <Link to={`/single-item/${item.id}`}>see details</Link>
-              </div>
+              <ProductCard key={item.id} item={item} />
             ))}
-          </SimpleGrid>
-        </div>
+          </ProductGrid>
+        </Box>
       ) : null}
     </div>
   );
