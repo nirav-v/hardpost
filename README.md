@@ -22,6 +22,10 @@ The decision to develop this platform stemmed from a personal hobby of mine, ska
 
 </p>
 
+## Database Design
+
+<img src="./hardpost-ERD.jpg">
+
 ### steps for running locally
 
 - clone repo
