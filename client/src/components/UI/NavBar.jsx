@@ -24,8 +24,6 @@ function NavBar({ loggedIn, handleLogoutClick }) {
       { title: "My items", path: "/user-items" },
       { title: "My Orders", path: "/orders" },
     ];
-  } else {
-    navTabs = [{ title: "Home", path: "/" }];
   }
 
   return (

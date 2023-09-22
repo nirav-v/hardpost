@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Image, Button, Box } from "@chakra-ui/react";
 import ItemCard from "../components/UI/ItemCard";
+import { ProductGrid } from "./ShopPage/ProductGrid";
+import { ProductCard } from "./ShopPage/ProductCard";
 import Auth from "../util/auth";
 
 function UserItems() {
@@ -13,8 +16,12 @@ function UserItems() {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        setUserItems(data);
+      .then((items) => {
+        // sort items in place by available items first
+        items.sort((item2, item1) => {
+          if (!item2.sold && item1.sold) return -1;
+        });
+        setUserItems(items);
       })
       .catch((err) => console.log(err));
   };
@@ -40,19 +47,22 @@ function UserItems() {
 
   return (
     <div>
-      <p>UserItems Page</p>
-
       {userItems.length ? (
-        <ul>
+        <ProductGrid>
           {userItems.map((item) => (
-            <li key={item.id}>
-              <ItemCard item={item} />
-              <button onClick={() => handleRemoveItemClick(item.id)}>
-                Remove Item
-              </button>
-            </li>
+            <div key={item.id}>
+              <Box boxSize="sm">
+                <Image src={item.imagePath} boxSize="300px" objectFit="cover" />
+                <Button
+                  onClick={() => handleRemoveItemClick(item.id)}
+                  colorScheme="red"
+                  size="xs">
+                  Delete Item
+                </Button>
+              </Box>
+            </div>
           ))}
-        </ul>
+        </ProductGrid>
       ) : (
         "you haven't posted any items"
       )}
