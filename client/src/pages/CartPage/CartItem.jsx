@@ -8,27 +8,25 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { CartProductMeta } from "./CartProductMeta";
+import { redirect, useNavigate } from "react-router-dom";
 
-export const CartItem = (props) => {
-  const {
-    name,
-    description,
-    // quantity,
-    imageUrl,
-    // currency,
-    price,
-    // onChangeQuantity,
-    onClickDelete,
-  } = props;
+export const CartItem = ({ item, onClickDelete }) => {
+  const navigate = useNavigate();
+
   return (
     <Flex
+      onClick={() => navigate(`/single-item/${item.id}`)}
       direction={{
         base: "column",
         md: "row",
       }}
       justify="space-between"
       align="center">
-      <CartProductMeta name={name} description={description} image={imageUrl} />
+      <CartProductMeta
+        name={item.name}
+        description={item.description}
+        image={item.imagePath}
+      />
 
       {/* Desktop */}
       <Flex
@@ -47,7 +45,7 @@ export const CartItem = (props) => {
         {/* <PriceTag price={price} currency={currency} /> */}
         <CloseButton
           colorScheme="whiteAlpha"
-          aria-label={`Delete ${name} from cart`}
+          aria-label={`Delete ${item.name} from cart`}
           onClick={onClickDelete}
         />
       </Flex>
@@ -62,9 +60,12 @@ export const CartItem = (props) => {
           base: "flex",
           md: "none",
         }}>
-        <Link fontSize="sm" textDecor="underline" onClick={onClickDelete}>
+        <CloseButton
+          fontSize="sm"
+          textDecor="underline"
+          onClick={onClickDelete}>
           Delete
-        </Link>
+        </CloseButton>
         {/* <QuantitySelect
           value={quantity}
           onChange={(e) => {
@@ -72,7 +73,7 @@ export const CartItem = (props) => {
           }}
         /> */}
         <Stat>
-          <StatNumber>${price}</StatNumber>
+          <StatNumber>${item.price}</StatNumber>
         </Stat>
       </Flex>
     </Flex>

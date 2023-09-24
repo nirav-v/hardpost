@@ -113,9 +113,7 @@ function CartPage() {
                     <CartItem
                       key={item.id}
                       onClickDelete={() => handleCartDelete(item.id)}
-                      name={item.name}
-                      price={item.price}
-                      imageUrl={item.imagePath}></CartItem>
+                      item={item}></CartItem>
                   );
                 })}
               </Stack>
