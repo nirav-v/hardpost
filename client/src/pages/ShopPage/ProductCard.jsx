@@ -13,6 +13,7 @@ import {
 // import { Rating } from "./Rating";
 // import { FavouriteButton } from "./FavouriteButton";
 import { PriceTag } from "./PriceTag";
+import { Link as ReactRouterLink } from "react-router-dom";
 import Auth from "../../util/auth";
 
 export const ProductCard = ({ item }) => {
@@ -36,19 +37,21 @@ export const ProductCard = ({ item }) => {
         md: "5",
       }}>
       <Box position="relative">
-        <AspectRatio ratio={4 / 3}>
-          <Image
-            src={item.imagePath}
-            alt={item.name}
-            opacity={item.sold ? 0.2 : null}
-            draggable="false"
-            fallback={<Skeleton />}
-            borderRadius={{
-              base: "md",
-              md: "xl",
-            }}
-          />
-        </AspectRatio>
+        <ReactRouterLink to={`/single-item/${item.id}`}>
+          <AspectRatio ratio={4 / 3}>
+            <Image
+              src={item.imagePath}
+              alt={item.name}
+              opacity={item.sold ? 0.2 : null}
+              draggable="false"
+              fallback={<Skeleton />}
+              borderRadius={{
+                base: "md",
+                md: "xl",
+              }}
+            />
+          </AspectRatio>
+        </ReactRouterLink>
       </Box>
       <Stack>
         <Stack spacing="1">
