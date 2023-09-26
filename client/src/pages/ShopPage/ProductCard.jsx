@@ -15,8 +15,16 @@ import { PriceTag } from "./PriceTag";
 import { Link as ReactRouterLink } from "react-router-dom";
 import Auth from "../../util/auth";
 import { useState } from "react";
+import { useCartContext } from "../../context/CartContext";
 
 export const ProductCard = ({ item }) => {
+  // get the current user's cart
+  const [cart, setCart] = useCartContext();
+
+  // create a set of cartIds to lookup when mapping over items below
+  const cartIds = new Set();
+  cart.forEach((cartItem) => cartIds.add(cartItem.id));
+
   // loading state to track while add to cart request is happening and finished
   const [loading, setLoading] = useState(false);
 
@@ -35,6 +43,20 @@ export const ProductCard = ({ item }) => {
         return res.json();
       })
       .then((data) => console.log(data));
+  };
+
+  // duplicate code for delete function in cart page, consider importing as util function
+  const handleCartDelete = (itemId) => {
+    fetch("/api/cart/delete-item", {
+      method: "POST",
+      body: JSON.stringify({ itemId }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((updatedItems) => setCart(updatedItems));
   };
 
   return (
@@ -74,6 +96,13 @@ export const ProductCard = ({ item }) => {
       <Stack align="center">
         {item.sold ? (
           <Text>Sold</Text>
+        ) : cartIds.has(item.id) ? (
+          <Button
+            onClick={() => handleCartDelete(item.id)}
+            colorScheme="red"
+            width="full">
+            Remove from cart
+          </Button>
         ) : (
           <Button
             onClick={() => handleAddCartClick(item.id)}
