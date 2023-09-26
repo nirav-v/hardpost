@@ -10,14 +10,18 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-// import { Rating } from "./Rating";
-// import { FavouriteButton } from "./FavouriteButton";
+
 import { PriceTag } from "./PriceTag";
 import { Link as ReactRouterLink } from "react-router-dom";
 import Auth from "../../util/auth";
+import { useState } from "react";
 
 export const ProductCard = ({ item }) => {
+  // loading state to track while add to cart request is happening and finished
+  const [loading, setLoading] = useState(false);
+
   const handleAddCartClick = (itemId) => {
+    setLoading(true);
     fetch("/api/cart", {
       method: "POST",
       body: JSON.stringify({ itemId }),
@@ -26,7 +30,10 @@ export const ProductCard = ({ item }) => {
         Authorization: `Bearer ${Auth.getToken()}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        setLoading(false);
+        return res.json();
+      })
       .then((data) => console.log(data));
   };
 
@@ -72,7 +79,7 @@ export const ProductCard = ({ item }) => {
             onClick={() => handleAddCartClick(item.id)}
             colorScheme="blue"
             width="full">
-            Add to cart
+            {loading ? "adding to your cart..." : "Add to cart"}
           </Button>
         )}
       </Stack>
