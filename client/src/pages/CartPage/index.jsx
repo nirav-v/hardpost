@@ -20,16 +20,6 @@ import Auth from "../../util/auth";
 function CartPage() {
   const [cart, setCart] = useCartContext();
 
-  useEffect(() => {
-    fetch("/api/cart", {
-      headers: {
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setCart(data));
-  }, []);
-
   const handleCartDelete = (itemId) => {
     fetch("/api/cart/delete-item", {
       method: "POST",
