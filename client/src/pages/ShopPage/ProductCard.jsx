@@ -9,8 +9,9 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  useDisclosure,
 } from "@chakra-ui/react";
-
+import BasicModal from "../../components/UI/BasicModal";
 import { PriceTag } from "./PriceTag";
 import { Link as ReactRouterLink } from "react-router-dom";
 import Auth from "../../util/auth";
@@ -30,9 +31,10 @@ export const ProductCard = ({ item }) => {
   // loading state to track while add to cart request is happening and finished
   const [loading, setLoading] = useState(false);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const handleAddCartClick = (itemId) => {
-    if (!Auth.isLoggedIn())
-      return "you must me logged in to purchase this item";
+    if (!Auth.isLoggedIn()) return;
 
     setLoading(true);
     fetch("/api/cart", {
@@ -99,8 +101,13 @@ export const ProductCard = ({ item }) => {
         <HStack></HStack>
       </Stack>
       <Stack align="center">
+        {/* rendering logic for buttons below: 
+        when user is not logged in, render modal that opens when they try adding to cart, 
+        if logged in, check cart items, render original button with onClick handlers for adding or removing from cart */}
         {item.sold ? (
           <Text>Sold</Text>
+        ) : !Auth.isLoggedIn() ? (
+          <BasicModal />
         ) : cartIds.has(item.id) ? (
           <Button
             onClick={() => handleCartDelete(item.id)}
