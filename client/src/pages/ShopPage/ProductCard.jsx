@@ -24,6 +24,8 @@ export const ProductCard = ({ item }) => {
   // create a set of cartIds to lookup when mapping over items below
   const cartIds = new Set();
   cart.forEach((cartItem) => cartIds.add(cartItem.id));
+  console.log(cart);
+  console.log(cartIds);
 
   // loading state to track while add to cart request is happening and finished
   const [loading, setLoading] = useState(false);
@@ -42,7 +44,7 @@ export const ProductCard = ({ item }) => {
         setLoading(false);
         return res.json();
       })
-      .then((data) => console.log(data));
+      .then((updatedItems) => setCart(updatedItems));
   };
 
   // duplicate code for delete function in cart page, consider importing as util function
