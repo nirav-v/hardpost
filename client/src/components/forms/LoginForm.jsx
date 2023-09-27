@@ -47,14 +47,14 @@ function LoginForm({
     });
 
     if (response.status === 200) {
-      setLoggedIn(true);
       const token = await response.json();
-      console.log(token);
       // sets token in local storage
       Auth.login(token);
+      console.log("set token in local storage", token);
       // localStorage.setItem("currentUserId", loginResult.userId);
       setEmail("");
       setPassword("");
+      setLoggedIn(true);
     } else {
       setLoginSuccess(false);
     }

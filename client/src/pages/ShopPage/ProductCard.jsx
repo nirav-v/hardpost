@@ -24,13 +24,16 @@ export const ProductCard = ({ item }) => {
   // create a set of cartIds to lookup when mapping over items below
   const cartIds = new Set();
   cart.forEach((cartItem) => cartIds.add(cartItem.id));
-  console.log(cart);
-  console.log(cartIds);
+  console.log("cart context", cart);
+  console.log("cart ids", cartIds);
 
   // loading state to track while add to cart request is happening and finished
   const [loading, setLoading] = useState(false);
 
   const handleAddCartClick = (itemId) => {
+    if (!Auth.isLoggedIn())
+      return "you must me logged in to purchase this item";
+
     setLoading(true);
     fetch("/api/cart", {
       method: "POST",

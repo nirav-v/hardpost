@@ -8,25 +8,17 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { CartProductMeta } from "./CartProductMeta";
-import { redirect, useNavigate } from "react-router-dom";
 
 export const CartItem = ({ item, onClickDelete }) => {
-  const navigate = useNavigate();
-
   return (
     <Flex
-      onClick={() => navigate(`/single-item/${item.id}`)}
       direction={{
         base: "column",
         md: "row",
       }}
       justify="space-between"
       align="center">
-      <CartProductMeta
-        name={item.name}
-        description={item.description}
-        image={item.imagePath}
-      />
+      <CartProductMeta item={item} />
 
       {/* Desktop */}
       <Flex
