@@ -76,14 +76,14 @@ function LoginForm({
               </Heading>
               <Text color="fg.muted">
                 Don't have an account?{" "}
-                <button
+                <Button
                   type="button"
                   onClick={(event) => {
                     event.preventDefault();
                     setShowSignUpForm(!showSignUpForm);
                   }}>
                   Sign up
-                </button>
+                </Button>
               </Text>
             </Stack>
           </Stack>
@@ -114,7 +114,9 @@ function LoginForm({
                 </Button>
               </HStack>
               <Stack spacing="6">
-                <Button type="submit">Log in</Button>
+                <Button type="submit" colorScheme="cyan">
+                  Log in
+                </Button>
                 <HStack>
                   <Divider />
                   {/* <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">

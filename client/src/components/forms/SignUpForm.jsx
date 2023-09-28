@@ -85,14 +85,14 @@ function SignUpForm({
               </Heading>
               <Text color="fg.muted">
                 Already have an account?{" "}
-                <button
+                <Button
                   type="button"
                   onClick={(event) => {
                     event.preventDefault();
                     setShowSignUpForm(!showSignUpForm);
                   }}>
                   Log in
-                </button>
+                </Button>
               </Text>
             </Stack>
           </Stack>

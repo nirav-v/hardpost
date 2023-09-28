@@ -28,7 +28,7 @@ function App() {
     if (Auth.isLoggedIn()) setLoggedIn(true);
   }, []);
 
-  const [showSignUpForm, setShowSignUpForm] = useState(false);
+  const [showSignUpForm, setShowSignUpForm] = useState(true);
 
   const handleLogoutClick = () => {
     localStorage.removeItem("token");
