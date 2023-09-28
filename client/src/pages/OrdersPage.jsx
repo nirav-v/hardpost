@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
+  Center,
   Heading,
   Text,
   Box,
@@ -38,9 +39,11 @@ function OrdersPage() {
 
   return (
     <div>
-      <h2>your orders</h2>
       {orders.length ? (
         <List spacing={5}>
+          <Center height="100px">
+            <Heading>Your Orders</Heading>
+          </Center>
           {orders.map((order) => {
             return (
               <ListItem key={order.id}>
@@ -80,7 +83,9 @@ function OrdersPage() {
           })}
         </List>
       ) : (
-        "no orders"
+        <Center height="100px">
+          <Heading>Looks like you haven't placed any orders</Heading>
+        </Center>
       )}
     </div>
   );

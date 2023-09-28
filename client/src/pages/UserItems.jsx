@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, Button, Box } from "@chakra-ui/react";
+import { Image, Button, Box, Center, Heading } from "@chakra-ui/react";
 import ItemCard from "../components/UI/ItemCard";
 import { ProductGrid } from "./ShopPage/ProductGrid";
 import { ProductCard } from "./ShopPage/ProductCard";
@@ -64,7 +64,9 @@ function UserItems() {
           ))}
         </ProductGrid>
       ) : (
-        "you haven't posted any items"
+        <Center height="100px">
+          <Heading>You haven't posted any items yet</Heading>
+        </Center>
       )}
     </div>
   );
