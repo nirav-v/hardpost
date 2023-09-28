@@ -80,9 +80,12 @@ function SignUpForm({
         <Stack spacing="8">
           <Stack spacing="6">
             <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
-              <Heading size={{ base: "xs", md: "sm" }}>
-                Create an account
-              </Heading>
+              <Heading size={{ base: "xs", md: "sm" }}>Welcome</Heading>
+              <Text fontSize="md">
+                Please create and account to use all features, or simply browse
+                items below
+              </Text>
+
               <Text color="fg.muted">
                 Already have an account?{" "}
                 <Button
@@ -139,7 +142,9 @@ function SignUpForm({
               </HStack>
               <Stack spacing="6">
                 <Text color="red">{errorMessage}</Text>
-                <Button type="submit">Sign Up</Button>
+                <Button type="submit" colorScheme="cyan">
+                  Sign Up
+                </Button>
                 <HStack>
                   <Divider />
                   {/* <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
