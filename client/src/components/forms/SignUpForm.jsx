@@ -82,8 +82,7 @@ function SignUpForm({
             <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
               <Heading size={{ base: "xs", md: "sm" }}>Welcome</Heading>
               <Text fontSize="md">
-                Please create and account to use all features, or simply browse
-                items below
+                Please create an account, or simply browse items below
               </Text>
 
               <Text color="fg.muted">

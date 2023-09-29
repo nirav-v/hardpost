@@ -15,6 +15,12 @@ const Auth = {
   getToken: () => {
     return localStorage.getItem("token");
   },
+
+  getPayload: function () {
+    console.log("this", this);
+    const token = this.getToken();
+    return jwt_decode(token);
+  },
 };
 
 export default Auth;

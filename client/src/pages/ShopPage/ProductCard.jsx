@@ -1,7 +1,9 @@
+import Auth from "../../util/auth";
 import {
   AspectRatio,
   Box,
   Button,
+  Center,
   HStack,
   Image,
   Link,
@@ -14,13 +16,19 @@ import {
 import BasicModal from "../../components/UI/BasicModal";
 import { PriceTag } from "./PriceTag";
 import { Link as ReactRouterLink } from "react-router-dom";
-import Auth from "../../util/auth";
 import { useState } from "react";
 import { useCartContext } from "../../context/CartContext";
 
 export const ProductCard = ({ item }) => {
   // get the current user's cart
   const [cart, setCart] = useCartContext();
+
+  // access the current user's id by decoding the jwt in local storage
+  let userId;
+  if (Auth.isLoggedIn()) {
+    userId = Auth.getPayload().userId;
+    console.log("userId: ", userId);
+  }
 
   // create a set of cartIds to lookup when mapping over items below
   const cartIds = new Set();
@@ -30,8 +38,6 @@ export const ProductCard = ({ item }) => {
 
   // loading state to track while add to cart request is happening and finished
   const [loading, setLoading] = useState(false);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleAddCartClick = (itemId) => {
     if (!Auth.isLoggedIn()) return;
@@ -65,6 +71,47 @@ export const ProductCard = ({ item }) => {
       .then((res) => res.json())
       .then((updatedItems) => setCart(updatedItems));
   };
+
+  // rendering a different button under different conditions
+  let button;
+  // user not logged in, render the modal opening button to tell them to log in
+  if (!Auth.isLoggedIn()) {
+    button = (
+      <BasicModal>
+        {" "}
+        <Text fontSize="lg" align="center">
+          You must have an account and be logged in to purchase this item
+        </Text>
+      </BasicModal>
+    );
+  }
+
+  if (item.sold) {
+    button = <Text>Sold</Text>; // item is sold, render "sold" button
+  }
+
+  if (item.userId === userId) {
+    button = <Text>My item</Text>; // item belongs to logged in user, render "my item" button
+  } else if (cartIds.has(item.id)) {
+    button = (
+      <Button
+        onClick={() => handleCartDelete(item.id)}
+        colorScheme="red"
+        width="full">
+        Remove from cart
+      </Button>
+    ); // item is in cart, return "remove from cart button"
+  } else {
+    // item is not in cart, return "add to cart button"
+    button = (
+      <Button
+        onClick={() => handleAddCartClick(item.id)}
+        colorScheme="blue"
+        width="full">
+        {loading ? "adding to your cart..." : "Add to cart"}
+      </Button>
+    );
+  }
 
   return (
     <Stack
@@ -100,30 +147,8 @@ export const ProductCard = ({ item }) => {
         </Stack>
         <HStack></HStack>
       </Stack>
-      <Stack align="center">
-        {/* rendering logic for buttons below: 
-        when user is not logged in, render modal that opens when they try adding to cart, 
-        if logged in, check cart items, render original button with onClick handlers for adding or removing from cart */}
-        {item.sold ? (
-          <Text>Sold</Text>
-        ) : !Auth.isLoggedIn() ? (
-          <BasicModal />
-        ) : cartIds.has(item.id) ? (
-          <Button
-            onClick={() => handleCartDelete(item.id)}
-            colorScheme="red"
-            width="full">
-            Remove from cart
-          </Button>
-        ) : (
-          <Button
-            onClick={() => handleAddCartClick(item.id)}
-            colorScheme="blue"
-            width="full">
-            {loading ? "adding to your cart..." : "Add to cart"}
-          </Button>
-        )}
-      </Stack>
+      {/* content of button conditionally rendered using logic above */}
+      <Stack align="center">{button}</Stack>
     </Stack>
   );
 };

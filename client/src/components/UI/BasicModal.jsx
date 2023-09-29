@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-export default function BasicModal({ message }) {
+export default function BasicModal({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -20,11 +20,9 @@ export default function BasicModal({ message }) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>
-            You must have an account and be logged in to purchase this item
-          </ModalHeader>
+          <ModalHeader></ModalHeader>
           <ModalCloseButton />
-
+          {children}
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
