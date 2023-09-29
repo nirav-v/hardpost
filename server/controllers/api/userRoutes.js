@@ -2,14 +2,8 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const { User, Cart } = require("../../models/");
 
-// GET Logged in user
-router.get("/login", async (req, res) => {
-  res.send(req.session);
-});
-
 // SIGNUP
 router.post("/signup", async (req, res) => {
-  console.log("BODY ", req.body);
   const { username, email, password } = req.body;
   //   check if user exists already
   const existingUser = await User.findOne({
@@ -32,9 +26,13 @@ router.post("/signup", async (req, res) => {
   const userCart = await newUser.createCart();
 
   // create jwt
-  const token = jwt.sign({ username, email }, process.env.JWT_SECRET, {
-    expiresIn: "24h",
-  });
+  const token = jwt.sign(
+    { username, email, userId: newUser.dataValues.id },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "24h",
+    }
+  );
 
   // set and save the user's id on the session. Won't save whole user instance because we lose all sequelize magic methods and other meta data when the object is stringified before being saved on session
   // req.session.userId = newUser.id;
@@ -61,7 +59,11 @@ router.post("/login", async (req, res) => {
   if (existingUser.checkPassword(req.body.password, existingUser.password)) {
     // create jwt
     const token = jwt.sign(
-      { username: existingUser.username, email: existingUser.email },
+      {
+        username: existingUser.username,
+        email: existingUser.email,
+        userId: existingUser.dataValues.id,
+      },
       "jwt-super secrettt",
       {
         expiresIn: "24h",
