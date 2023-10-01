@@ -74,8 +74,11 @@ export const ProductCard = ({ item }) => {
 
   // rendering a different button under different conditions
   let button;
-  // user not logged in, render the modal opening button to tell them to log in
-  if (!Auth.isLoggedIn()) {
+
+  if (item.sold) {
+    button = <Text>Sold</Text>; // item is sold, render "sold" button
+  } else if (!Auth.isLoggedIn()) {
+    // user not logged in, render the modal opening button to tell them to log in
     button = (
       <BasicModal>
         {" "}
@@ -84,13 +87,7 @@ export const ProductCard = ({ item }) => {
         </Text>
       </BasicModal>
     );
-  }
-
-  if (item.sold) {
-    button = <Text>Sold</Text>; // item is sold, render "sold" button
-  }
-
-  if (item.userId === userId) {
+  } else if (item.userId === userId) {
     button = <Text>My item</Text>; // item belongs to logged in user, render "my item" button
   } else if (cartIds.has(item.id)) {
     button = (
@@ -101,7 +98,7 @@ export const ProductCard = ({ item }) => {
         Remove from cart
       </Button>
     ); // item is in cart, return "remove from cart button"
-  } else {
+  } else if (!cartIds.has(item.id)) {
     // item is not in cart, return "add to cart button"
     button = (
       <Button

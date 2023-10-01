@@ -12,7 +12,7 @@ import { Routes, Route } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import { ItemsProvider } from "./context/ItemsContext";
 import LogoutButton from "./components/UI/LogoutButton";
-import { Button, Container, useColorMode, Flex } from "@chakra-ui/react";
+import { Button, Box, Container, useColorMode, Flex } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import CartProvider from "./context/CartContext";
 import Auth from "./util/auth";
@@ -42,6 +42,11 @@ function App() {
           <Button mr={0} onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
+          {loggedIn ? (
+            <Box>
+              <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>{" "}
+            </Box>
+          ) : null}
         </Flex>
         <NavBar loggedIn={loggedIn} handleLogoutClick={handleLogoutClick} />
         <ItemsProvider>
