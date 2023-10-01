@@ -24,6 +24,7 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 import hardpostLogo from "../../images/hardpost-logo.png";
+import { useCartContext } from "../../context/CartContext";
 
 const NavLink = ({ children }) => {
   return (
@@ -41,7 +42,7 @@ const NavLink = ({ children }) => {
 };
 
 function NavBar({ loggedIn, handleLogoutClick }) {
-  const [currentPage, setCurrentPage] = useState("Home");
+  const [cart, setCart] = useCartContext();
 
   let navTabs = [];
   if (loggedIn) {
@@ -89,6 +90,9 @@ function NavBar({ loggedIn, handleLogoutClick }) {
                   <Link to={tab.path}>{tab.title}</Link>
                 </NavLink>
               ))}
+              <NavLink>
+                <Link to="/cart">Cart: {cart.length} items</Link>
+              </NavLink>
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
@@ -98,14 +102,7 @@ function NavBar({ loggedIn, handleLogoutClick }) {
                 rounded={"full"}
                 variant={"link"}
                 cursor={"pointer"}
-                minW={0}>
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
-              </MenuButton>
+                minW={0}></MenuButton>
             </Menu>
           </Flex>
         </Flex>
