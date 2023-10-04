@@ -1,5 +1,6 @@
 import {
   Button,
+  Heading,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -7,6 +8,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
@@ -30,15 +32,27 @@ export default function WelcomeModal() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>Welcomen </ModalBody>
+          <ModalHeader> Welcome to HardPost!</ModalHeader>
+
+          <ModalBody>
+            <Heading size="lg">First time users please read:</Heading>
+            <br />
+            <Text fontSize="lg">
+              This platform is still in development. Therefore all current
+              purchases and sales are SIMULATED, and no actual financial charges
+              will be processed or made. Please feel free to post and delete
+              test items, add items to your cart, and navigate through the
+              checkout process. Fake credit card numbers will be provided so
+              that you can properly simulate payments through Stripe in test
+              mode.
+            </Text>
+          </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleWelcomeClose}>
               Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
