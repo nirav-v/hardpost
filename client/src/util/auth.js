@@ -21,6 +21,11 @@ const Auth = {
     const token = this.getToken();
     return jwt_decode(token);
   },
+
+  returningUser: () => {
+    if (localStorage.getItem("returningUser")) return true;
+    return false;
+  },
 };
 
 export default Auth;

@@ -1,13 +1,14 @@
-import ShopPage from "./pages/ShopPage";
-import SignUpForm from "./components/forms/SignUpForm";
-import LoginForm from "./components/forms/LoginForm";
+import Auth from "./util/auth";
 import AddItemForm from "./components/forms/AddItemForm1";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import SignUpForm from "./components/forms/SignUpForm";
+import SingleItemPage from "./pages/SingleItemPage";
+import ShopPage from "./pages/ShopPage";
+import LoginForm from "./components/forms/LoginForm";
 import OrdersPage from "./pages/OrdersPage";
 import UserItems from "./pages/UserItems";
 import NavBar from "./components/UI/NavBar";
-import SingleItemPage from "./pages/SingleItemPage";
 import { Routes, Route } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import { ItemsProvider } from "./context/ItemsContext";
@@ -15,10 +16,15 @@ import LogoutButton from "./components/UI/LogoutButton";
 import { Button, Box, Container, useColorMode, Flex } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import CartProvider from "./context/CartContext";
-import Auth from "./util/auth";
+import WelcomeModal from "./components/UI/WelcomeModal";
 
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const [showSignUpForm, setShowSignUpForm] = useState(!Auth.returningUser());
+
+  console.log(showSignUpForm);
+  // first check is we have a returning user
 
   const [loggedIn, setLoggedIn] = useState(false);
   console.log("loggedIn ", loggedIn);
@@ -27,8 +33,6 @@ function App() {
   useEffect(() => {
     if (Auth.isLoggedIn()) setLoggedIn(true);
   }, []);
-
-  const [showSignUpForm, setShowSignUpForm] = useState(true);
 
   const handleLogoutClick = () => {
     localStorage.removeItem("token");
@@ -55,15 +59,18 @@ function App() {
             <div>
               <Container centerContent>
                 {/* conditionally render Login form OR Sign up form based on state */}
-                {!showSignUpForm ? (
-                  <LoginForm
-                    loggedIn={loggedIn}
-                    setLoggedIn={setLoggedIn}
-                    showSignUpForm={showSignUpForm}
-                    setShowSignUpForm={setShowSignUpForm}
-                  />
+                {showSignUpForm ? (
+                  <>
+                    {Auth.returningUser() ? null : <WelcomeModal />}
+                    <SignUpForm
+                      loggedIn={loggedIn}
+                      setLoggedIn={setLoggedIn}
+                      showSignUpForm={showSignUpForm}
+                      setShowSignUpForm={setShowSignUpForm}
+                    />
+                  </>
                 ) : (
-                  <SignUpForm
+                  <LoginForm
                     loggedIn={loggedIn}
                     setLoggedIn={setLoggedIn}
                     showSignUpForm={showSignUpForm}
