@@ -114,6 +114,9 @@ function NavBar({ loggedIn, handleLogoutClick }) {
                   <Link to={tab.path}>{tab.title}</Link>
                 </NavLink>
               ))}
+              <NavLink>
+                <Link to="/cart">Cart: {cart.length} items</Link>
+              </NavLink>
             </Stack>
           </Box>
         ) : null}
