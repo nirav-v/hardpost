@@ -67,7 +67,7 @@ function NavBar({ loggedIn, handleLogoutClick }) {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box px={4}>
         <Container centerContent>
           {" "}
           <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
