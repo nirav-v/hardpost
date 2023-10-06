@@ -34,7 +34,7 @@ const itemData = [
   {
     name: "Converse - Fastbreak Sage colorway",
     category: "shoes",
-    price: 20,
+    price: 35,
     description:
       "Size 8 in Mens. Skated these for a day so slight kickflip wear on right toe. ",
     imagePath:
@@ -45,12 +45,22 @@ const itemData = [
   {
     name: "Brand New Spitfire Wheels",
     category: "wheels",
-    price: 20,
+    price: 30,
     description: "54mm, Formula 4 Conical Full Shape",
     imagePath:
       "https://public-hardpost-bucket.s3.amazonaws.com/spitfiref4wheels.jpg4f00b35e787dfeb151a411b7e3c99d77bb69ad60dbfd6451bbfc244514b94fe4",
     sold: false,
     userId: 1,
+  },
+  {
+    name: "Real - Mason Silva deck",
+    category: "decks",
+    price: 10,
+    description: "54mm, Formula 4 Conical Full Shape",
+    imagePath:
+      "https://public-hardpost-bucket.s3.amazonaws.com/real-mason-deck.jpg855febf05f4f6b79f2c21c4eff03297d6c4e9ac2cd7631dec3954ece0b2e3dd4",
+    sold: false,
+    userId: 2,
   },
 ];
 
@@ -63,7 +73,7 @@ const seedDB = async () => {
   });
   // add a cart for every user
   for (const user of users) {
-    user.createCart();
+    await user.createCart();
   }
 
   const items = await Item.bulkCreate(itemData);
