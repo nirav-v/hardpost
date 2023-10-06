@@ -1,5 +1,6 @@
 import React from "react";
 import { useItemsContext } from "../context/ItemsContext";
+import { useCartContext } from "../context/CartContext";
 import { useParams } from "react-router-dom";
 import {
   Center,
@@ -19,6 +20,14 @@ import Auth from "../util/auth";
 
 const SingleItemPage = () => {
   const [items, setItems] = useItemsContext();
+  console.log(items);
+  const [cart, setCart] = useCartContext();
+
+  // DUPLICATE CODE from ProductCard
+  // create a set of cartIds to lookup when mapping over items below
+  const cartIds = new Set();
+  cart.forEach((cartItem) => cartIds.add(cartItem.id));
+
   const params = useParams();
 
   if (items.length < 1)
@@ -36,7 +45,7 @@ const SingleItemPage = () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((updatedCart) => setCart(updatedCart));
   };
 
   return (
@@ -62,12 +71,16 @@ const SingleItemPage = () => {
             {/* <Button variant="solid" colorScheme="blue">
             Buy now
           </Button> */}
-            <Button
-              onClick={() => handleAddCartClick(item.id)}
-              variant="ghost"
-              colorScheme="blue">
-              Add to cart
-            </Button>
+            {cartIds.has(item.id) ? (
+              "In your cart already"
+            ) : (
+              <Button
+                onClick={() => handleAddCartClick(item.id)}
+                variant="ghost"
+                colorScheme="blue">
+                Add to cart
+              </Button>
+            )}
           </ButtonGroup>
         </CardFooter>
       </Card>
