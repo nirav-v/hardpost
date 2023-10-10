@@ -11,7 +11,7 @@ import {
   Heading,
   HStack,
 } from "@chakra-ui/react";
-import deleteCartItem from "../../util/cartApi";
+import { deleteCartItem } from "../../util/cartApi";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { CartItem } from "./CartItem";
 import { CartOrderSummary } from "./CartOrderSummary";

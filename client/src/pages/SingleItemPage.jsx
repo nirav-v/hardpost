@@ -1,3 +1,5 @@
+import Auth from "../util/auth";
+import { addCartItem } from "../util/cartApi";
 import React from "react";
 import { useItemsContext } from "../context/ItemsContext";
 import { useCartContext } from "../context/CartContext";
@@ -16,7 +18,6 @@ import {
   Button,
   ButtonGroup,
 } from "@chakra-ui/react";
-import Auth from "../util/auth";
 
 const SingleItemPage = () => {
   const [items, setItems] = useItemsContext();
@@ -35,17 +36,9 @@ const SingleItemPage = () => {
 
   const item = items.filter((item) => item.id === parseInt(params.itemId))[0];
 
-  const handleAddCartClick = (itemId) => {
-    fetch("/api/cart", {
-      method: "POST",
-      body: JSON.stringify({ itemId }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((updatedCart) => setCart(updatedCart));
+  const handleAddCartClick = async (itemId) => {
+    const updatedItems = await addCartItem(itemId);
+    setCart(updatedItems);
   };
 
   return (

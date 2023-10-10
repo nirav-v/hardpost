@@ -16,7 +16,7 @@ import {
 import BasicModal from "../../components/UI/BasicModal";
 import { PriceTag } from "./PriceTag";
 import { Link as ReactRouterLink } from "react-router-dom";
-import deleteCartItem from "../../util/cartApi";
+import { addCartItem, deleteCartItem } from "../../util/cartApi";
 import { useState } from "react";
 import { useCartContext } from "../../context/CartContext";
 
@@ -40,23 +40,12 @@ export const ProductCard = ({ item }) => {
   // loading state to track while add to cart request is happening and finished
   const [loading, setLoading] = useState(false);
 
-  const handleAddCartClick = (itemId) => {
+  const handleAddCartClick = async (itemId) => {
     if (!Auth.isLoggedIn()) return;
-
     setLoading(true);
-    fetch("/api/cart", {
-      method: "POST",
-      body: JSON.stringify({ itemId }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    })
-      .then((res) => {
-        setLoading(false);
-        return res.json();
-      })
-      .then((updatedItems) => setCart(updatedItems));
+    const updatedItems = await addCartItem(itemId);
+    setCart(updatedItems);
+    setLoading(false);
   };
 
   // using imported util function for deleting item
