@@ -1,3 +1,4 @@
+import Auth from "../../util/auth";
 import React, { useState, useEffect, useContext } from "react";
 import {
   CloseButton,
@@ -10,27 +11,20 @@ import {
   Heading,
   HStack,
 } from "@chakra-ui/react";
+import deleteCartItem from "../../util/cartApi";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { CartItem } from "./CartItem";
 import { CartOrderSummary } from "./CartOrderSummary";
 import { useCartContext } from "../../context/CartContext";
 import { loadStripe } from "@stripe/stripe-js";
-import Auth from "../../util/auth";
 
 function CartPage() {
   const [cart, setCart] = useCartContext();
 
-  const handleCartDelete = (itemId) => {
-    fetch("/api/cart/delete-item", {
-      method: "POST",
-      body: JSON.stringify({ itemId }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((updatedItems) => setCart(updatedItems));
+  // using imported util function for deleting item
+  const handleCartDelete = async (itemId) => {
+    const updatedItems = await deleteCartItem(itemId);
+    setCart(updatedItems);
   };
 
   const handleCheckoutSubmit = async () => {

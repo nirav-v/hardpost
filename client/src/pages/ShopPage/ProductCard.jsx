@@ -16,6 +16,7 @@ import {
 import BasicModal from "../../components/UI/BasicModal";
 import { PriceTag } from "./PriceTag";
 import { Link as ReactRouterLink } from "react-router-dom";
+import deleteCartItem from "../../util/cartApi";
 import { useState } from "react";
 import { useCartContext } from "../../context/CartContext";
 
@@ -58,18 +59,10 @@ export const ProductCard = ({ item }) => {
       .then((updatedItems) => setCart(updatedItems));
   };
 
-  // duplicate code for delete function in cart page, consider importing as util function
-  const handleCartDelete = (itemId) => {
-    fetch("/api/cart/delete-item", {
-      method: "POST",
-      body: JSON.stringify({ itemId }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((updatedItems) => setCart(updatedItems));
+  // using imported util function for deleting item
+  const handleCartDelete = async (itemId) => {
+    const updatedItems = await deleteCartItem(itemId);
+    setCart(updatedItems);
   };
 
   // rendering a different button under different conditions
