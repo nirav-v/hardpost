@@ -1,6 +1,6 @@
 import Auth from "./auth";
 
-const addCartItem = async (itemId) => {
+const addCartItem = async (itemId: number) => {
   const res = await fetch("/api/cart", {
     method: "POST",
     body: JSON.stringify({ itemId }),
@@ -12,7 +12,7 @@ const addCartItem = async (itemId) => {
   return res.json();
 };
 
-const deleteCartItem = async (itemId) => {
+const deleteCartItem = async (itemId: number) => {
   const res = await fetch("/api/cart/delete-item", {
     method: "POST",
     body: JSON.stringify({ itemId }),
