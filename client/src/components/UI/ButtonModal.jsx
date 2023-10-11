@@ -11,15 +11,15 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-export default function BasicModal({ children }) {
+export default function ButtonModal({ children, buttonContent }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen}>Add to Cart</Button>
+      <Button onClick={onOpen}>{buttonContent}</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent w="80%">
           <ModalHeader></ModalHeader>
           <ModalCloseButton />
           {children}
@@ -27,7 +27,6 @@ export default function BasicModal({ children }) {
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            {/* <Button variant="ghost">Secondary Action</Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>

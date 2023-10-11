@@ -13,7 +13,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import BasicModal from "../../components/UI/BasicModal";
+import ButtonModal from "../../components/UI/ButtonModal";
 import { PriceTag } from "./PriceTag";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { addCartItem, deleteCartItem } from "../../util/cartApi";
@@ -34,8 +34,6 @@ export const ProductCard = ({ item }) => {
   // create a set of cartIds to lookup when mapping over items below
   const cartIds = new Set();
   cart.forEach((cartItem) => cartIds.add(cartItem.id));
-  console.log("cart context", cart);
-  console.log("cart ids", cartIds);
 
   // loading state to track while add to cart request is happening and finished
   const [loading, setLoading] = useState(false);
@@ -62,12 +60,12 @@ export const ProductCard = ({ item }) => {
   } else if (!Auth.isLoggedIn()) {
     // user not logged in, render the modal opening button to tell them to log in
     button = (
-      <BasicModal>
+      <ButtonModal buttonContent="Add to Cart">
         {" "}
         <Text fontSize="lg" align="center">
           You must have an account and be logged in to purchase this item
         </Text>
-      </BasicModal>
+      </ButtonModal>
     );
   } else if (item.userId === userId) {
     button = <Text>My item</Text>; // item belongs to logged in user, render "my item" button

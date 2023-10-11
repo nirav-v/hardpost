@@ -1,3 +1,4 @@
+import CheckoutModal from "../../components/UI/CheckoutModal";
 import {
   Button,
   Flex,
@@ -8,9 +9,7 @@ import {
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { Link as ReactRouterLink } from "react-router-dom";
-// import { FaArrowRight } from "react-icons/fa";
-// import { formatPrice } from "./PriceTag";
+
 function formatPrice(value, opts = {}) {
   const { locale = "en-US", currency = "USD" } = opts;
   const formatter = new Intl.NumberFormat(locale, {
@@ -75,6 +74,7 @@ export const CartOrderSummary = ({ cartData, onCheckoutSubmit }) => {
           </Text>
         </Flex>
       </Stack>
+      <CheckoutModal />
       <Button
         onClick={onCheckoutSubmit}
         colorScheme="blue"
