@@ -28,6 +28,8 @@ function CartPage() {
   };
 
   const handleCheckoutSubmit = async () => {
+    if (!cart.length) return;
+
     const domain = `${window.location.protocol}//${window.location.host}`;
 
     const res = await fetch("/api/create-checkout-session", {
