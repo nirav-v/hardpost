@@ -58,7 +58,7 @@ const itemData = [
     price: 10,
     description: "Moderate wear, no chips or razor tail",
     imagePath:
-      "https://public-hardpost-bucket.s3.amazonaws.com/real-mason-deck.jpg855febf05f4f6b79f2c21c4eff03297d6c4e9ac2cd7631dec3954ece0b2e3dd4",
+      "https://public-hardpost-bucket.s3.amazonaws.com/numbersMilesSilvasdeck.jpgf0a427417f3e690455cf031041bfba3e2a294e5e4a25886a7dacd16f15eb08bc",
     sold: false,
     userId: 2,
   },

@@ -37,6 +37,7 @@ const SingleItemPage = () => {
   const item = items.filter((item) => item.id === parseInt(params.itemId))[0];
 
   const handleAddCartClick = async (itemId) => {
+    if (!Auth.isLoggedIn) return;
     const updatedItems = await addCartItem(itemId);
     setCart(updatedItems);
   };
