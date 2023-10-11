@@ -53,10 +53,20 @@ const itemData = [
     userId: 1,
   },
   {
+    name: "Numbers Miles Silvas deck",
+    category: "decks",
+    price: 10,
+    description: "Moderate wear, no chips or razor tail",
+    imagePath:
+      "https://public-hardpost-bucket.s3.amazonaws.com/real-mason-deck.jpg855febf05f4f6b79f2c21c4eff03297d6c4e9ac2cd7631dec3954ece0b2e3dd4",
+    sold: false,
+    userId: 2,
+  },
+  {
     name: "Real - Mason Silva deck",
     category: "decks",
     price: 10,
-    description: "54mm, Formula 4 Conical Full Shape",
+    description: "Moderate wear, no chips or razor tail",
     imagePath:
       "https://public-hardpost-bucket.s3.amazonaws.com/real-mason-deck.jpg855febf05f4f6b79f2c21c4eff03297d6c4e9ac2cd7631dec3954ece0b2e3dd4",
     sold: false,
