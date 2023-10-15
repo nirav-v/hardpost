@@ -1,10 +1,11 @@
 const router = require("express").Router();
-const Item = require("../models/Item");
+const { Item, User } = require("../models");
 
 // route for showing all items listed
 router.get("/shop", async (req, res, next) => {
   try {
-    let items = await Item.findAll();
+    let items = await Item.findAll({ include: User });
+    console.log(items);
     res.send(items);
   } catch (err) {
     console.log(err);

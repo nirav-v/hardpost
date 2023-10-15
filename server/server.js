@@ -7,7 +7,7 @@ const session = require("express-session");
 // import database connection
 const sequelize = require("./config/database");
 // import models to map to db tables
-const { User, Cart, Order } = require("./models");
+const { User, Cart, Order, Item } = require("./models");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -57,6 +57,7 @@ app.use("*", (req, res, next) =>
 // console.log("magic user methods", Object.keys(User.prototype));
 // console.log("magic cart methods", Object.keys(Cart.prototype));
 // console.log("magic Order methods", Object.keys(Order.prototype));
+// console.log("magic Order methods", Object.keys(Item.prototype));
 
 // create db connection before starting up server
 sequelize
