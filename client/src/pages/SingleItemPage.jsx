@@ -42,6 +42,7 @@ const SingleItemPage = () => {
             borderRadius="lg"
           />
           <Stack mt="6" spacing="3">
+            <Text>@{item.user.username}</Text>
             <Heading size="md">{item.name}</Heading>
             <Text>{item.description}</Text>
             <Text color="blue.600" fontSize="2xl">

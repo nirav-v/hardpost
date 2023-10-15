@@ -46,6 +46,11 @@ export const ProductCard = ({ item }) => {
           <Text
             fontWeight="medium"
             color={useColorModeValue("gray.700", "gray.400")}>
+            posted by @{item.user.username}
+          </Text>
+          <Text
+            fontWeight="medium"
+            color={useColorModeValue("gray.700", "gray.400")}>
             {item.name}
           </Text>
           <PriceTag price={item.price} currency="USD" />
