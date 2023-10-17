@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
         email: existingUser.email,
         userId: existingUser.dataValues.id,
       },
-      "jwt-super secrettt",
+      process.env.JWT_SECRET,
       {
         expiresIn: "24h",
       }
