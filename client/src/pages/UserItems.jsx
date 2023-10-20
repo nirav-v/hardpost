@@ -1,12 +1,14 @@
+import Auth from "../util/auth";
 import React, { useState, useEffect } from "react";
 import { Image, Button, Box, Center, Heading } from "@chakra-ui/react";
 import ItemCard from "../components/UI/ItemCard";
 import { ProductGrid } from "./ShopPage/ProductGrid";
 import { ProductCard } from "./ShopPage/ProductCard";
-import Auth from "../util/auth";
+import { useItemsContext } from "../context/ItemsContext";
 
 function UserItems() {
   const [userItems, setUserItems] = useState([]);
+  const [items, setItems] = useItemsContext();
 
   // function to fetch all userItems and update state
   const fetchItems = () => {
@@ -16,12 +18,13 @@ function UserItems() {
       },
     })
       .then((res) => res.json())
-      .then((items) => {
+      .then((userItems) => {
         // sort items in place by available items first
-        items.sort((item2, item1) => {
+        userItems.sort((item2, item1) => {
           if (!item2.sold && item1.sold) return -1;
         });
-        setUserItems(items);
+        // update both userItems for this component, as well as global items context being used by other sibling components
+        setUserItems(userItems);
       })
       .catch((err) => console.log(err));
   };
@@ -33,7 +36,7 @@ function UserItems() {
   const handleRemoveItemClick = async (itemId) => {
     // grab the item id and send a fetch request to the delete-item route
     console.log("id removed: ", itemId);
-    const deleteItem = await fetch("/api/delete-item", {
+    const response = await fetch("/api/delete-item", {
       method: "POST",
       body: JSON.stringify({ itemId }),
       headers: {
@@ -41,6 +44,12 @@ function UserItems() {
         Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
+
+    const deletedItem = await response.json();
+
+    const updatedItems = items.filter((item) => item.id !== deletedItem.id);
+
+    setItems(updatedItems);
 
     fetchItems();
   };
