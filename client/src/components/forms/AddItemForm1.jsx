@@ -40,6 +40,7 @@ function addItemForm() {
       ...formState,
       [event.target.name]: event.target.value,
     });
+    console.log(formState, event.target.name, event.target.value);
   };
 
   const handleSubmit = async (event) => {
@@ -144,6 +145,7 @@ function addItemForm() {
 
                       <FormLabel>Category</FormLabel>
                       <Select
+                        name="category"
                         placeholder="Select Category"
                         onChange={handleChange}>
                         <option name="category" value="decks">

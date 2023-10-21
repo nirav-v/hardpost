@@ -19,6 +19,7 @@ function ShopPage() {
   for (let param of paramsArray) {
     filterChoices.push(param[1]);
   }
+
   useEffect(() => {
     if (filterChoices.length) {
       // get filtered array of items with matching category
@@ -28,6 +29,7 @@ function ShopPage() {
           else return false;
         }
       });
+
       setItems(filteredItems);
       return;
     }
