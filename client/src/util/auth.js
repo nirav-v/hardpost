@@ -17,7 +17,6 @@ const Auth = {
   },
 
   getPayload: function () {
-    console.log("this", this);
     const token = this.getToken();
     return jwt_decode(token);
   },
