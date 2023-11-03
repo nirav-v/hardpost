@@ -12,11 +12,11 @@ import NavBar from "./components/UI/NavBar";
 import { Routes, Route } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import { ItemsProvider } from "./context/ItemsContext";
-import LogoutButton from "./components/UI/LogoutButton";
+import LogoutButton from "./components/buttons/LogoutButton";
 import { Button, Box, Container, useColorMode, Flex } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import CartProvider from "./context/CartContext";
-import WelcomeModal from "./components/UI/WelcomeModal";
+import WelcomeModal from "./components/modals/WelcomeModal";
 
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();

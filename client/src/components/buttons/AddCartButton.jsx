@@ -1,7 +1,7 @@
 import Auth from "../../util/auth";
 import { addCartItem, deleteCartItem } from "../../util/cartApi";
 import React, { useState } from "react";
-import ButtonModal from "./ButtonModal";
+import ButtonModal from "../modals/ButtonModal";
 import { Button, Text } from "@chakra-ui/react";
 import { useCartContext } from "../../context/CartContext";
 

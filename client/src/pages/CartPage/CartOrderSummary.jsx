@@ -1,4 +1,4 @@
-import CheckoutModal from "../../components/UI/CheckoutModal";
+import CheckoutModal from "../../components/modals/CheckoutModal";
 import {
   Button,
   Flex,

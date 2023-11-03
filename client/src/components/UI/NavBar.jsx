@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "../buttons/LogoutButton";
 import { Link } from "react-router-dom";
 import {
   Box,

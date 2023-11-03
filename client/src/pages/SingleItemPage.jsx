@@ -1,6 +1,6 @@
 import Auth from "../util/auth";
-import AddCartButton from "../components/UI/AddCartButton";
-import ButtonModal from "../components/UI/ButtonModal";
+import AddCartButton from "../components/buttons/AddCartButton";
+import ButtonModal from "../components/modals/ButtonModal";
 import { addCartItem } from "../util/cartApi";
 import React from "react";
 import { useState } from "react";

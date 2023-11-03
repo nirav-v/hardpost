@@ -1,5 +1,5 @@
 import Auth from "../../util/auth";
-import AddCartButton from "../../components/UI/AddCartButton";
+import AddCartButton from "../../components/buttons/AddCartButton";
 import {
   AspectRatio,
   Box,
