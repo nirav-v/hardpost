@@ -7,7 +7,11 @@ function FilterCheckbox({ onChange, defaultValue }) {
       colorScheme="green"
       defaultValue={defaultValue}
       onChange={onChange}>
-      <Stack spacing={[1, 5]} direction={["column", "row"]}>
+      <Stack
+        justifyContent="center"
+        spacing={[1, 5]}
+        direction={["column", "row"]}>
+        <h2>Filter by </h2>
         <Checkbox value="decks">Decks</Checkbox>
         <Checkbox value="shoes">Shoes</Checkbox>
         <Checkbox value="trucks">Trucks</Checkbox>

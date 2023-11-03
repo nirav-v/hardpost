@@ -11,11 +11,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-export default function ButtonModal({ children, buttonContent }) {
+export default function ButtonModal({ children, buttonContent, chakraColor }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen}>{buttonContent}</Button>
+      <Button colorScheme={chakraColor} onClick={onOpen} m={2}>
+        {buttonContent}
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
