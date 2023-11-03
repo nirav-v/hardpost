@@ -17,6 +17,7 @@ import { Button, Box, Container, useColorMode, Flex } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import CartProvider from "./context/CartContext";
 import WelcomeModal from "./components/modals/WelcomeModal";
+import ButtonModal from "./components/modals/ButtonModal";
 
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -46,6 +47,7 @@ function App() {
           <Button mr={0} onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
+          {/* conditionally render log out button */}
           {loggedIn ? (
             <Box>
               <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>{" "}
@@ -58,25 +60,25 @@ function App() {
           {!loggedIn ? (
             <div>
               <Container centerContent>
-                {/* conditionally render Login form OR Sign up form based on state */}
-                {showSignUpForm ? (
-                  <>
-                    {Auth.returningUser() ? null : <WelcomeModal />}
+                {Auth.returningUser() ? null : <WelcomeModal />}
+                <ButtonModal buttonContent="Log In">
+                  {/* conditionally render Login form OR Sign up form based on state */}
+                  {showSignUpForm ? (
                     <SignUpForm
                       loggedIn={loggedIn}
                       setLoggedIn={setLoggedIn}
                       showSignUpForm={showSignUpForm}
                       setShowSignUpForm={setShowSignUpForm}
                     />
-                  </>
-                ) : (
-                  <LoginForm
-                    loggedIn={loggedIn}
-                    setLoggedIn={setLoggedIn}
-                    showSignUpForm={showSignUpForm}
-                    setShowSignUpForm={setShowSignUpForm}
-                  />
-                )}
+                  ) : (
+                    <LoginForm
+                      loggedIn={loggedIn}
+                      setLoggedIn={setLoggedIn}
+                      showSignUpForm={showSignUpForm}
+                      setShowSignUpForm={setShowSignUpForm}
+                    />
+                  )}
+                </ButtonModal>
               </Container>
               <Routes>
                 <Route path="/" element={<ShopPage />} />
