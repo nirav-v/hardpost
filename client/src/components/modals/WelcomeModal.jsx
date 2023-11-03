@@ -36,16 +36,14 @@ export default function WelcomeModal() {
           <ModalHeader> Welcome to HardPost!</ModalHeader>
 
           <ModalBody>
-            <Heading size="lg">First time users please read:</Heading>
+            <Heading size="lg">First time users please read</Heading>
             <br />
             <Text fontSize="lg">
-              This platform is still in development. Therefore all current
-              purchases and sales are SIMULATED, and no actual financial charges
-              will be processed or made. Please feel free to post and delete
-              test items, add items to your cart, and navigate through the
-              checkout process. Fake credit card numbers will be provided so
-              that you can properly simulate payments through Stripe in test
-              mode.
+              This platform is still in development. Therefore, all current
+              purchases and sales are simulated, and no actual orders and
+              charges will be made. Please feel free to post and delete test
+              items, add items to your cart, and navigate through the checkout
+              process. Fake credit card numbers will be provided to test with.
             </Text>
           </ModalBody>
 
