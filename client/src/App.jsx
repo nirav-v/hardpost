@@ -37,7 +37,8 @@ function App() {
 
   const handleLogoutClick = () => {
     localStorage.removeItem("token");
-    window.location.reload();
+    // reload the homepage, needed to trigger check loggedIn check
+    window.location.replace(window.location.origin);
   };
 
   return (
