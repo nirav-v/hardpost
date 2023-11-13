@@ -4,11 +4,14 @@ import { ProductCard } from "./ProductCard";
 import { ProductGrid } from "./ProductGrid";
 import { useItemsContext } from "../../context/ItemsContext";
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function ShopPage() {
   const [items, setItems] = useItemsContext();
+  const [filteredItems, setFilteredItems] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  console.log("items state", items);
 
   // searchParams object doesn't show any iterable param values, so spreading it into array gives get nested array of [key, value] query params
   // e.g [['category', 'decks'], ['category', 'wheels']]
@@ -21,19 +24,19 @@ function ShopPage() {
   }
 
   useEffect(() => {
+    console.log("params array", paramsArray);
+    console.log("filter choices", filterChoices);
     if (filterChoices.length) {
       // get filtered array of items with matching category
-      const filteredItems = items.filter((item) => {
-        for (const filter of filterChoices) {
-          if (item.category === filter) return true;
-          else return false;
-        }
-      });
-
-      setItems(filteredItems);
+      const updatedItems = items.filter((item) =>
+        filterChoices.includes(item.category)
+      );
+      setFilteredItems(updatedItems);
       return;
     }
-  }, [searchParams]);
+
+    setFilteredItems(items);
+  }, [filterChoices.length, items]);
 
   return (
     <div>
@@ -45,7 +48,7 @@ function ShopPage() {
           if (!choices.length) window.location.reload();
         }}
       />
-      {items.length ? (
+      {filteredItems.length ? (
         <Box
           maxW="7xl"
           mx="auto"
@@ -60,7 +63,7 @@ function ShopPage() {
             lg: "12",
           }}>
           <ProductGrid>
-            {items.map((item) => (
+            {filteredItems.map((item) => (
               <ProductCard key={item.id} item={item} />
             ))}
           </ProductGrid>
