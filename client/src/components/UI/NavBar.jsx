@@ -60,7 +60,9 @@ function NavBar({ loggedIn, handleLogoutClick }) {
     return (
       <Container centerContent>
         {" "}
-        <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
+        <Link to={"/"}>
+          <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
+        </Link>
       </Container>
     );
   }
@@ -70,7 +72,9 @@ function NavBar({ loggedIn, handleLogoutClick }) {
       <Box px={4}>
         <Container centerContent>
           {" "}
-          <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
+          <Link to={"/"}>
+            <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
+          </Link>
         </Container>{" "}
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
