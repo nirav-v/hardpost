@@ -15,7 +15,7 @@ export default function ButtonModal({ children, buttonContent, chakraColor }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button colorScheme={chakraColor} onClick={onOpen} m={2}>
+      <Button colorScheme={chakraColor} onClick={onOpen} m={4}>
         {buttonContent}
       </Button>
 

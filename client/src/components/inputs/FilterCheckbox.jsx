@@ -8,8 +8,9 @@ function FilterCheckbox({ onChange, defaultValue }) {
       defaultValue={defaultValue}
       onChange={onChange}>
       <Stack
+        p={4}
         justifyContent="center"
-        spacing={[1, 5]}
+        // spacing={[1, 5]}
         direction={["column", "row"]}>
         <h2>Filter by </h2>
         <Checkbox value="decks">Decks</Checkbox>

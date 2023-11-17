@@ -44,8 +44,6 @@ function ShopPage() {
         defaultValue={filterChoices}
         onChange={(choices) => {
           setSearchParams({ category: choices });
-          // if no filters are selected, refresh so that all items are refetched from database and updated
-          if (!choices.length) window.location.reload();
         }}
       />
       {filteredItems.length ? (
