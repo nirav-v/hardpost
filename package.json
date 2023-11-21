@@ -13,6 +13,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.2",
+    "concurrently": "^8.2.0",
+    "jsdom": "^22.1.0",
+    "vitest": "^0.34.6"
   }
 }
