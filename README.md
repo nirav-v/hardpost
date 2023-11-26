@@ -1,12 +1,12 @@
 # <p align="center">[<img src="./client/src/images/hardpost-logo.png">](https://hardpost-f79ecee5b44d.herokuapp.com/)</p>
 
+[deployed site](https://hardpost-f79ecee5b44d.herokuapp.com/)
+
 ### An online marketplace to buy, sell, and trade items for the niche skateboarding community.
 
 ## <p align="center">Motivation
 
 The decision to develop this platform stemmed from a personal hobby of mine, skateboarding. The prices of skateboarding hard-goods are at an all time high, and they must still continuously be replaced after a certain amount of wear. Being in the skateboarding community for over 10 years, I have found that we typically accumulate lots of expensive products that are no longer used after a certain time. I found that there is no online platform for us to specifically sell our items or buy from other individuals at a more affordable price. Until now, the only option would be to go on generic e-commerce platforms, where the majority of users have no interest in skateboarding products. Hardpost aims to fill that gap
-
-[live site](https://hardpost-f79ecee5b44d.herokuapp.com/)
 
 ## <p align="center">Technologies used
 
