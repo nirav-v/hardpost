@@ -1,5 +1,5 @@
 export default {
-  collectCoverage: true,
+  collectCoverage: false,
   collectCoverageFrom: ["src/**/*.{js,ts,tsx,jsx}"],
   coverageDirectory: "coverage",
   testEnvironment: "jsdom",
