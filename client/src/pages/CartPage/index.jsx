@@ -17,17 +17,31 @@ import { CartItem } from "./CartItem";
 import { CartOrderSummary } from "./CartOrderSummary";
 import { useCartContext } from "../../context/CartContext";
 import { loadStripe } from "@stripe/stripe-js";
+import ButtonModal from "../../components/modals/ButtonModal";
+import WelcomeModal from "../../components/modals/WelcomeModal";
+import LoginForm from "../../components/forms/LoginForm";
 
 function CartPage() {
   const [cart, setCart] = useCartContext();
 
   // using imported util function for deleting item
   const handleCartDelete = async (itemId) => {
+    if (!Auth.isLoggedIn()) {
+      const updatedCart = cart.filter((item) => item.id !== itemId);
+      setCart(updatedCart);
+      return;
+    }
+
     const updatedItems = await deleteCartItem(itemId);
     setCart(updatedItems);
   };
 
   const handleCheckoutSubmit = async () => {
+    if (!Auth.isLoggedIn()) {
+      alert("Please log in to checkout");
+      return;
+    }
+
     if (!cart.length) return;
 
     const domain = `${window.location.protocol}//${window.location.host}`;
