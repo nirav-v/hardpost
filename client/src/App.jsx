@@ -66,7 +66,7 @@ function App() {
               <div>
                 <Container centerContent>
                   {Auth.returningUser() ? null : <WelcomeModal />}
-                  <GoogleLoginButton />
+                  {/* <GoogleLoginButton /> */}
                   <ButtonModal chakraColor={"teal"} buttonContent="Log In">
                     {/* conditionally render Login form OR Sign up form based on state */}
                     {showSignUpForm ? (
