@@ -63,6 +63,9 @@ function NavBar({ loggedIn, handleLogoutClick }) {
         <Link to={"/"}>
           <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
         </Link>
+        <NavLink>
+          <Link to="/cart">Cart: {cart.length} items</Link>
+        </NavLink>
       </Container>
     );
   }

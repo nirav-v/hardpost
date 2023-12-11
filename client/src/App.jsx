@@ -92,6 +92,7 @@ function App() {
                     path="/single-item/:itemId"
                     element={<SingleItemPage />}
                   />
+                  <Route path="/cart" element={<CartPage />} />
                 </Routes>
               </div>
             ) : (
