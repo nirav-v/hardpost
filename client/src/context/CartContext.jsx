@@ -9,7 +9,13 @@ function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    if (!Auth.isLoggedIn()) return;
+    // if not logged in, use local storage to store cart
+    if (!Auth.isLoggedIn()) {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      setCart(cart);
+      return;
+    }
+
     fetch("/api/cart", {
       headers: {
         Authorization: `Bearer ${Auth.getToken()}`,
@@ -18,6 +24,7 @@ function CartProvider({ children }) {
       .then((res) => res.json())
       .then((data) => setCart(data));
   }, [Auth.isLoggedIn()]);
+
   console.log(cart);
 
   return (
