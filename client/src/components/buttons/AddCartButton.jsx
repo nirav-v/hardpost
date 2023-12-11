@@ -42,7 +42,10 @@ function AddCartButton({ item }) {
 
   if (item.sold) {
     button = <Text>Sold</Text>; // item is sold, render "sold" button
-  } else if (!Auth.isLoggedIn()) {
+    return button;
+  }
+
+  if (!Auth.isLoggedIn()) {
     // user not logged in, render the modal opening button to tell them to log in
     button = (
       <ButtonModal buttonContent="Add to Cart">
@@ -52,9 +55,15 @@ function AddCartButton({ item }) {
         </Text>
       </ButtonModal>
     );
-  } else if (item.userId === userId) {
+    return button;
+  }
+
+  if (item.userId === userId) {
     button = <Text>My item</Text>; // item belongs to logged in user, render "my item" button
-  } else if (cartIds.has(item.id)) {
+    return button;
+  }
+
+  if (cartIds.has(item.id)) {
     button = (
       <Button
         onClick={() => handleCartDelete(item.id)}
@@ -63,7 +72,10 @@ function AddCartButton({ item }) {
         Remove from cart
       </Button>
     ); // item is in cart, return "remove from cart button"
-  } else if (!cartIds.has(item.id)) {
+    return button;
+  }
+
+  if (!cartIds.has(item.id)) {
     // item is not in cart, return "add to cart button"
     button = (
       <Button
@@ -73,9 +85,10 @@ function AddCartButton({ item }) {
         {loading ? "adding to your cart..." : "Add to cart"}
       </Button>
     );
+    return button;
   }
 
-  return button;
+  // return button;
 }
 
 export default AddCartButton;
