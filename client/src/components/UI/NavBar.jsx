@@ -44,7 +44,7 @@ const NavLink = ({ children }) => {
 function NavBar({ loggedIn, handleLogoutClick }) {
   const [cart, setCart] = useCartContext();
 
-  let navTabs = [];
+  let navTabs = [{ title: "Home", path: "/" }];
   if (loggedIn) {
     navTabs = [
       { title: "Home", path: "/" },
@@ -65,6 +65,9 @@ function NavBar({ loggedIn, handleLogoutClick }) {
         </Link>
         <NavLink>
           <Link to="/cart">Cart: {cart.length} items</Link>
+        </NavLink>
+        <NavLink>
+          <Link to="/">Home</Link>
         </NavLink>
       </Container>
     );
