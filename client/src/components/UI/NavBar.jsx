@@ -56,22 +56,22 @@ function NavBar({ loggedIn, handleLogoutClick }) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  if (!loggedIn) {
-    return (
-      <Container centerContent>
-        {" "}
-        <Link to={"/"}>
-          <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
-        </Link>
-        <NavLink>
-          <Link to="/cart">Cart: {cart.length} items</Link>
-        </NavLink>
-        <NavLink>
-          <Link to="/">Home</Link>
-        </NavLink>
-      </Container>
-    );
-  }
+  // if (!loggedIn) {
+  //   return (
+  //     <Container centerContent>
+  //       {" "}
+  //       <Link to={"/"}>
+  //         <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
+  //       </Link>
+  //       <NavLink>
+  //         <Link to="/cart">Cart: {cart.length} items</Link>
+  //       </NavLink>
+  //       <NavLink>
+  //         <Link to="/">Home</Link>
+  //       </NavLink>
+  //     </Container>
+  //   );
+  // }
 
   return (
     <>
