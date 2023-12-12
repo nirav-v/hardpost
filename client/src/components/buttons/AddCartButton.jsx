@@ -19,7 +19,6 @@ function AddCartButton({ item }) {
   let userId;
   if (Auth.isLoggedIn()) {
     userId = Auth.getPayload().userId;
-    console.log("userId: ", userId);
   }
 
   // create a set of cartIds to lookup when mapping over items below, more performant than looping again

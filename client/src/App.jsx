@@ -26,12 +26,9 @@ function App() {
 
   const [showSignUpForm, setShowSignUpForm] = useState(!Auth.returningUser());
 
-  console.log(showSignUpForm);
   // first check is we have a returning user
 
   const [loggedIn, setLoggedIn] = useState(false);
-  console.log("loggedIn ", loggedIn);
-  console.log("Auth", Auth.isLoggedIn());
 
   useEffect(() => {
     if (Auth.isLoggedIn()) setLoggedIn(true);
@@ -43,7 +40,7 @@ function App() {
     window.location.replace(window.location.origin);
   };
 
-  console.log(import.meta.env);
+  // console.log(import.meta.env);
   return (
     <Fragment>
       <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>

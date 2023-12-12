@@ -25,8 +25,6 @@ function CartProvider({ children }) {
       .then((data) => setCart(data));
   }, [Auth.isLoggedIn()]);
 
-  console.log(cart);
-
   return (
     <CartContext.Provider value={[cart, setCart]}>
       {children}

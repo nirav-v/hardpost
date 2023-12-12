@@ -11,7 +11,7 @@ function ShopPage() {
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log("items state", items);
+  // console.log("items state", items);
 
   // searchParams object doesn't show any iterable param values, so spreading it into array gives get nested array of [key, value] query params
   // e.g [['category', 'decks'], ['category', 'wheels']]
@@ -24,8 +24,8 @@ function ShopPage() {
   }
 
   useEffect(() => {
-    console.log("params array", paramsArray);
-    console.log("filter choices", filterChoices);
+    // console.log("params array", paramsArray);
+    // console.log("filter choices", filterChoices);
     if (filterChoices.length) {
       // get filtered array of items with matching category
       const updatedItems = items.filter((item) =>
