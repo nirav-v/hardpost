@@ -1,5 +1,7 @@
-const { Sequelize, DataTypes, Model } = require("sequelize");
-const sequelize = require("../config/database");
+// const { Sequelize, DataTypes, Model } = require("sequelize");
+// const sequelize = require("../config/database.js");
+import { Sequelize, DataTypes, Model } from "sequelize";
+import sequelize from "../config/database.js";
 
 class Cart extends Model {}
 
@@ -18,4 +20,5 @@ Cart.init(
   }
 );
 
-module.exports = Cart;
+// module.exports = Cart;
+export default Cart;

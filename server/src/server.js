@@ -1,19 +1,28 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const path = require("path");
+// const express = require("express");
+// const cors = require("cors");
+// const bodyParser = require("body-parser");
+// const path = require("path");
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// modular route imports
+import apiRoutes from "./controllers/api/index.js";
+import shopRoutes from "./controllers/shop-routes.js";
 
 // import database connection
-const sequelize = require("./config/database");
+// const sequelize = require("./config/database.js");
+import sequelize from "./config/database.js";
 // import models to map to db tables
-const { User, Cart, Order, Item } = require("./models");
+// const { User, Cart, Order, Item } = require("./models");
+import { User, Cart, Order, Item } from "./models/index.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-// modular route imports
-const apiRoutes = require("./controllers/api");
-const shopRoutes = require("./controllers/shop-routes");
 
 app.use(express.static("dist"));
 

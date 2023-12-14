@@ -1,10 +1,17 @@
-const User = require("./User");
-const Item = require("./Item");
-const Cart = require("./Cart");
-const CartItem = require("./Cart-Item");
-const Order = require("./Order");
-const OrderItem = require("./Order-Item");
-const Comment = require("./Comment");
+// const User = require("./User");
+// const Item = require("./Item");
+// const Cart = require("./Cart");
+// const CartItem = require("./Cart-Item");
+// const Order = require("./Order");
+// const OrderItem = require("./Order-Item");
+// const Comment = require("./Comment");
+import User from "./User.js";
+import Item from "./Item.js";
+import Cart from "./Cart.js";
+import CartItem from "./Cart-Item.js";
+import Order from "./Order.js";
+import OrderItem from "./Order-Item.js";
+import Comment from "./Comment.js";
 
 // define model associations
 Item.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
@@ -23,4 +30,5 @@ Comment.belongsTo(User);
 Item.hasMany(Comment);
 
 // export as an object with all models as properties
-module.exports = { User, Item, Cart, CartItem, Order, OrderItem };
+// module.exports = { User, Item, Cart, CartItem, Order, OrderItem };
+export { User, Item, Cart, CartItem, Order, OrderItem, Comment };

@@ -1,5 +1,7 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+// const { Sequelize, Model, DataTypes } = require("sequelize");
+// const sequelize = require("../config/database.js");
+import { Sequelize, Model, DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
 class Item extends Model {}
 
@@ -44,4 +46,5 @@ Item.init(
 // the defined model is the class itself
 // console.log(Item === sequelize.models.Item); // true
 
-module.exports = Item;
+// module.exports = Item;
+export default Item;

@@ -1,9 +1,15 @@
-const router = require("express").Router();
-const { Item, User } = require("../../models/");
-const Auth = require("../../util/serverAuth");
-const { uploadFile } = require("../../util/S3");
+// const router = require("express").Router();
+// const { Item, User } = require("../../models/");
+// const Auth = require("../../util/serverAuth");
+// const { uploadFile } = require("../../util/S3");
+// const multer = require("multer");
+import { Router } from "express";
+import { Item, User } from "../../models/index.js";
+import Auth from "../../util/serverAuth.js";
+import { uploadFile } from "../../util/S3.js";
+import multer from "multer";
+const router = Router();
 
-const multer = require("multer");
 // configure multer file storage options, store in images folder under unique name of date + filename
 // const fileStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -103,4 +109,5 @@ router.post("/delete-item", async (req, res, next) => {
   res.send("cannot find item with that id");
 });
 
-module.exports = router;
+// module.exports = router;
+export default router;

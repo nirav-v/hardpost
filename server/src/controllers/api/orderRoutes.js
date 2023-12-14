@@ -1,8 +1,14 @@
-const router = require("express").Router();
-const { User, Item } = require("../../models");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const Auth = require("../../util/serverAuth");
-const jwt = require("jsonwebtoken");
+// const router = require("express").Router();
+// const { User, Item } = require("../../models");
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+// const Auth = require("../../util/serverAuth");
+// const jwt = require("jsonwebtoken");
+import { Router } from "express";
+import { User, Item } from "../../models/index.js";
+import stripe from "stripe";
+import Auth from "../../util/serverAuth.js";
+import jwt from "jsonwebtoken";
+const router = Router();
 
 router.post("/create-checkout-session", async (req, res) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
@@ -91,4 +97,5 @@ router.post("/create-order", async (req, res, next) => {
   res.status(201).redirect("/orders");
 });
 
-module.exports = router;
+// module.exports = router;
+export default router;

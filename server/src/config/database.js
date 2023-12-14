@@ -1,6 +1,9 @@
 // import sequelize and set up a connection pool to the mysql database
-const Sequelize = require("sequelize");
-require("dotenv").config(); // configure package for loading local env file
+// const Sequelize = require("sequelize");
+// require("dotenv").config(); // configure package for loading local env file
+import Sequelize from "sequelize";
+import dotenv from "dotenv";
+dotenv.config();
 
 let sequelize;
 
@@ -18,4 +21,5 @@ if (process.env.JAWSDB_URL) {
   );
 }
 
-module.exports = sequelize;
+// module.exports = sequelize;
+export default sequelize;

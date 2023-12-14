@@ -1,7 +1,9 @@
-const { Model, DataTypes } = require("sequelize");
-const bcrypt = require("bcrypt");
-const sequelize = require("../config/database");
-
+// const { Model, DataTypes } = require("sequelize");
+// const bcrypt = require("bcrypt");
+// const sequelize = require("../config/database.js");
+import { Model, DataTypes } from "sequelize";
+import bcrypt from "bcrypt";
+import sequelize from "../config/database.js";
 class User extends Model {
   checkPassword(loginPw) {
     return bcrypt.compareSync(loginPw, this.password);
@@ -50,4 +52,5 @@ User.init(
   }
 );
 
-module.exports = User;
+// module.exports = User;
+export default User;
