@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
-const session = require("express-session");
 
 // import database connection
 const sequelize = require("./config/database");
@@ -25,23 +24,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use(express.json()); // needed to send json req.body in insomnia post requests
-
-// Create a new sequelize store using the express-session package
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
-// use the express session middleware providing options
-app.use(
-  session({
-    secret: "temporary secret key",
-    resave: false,
-    saveUninitialized: false,
-    store: new SequelizeStore({
-      db: sequelize,
-    }),
-    cookie: {
-      // maxAge: 1000 * 60 * 60 * 12, // no maxAge bc using also using localStorage to persist logged in status
-    },
-  })
-);
 
 // using modular route files
 app.use("/api", apiRoutes);
