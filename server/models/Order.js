@@ -1,5 +1,7 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+// const { Sequelize, Model, DataTypes } = require("sequelize");
+// const sequelize = require("../config/database.js");
+import { Sequelize, Model, DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
 // Order will serve as a junction table between Users and the Items they ordered
 
@@ -21,4 +23,5 @@ Order.init(
   }
 );
 
-module.exports = Order;
+// module.exports = Order;
+export default Order;

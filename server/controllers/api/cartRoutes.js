@@ -1,7 +1,12 @@
-const router = require("express").Router();
-const { Cart, Item, User } = require("../../models");
-const jwt = require("jsonwebtoken");
-const Auth = require("../../util/serverAuth");
+// const router = require("express").Router();
+// const { Cart, Item, User } = require("../../models");
+// const jwt = require("jsonwebtoken");
+// const Auth = require("../../util/serverAuth");
+import { Router } from "express";
+import { Cart, Item, User } from "../../models/index.js";
+import jwt from "jsonwebtoken";
+import Auth from "../../util/serverAuth.js";
+const router = Router();
 
 router.get("/cart", async (req, res, next) => {
   try {
@@ -18,10 +23,14 @@ router.get("/cart", async (req, res, next) => {
     const loggedInUser = await User.findOne({
       where: { email: payload.email },
     });
-    const cart = await loggedInUser.getCart();
-    const cartItems = await cart.getItems(); //magic method from many to many association between Cart and Item
-    // console.log(cart);
-    res.json(cartItems);
+    if (loggedInUser) {
+      const cart = await loggedInUser.getCart();
+      const cartItems = await cart.getItems(); //magic method from many to many association between Cart and Item
+      // console.log(cart);
+      res.json(cartItems);
+    } else {
+      res.send("not logged in");
+    }
   } catch (err) {
     console.log(err);
   }
@@ -74,4 +83,5 @@ router.post("/cart/delete-item", async (req, res, next) => {
   res.redirect("/api/cart");
 });
 
-module.exports = router;
+// module.exports = router;
+export default router;

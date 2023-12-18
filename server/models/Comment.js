@@ -1,6 +1,8 @@
 // comment model should contain text and authorId of user who writes the comment
-const { Sequelize, Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+// const { Sequelize, Model, DataTypes } = require("sequelize");
+// const sequelize = require("../config/database.js");
+import { Sequelize, Model, DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
 class Comment extends Model {}
 
@@ -20,4 +22,5 @@ Comment.init(
   }
 );
 
-module.exports = Comment;
+// module.exports = Comment;
+export default Comment;

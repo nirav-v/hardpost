@@ -22,9 +22,9 @@ The decision to develop this platform stemmed from a personal hobby of mine, ska
 
 </p>
 
-## Database Design
+## Relational Database Design
 
-<img src="./hardpost-ERD.jpg">
+<img src="./hardpost-ERD.png">
 
 ### steps for running locally
 

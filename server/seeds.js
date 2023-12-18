@@ -1,4 +1,4 @@
-const sequelize = require("./config/database");
+const sequelize = require("./config/database.js");
 const { User, Item, Cart, CartItem, Order, OrderItem } = require("./models");
 
 const userData = [

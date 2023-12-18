@@ -1,20 +1,28 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const path = require("path");
-const session = require("express-session");
+// const express = require("express");
+// const cors = require("cors");
+// const bodyParser = require("body-parser");
+// const path = require("path");
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// modular route imports
+import apiRoutes from "./controllers/api/index.js";
+import shopRoutes from "./controllers/shop-routes.js";
 
 // import database connection
-const sequelize = require("./config/database");
+// const sequelize = require("./config/database.js");
+import sequelize from "./config/database.js";
 // import models to map to db tables
-const { User, Cart, Order, Item } = require("./models");
+// const { User, Cart, Order, Item } = require("./models");
+import { User, Cart, Order, Item } from "./models/index.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-// modular route imports
-const apiRoutes = require("./controllers/api");
-const shopRoutes = require("./controllers/shop-routes");
 
 app.use(express.static("dist"));
 
@@ -25,23 +33,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use(express.json()); // needed to send json req.body in insomnia post requests
-
-// Create a new sequelize store using the express-session package
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
-// use the express session middleware providing options
-app.use(
-  session({
-    secret: "temporary secret key",
-    resave: false,
-    saveUninitialized: false,
-    store: new SequelizeStore({
-      db: sequelize,
-    }),
-    cookie: {
-      // maxAge: 1000 * 60 * 60 * 12, // no maxAge bc using also using localStorage to persist logged in status
-    },
-  })
-);
 
 // using modular route files
 app.use("/api", apiRoutes);
