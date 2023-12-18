@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "kill": "killall node",
-    "start": "cd server/src && npm run start & cd client && npm run dev",
+    "start": "cd server && tsc --allowJs && cd dist && node server.js & cd client && npm run dev",
     "seed": "cd server && node seeds.js"
   },
   "keywords": [],
@@ -15,8 +15,10 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
+    "@tsconfig/node20": "^20.1.2",
     "concurrently": "^8.2.0",
     "jsdom": "^22.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vitest": "^0.34.6"
   }

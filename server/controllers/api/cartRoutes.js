@@ -23,10 +23,14 @@ router.get("/cart", async (req, res, next) => {
     const loggedInUser = await User.findOne({
       where: { email: payload.email },
     });
-    const cart = await loggedInUser.getCart();
-    const cartItems = await cart.getItems(); //magic method from many to many association between Cart and Item
-    // console.log(cart);
-    res.json(cartItems);
+    if (loggedInUser) {
+      const cart = await loggedInUser.getCart();
+      const cartItems = await cart.getItems(); //magic method from many to many association between Cart and Item
+      // console.log(cart);
+      res.json(cartItems);
+    } else {
+      res.send("not logged in");
+    }
   } catch (err) {
     console.log(err);
   }

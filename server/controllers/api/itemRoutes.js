@@ -44,7 +44,7 @@ router.get("/get-items", async (req, res) => {
 
 // use multer middleware for parsing and storing files
 router.post("/add-item", upload.single("image"), async (req, res, next) => {
-  console.log("req.file", req.file);
+  console.log("req.file", req.file); // multer adds image data as file field on req object
 
   try {
     const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
