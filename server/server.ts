@@ -11,8 +11,8 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // modular route imports
-import apiRoutes from "./controllers/api/index.js";
-import shopRoutes from "./controllers/shop-routes.js";
+import apiRoutes from "./routes/api/index.js";
+import shopRoutes from "./routes/shop-routes.js";
 
 // import database connection
 // const sequelize = require("./config/database.js");
