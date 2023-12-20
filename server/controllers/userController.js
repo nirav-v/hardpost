@@ -1,13 +1,7 @@
-// const router = require("express").Router();
-// const jwt = require("jsonwebtoken");
-// const { User, Cart } = require("../../models/");
-import { Router } from "express";
+import { User } from "../models/index.js";
 import jwt from "jsonwebtoken";
-import { User, Cart } from "../../models/index.js";
-const router = Router();
 
-// SIGNUP
-router.post("/signup", async (req, res) => {
+export const signUpUser = async (req, res) => {
   const { username, email, password } = req.body;
   //   check if user exists already
   const existingUser = await User.findOne({
@@ -44,10 +38,9 @@ router.post("/signup", async (req, res) => {
   //   if (err) return next(err);
   // });
   return res.status(201).json(token);
-});
+};
 
-// LOGIN
-router.post("/login", async (req, res) => {
+export const loginUser = async (req, res) => {
   // check db for matching username
 
   const existingUser = await User.findOne({
@@ -84,13 +77,4 @@ router.post("/login", async (req, res) => {
   }
   // if wrong password
   return res.status(404).send({ error: "incorrect credentials" });
-});
-
-// GET USER BY ID
-router.get("/:id", async (req, res) => {
-  const user = await User.findByPk(req.params.id, { include: Cart });
-  res.json(user);
-});
-
-// module.exports = router;
-export default router;
+};

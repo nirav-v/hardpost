@@ -1,16 +1,11 @@
-// const router = require("express").Router();
-// const { User, Item } = require("../../models");
-// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-// const Auth = require("../../util/serverAuth");
-// const jwt = require("jsonwebtoken");
-import { Router } from "express";
 import { User, Item } from "../../models/index.js";
-import stripe from "stripe";
+import Stripe from "stripe";
 import Auth from "../../util/serverAuth.js";
 import jwt from "jsonwebtoken";
-const router = Router();
 
-router.post("/create-checkout-session", async (req, res) => {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+export const createStripCheckoutSession = async (req, res) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
@@ -61,23 +56,9 @@ router.post("/create-checkout-session", async (req, res) => {
   console.log(items);
 
   res.json({ id: session.id });
-});
+};
 
-router.get("/orders", async (req, res, next) => {
-  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-
-  console.log("PAYLOAD: ", payload);
-
-  const loggedInUser = await User.findOne({
-    where: { email: payload.email },
-  });
-  const orders = await loggedInUser.getOrders({
-    include: ["items"],
-  }); // tells sequelize to also load all items associated with each order
-  res.send(orders);
-});
-
-router.post("/create-order", async (req, res, next) => {
+export const createOrder = async (req, res, next) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
@@ -95,7 +76,18 @@ router.post("/create-order", async (req, res, next) => {
   const updatedItems = await cart.getItems();
   console.log(updatedItems);
   res.status(201).redirect("/orders");
-});
+};
 
-// module.exports = router;
-export default router;
+export const getUserOrders = async (req, res, next) => {
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+
+  console.log("PAYLOAD: ", payload);
+
+  const loggedInUser = await User.findOne({
+    where: { email: payload.email },
+  });
+  const orders = await loggedInUser.getOrders({
+    include: ["items"],
+  }); // tells sequelize to also load all items associated with each order
+  res.send(orders);
+};

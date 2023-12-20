@@ -1,14 +1,8 @@
-// const router = require("express").Router();
-// const { Cart, Item, User } = require("../../models");
-// const jwt = require("jsonwebtoken");
-// const Auth = require("../../util/serverAuth");
-import { Router } from "express";
-import { Cart, Item, User } from "../../models/index.js";
+import { Cart, Item, User } from "../models/index.js";
 import jwt from "jsonwebtoken";
 import Auth from "../../util/serverAuth.js";
-const router = Router();
 
-router.get("/cart", async (req, res, next) => {
+export const getUserCart = async (req, res, next) => {
   try {
     if (!req.headers.authorization)
       return res.status(401).send({
@@ -34,10 +28,9 @@ router.get("/cart", async (req, res, next) => {
   } catch (err) {
     console.log(err);
   }
-});
+};
 
-// adding item to cart
-router.post("/cart", async (req, res, next) => {
+export const addCartItem = async (req, res, next) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({
@@ -67,9 +60,9 @@ router.post("/cart", async (req, res, next) => {
   }); // specify value for extra fields that were created in the cart-item junction table
   // respond with the updated cart items
   res.redirect("/api/cart");
-});
+};
 
-router.post("/cart/delete-item", async (req, res, next) => {
+export const deleteCartItem = async (req, res, next) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
@@ -81,7 +74,4 @@ router.post("/cart/delete-item", async (req, res, next) => {
     const deletedItem = await cartItems[0].cartItem.destroy();
   }
   res.redirect("/api/cart");
-});
-
-// module.exports = router;
-export default router;
+};

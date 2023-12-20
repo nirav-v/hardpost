@@ -8,3 +8,8 @@ export const getShopItems = async (req, res, next) => {
     console.log(err);
   }
 };
+
+export const getItemById = async (req, res, next) => {
+  const item = await Item.findByPk(req.params.itemId);
+  res.status(200).json(item);
+};

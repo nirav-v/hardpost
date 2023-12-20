@@ -1,49 +1,8 @@
-// const router = require("express").Router();
-// const { Item, User } = require("../../models/");
-// const Auth = require("../../util/serverAuth");
-// const { uploadFile } = require("../../util/S3");
-// const multer = require("multer");
-import { Router } from "express";
 import { Item, User } from "../../models/index.js";
 import Auth from "../../util/serverAuth.js";
 import { uploadFile } from "../../util/S3.js";
-import multer from "multer";
-const router = Router();
 
-// configure multer file storage options, store in images folder under unique name of date + filename
-// const fileStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "images");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, new Date().toISOString() + "+" + file.originalname);
-//   },
-// });
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-const upload = multer({ storage: multer.memoryStorage(), fileFilter });
-
-router.get("/get-items", async (req, res) => {
-  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-  const loggedInUser = await User.findOne({ where: { email: payload.email } });
-  // find all items that have a userId matching req.session.userId
-  const userItems = await Item.findAll({
-    where: { userId: loggedInUser.id },
-  });
-  res.status(200).send(userItems);
-});
-
-// use multer middleware for parsing and storing files
-router.post("/add-item", upload.single("image"), async (req, res, next) => {
+export const uploadItem = async (req, res, next) => {
   console.log("req.file", req.file); // multer adds image data as file field on req object
 
   try {
@@ -71,9 +30,9 @@ router.post("/add-item", upload.single("image"), async (req, res, next) => {
   } catch (err) {
     console.log(err, "something went wrong");
   }
-});
+};
 
-router.post("/edit-item", async (req, res, next) => {
+export const editItem = async (req, res, next) => {
   // construct a new item object from the arguments passed through the req.body
   // - should receive id, name, category, price, description, image
   const { id, name, category, price, description, image } = req.body;
@@ -89,9 +48,9 @@ router.post("/edit-item", async (req, res, next) => {
   // call the save method on the created item which will know to replace the existing item with the same id
   updatedItem.save();
   res.json(updatedItem);
-});
+};
 
-router.post("/delete-item", async (req, res, next) => {
+export const deleteItem = async (req, res, next) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
@@ -107,7 +66,14 @@ router.post("/delete-item", async (req, res, next) => {
     }
   }
   res.send("cannot find item with that id");
-});
+};
 
-// module.exports = router;
-export default router;
+export const getUserItems = async (req, res) => {
+  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+  const loggedInUser = await User.findOne({ where: { email: payload.email } });
+  // find all items that have a userId matching req.session.userId
+  const userItems = await Item.findAll({
+    where: { userId: loggedInUser.id },
+  });
+  res.status(200).send(userItems);
+};
