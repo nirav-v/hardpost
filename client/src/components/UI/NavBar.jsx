@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
-import hardpostLogo from "../../images/hardpost-logo.png";
+import hardpostLogo from "../../../public/images/Hardpost-logos_transparent.png";
 import { useCartContext } from "../../context/CartContext";
 
 const NavLink = ({ children }) => {
@@ -76,46 +76,53 @@ function NavBar({ loggedIn, handleLogoutClick }) {
   return (
     <>
       <Box px={4}>
-        <Container centerContent>
+        <Box display="flex" justifyContent={"flex-start"} alignItems={"center"}>
           {" "}
-          <Link to={"/"}>
-            <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
-          </Link>
-        </Container>{" "}
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <IconButton
-            size={"md"}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={"Open Menu"}
-            display={{ md: "none" }}
-            onClick={isOpen ? onClose : onOpen}
-          />
-          <HStack spacing={8} alignItems={"center"}>
-            <HStack
-              as={"nav"}
-              spacing={4}
-              display={{ base: "none", md: "flex" }}>
-              {navTabs.map((tab) => (
-                <NavLink key={tab.title}>
-                  <Link to={tab.path}>{tab.title}</Link>
+          <div className="logo-container">
+            <Link to={"/"}>
+              <Image
+                src={hardpostLogo}
+                alt="hardpost-logo"
+                h="150px"
+                borderRadius="full"
+              />
+            </Link>
+          </div>
+          <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+            <IconButton
+              size={"md"}
+              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+              aria-label={"Open Menu"}
+              display={{ md: "none" }}
+              onClick={isOpen ? onClose : onOpen}
+            />
+            <HStack spacing={8} alignItems={"center"}>
+              <HStack
+                as={"nav"}
+                spacing={4}
+                display={{ base: "none", md: "flex" }}>
+                {navTabs.map((tab) => (
+                  <NavLink key={tab.title}>
+                    <Link to={tab.path}>{tab.title}</Link>
+                  </NavLink>
+                ))}
+                <NavLink>
+                  <Link to="/cart">Cart: {cart.length} items</Link>
                 </NavLink>
-              ))}
-              <NavLink>
-                <Link to="/cart">Cart: {cart.length} items</Link>
-              </NavLink>
+              </HStack>
             </HStack>
-          </HStack>
-          <Flex alignItems={"center"}>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}></MenuButton>
-            </Menu>
+            <Flex alignItems={"center"}>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}></MenuButton>
+              </Menu>
+            </Flex>
           </Flex>
-        </Flex>
+        </Box>{" "}
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
