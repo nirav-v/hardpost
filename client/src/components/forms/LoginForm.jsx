@@ -50,7 +50,7 @@ function LoginForm({
       const token = await response.json();
       // sets token in local storage
       Auth.login(token);
-      console.log("set token in local storage", token);
+      // console.log("set token in local storage", token);
       // localStorage.setItem("currentUserId", loginResult.userId);
       setEmail("");
       setPassword("");

@@ -26,18 +26,21 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import hardpostLogo from "../../../public/images/Hardpost-logos_transparent.png";
 import { useCartContext } from "../../context/CartContext";
 
-const NavLink = ({ children }) => {
+const NavLink = ({ to, children }) => {
   return (
-    <Box
-      px={2}
-      py={1}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: useColorModeValue("gray.200", "gray.700"),
-      }}>
-      {children}
-    </Box>
+    <Link to={to}>
+      <Box
+        fontWeight="bold"
+        px={2}
+        py={1}
+        rounded={"md"}
+        _hover={{
+          textDecoration: "none",
+          bg: useColorModeValue("gray.200", "gray.700"),
+        }}>
+        {children}
+      </Box>
+    </Link>
   );
 };
 
@@ -55,23 +58,6 @@ function NavBar({ loggedIn, handleLogoutClick }) {
   }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  // if (!loggedIn) {
-  //   return (
-  //     <Container centerContent>
-  //       {" "}
-  //       <Link to={"/"}>
-  //         <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
-  //       </Link>
-  //       <NavLink>
-  //         <Link to="/cart">Cart: {cart.length} items</Link>
-  //       </NavLink>
-  //       <NavLink>
-  //         <Link to="/">Home</Link>
-  //       </NavLink>
-  //     </Container>
-  //   );
-  // }
 
   return (
     <>
@@ -106,13 +92,11 @@ function NavBar({ loggedIn, handleLogoutClick }) {
                 spacing={4}
                 display={{ base: "none", md: "flex" }}>
                 {navTabs.map((tab) => (
-                  <NavLink key={tab.title}>
-                    <Link to={tab.path}>{tab.title}</Link>
+                  <NavLink to={tab.path} key={tab.title}>
+                    {tab.title}
                   </NavLink>
                 ))}
-                <NavLink>
-                  <Link to="/cart">Cart: {cart.length} items</Link>
-                </NavLink>
+                <NavLink to="/cart">Cart: {cart.length} items</NavLink>
               </HStack>
             </HStack>
             <Flex alignItems={"center"}>
@@ -131,45 +115,17 @@ function NavBar({ loggedIn, handleLogoutClick }) {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
               {navTabs.map((tab) => (
-                <NavLink key={tab.title}>
-                  <Link to={tab.path}>{tab.title}</Link>
+                <NavLink to={tab.path} key={tab.title}>
+                  {tab.title}
                 </NavLink>
               ))}
-              <NavLink>
-                <Link to="/cart">Cart: {cart.length} items</Link>
-              </NavLink>
+              <NavLink to="/cart">Cart: {cart.length} items</NavLink>
             </Stack>
           </Box>
         ) : null}
       </Box>
     </>
   );
-
-  // return (
-  //   <div position="relative">
-  //     {loggedIn ? (
-  //       <Box position="absolute" right="0">
-  //         {" "}
-  //         <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
-  //       </Box>
-  //     ) : null}
-  //     <Container centerContent>
-  //       <Image src={hardpostLogo} alt="hardpost-logo" borderRadius="full" />
-  //       <Breadcrumb separator="-">
-  //         {navTabs.map((tab, i) => (
-  //           <BreadcrumbItem
-  //             key={i}
-  //             onClick={() => setCurrentPage(tab.title)}
-  //             isCurrentPage={currentPage === tab.title}>
-  //             <BreadcrumbLink as={Link} to={tab.path}>
-  //               {tab.title}
-  //             </BreadcrumbLink>
-  //           </BreadcrumbItem>
-  //         ))}
-  //       </Breadcrumb>
-  //     </Container>
-  //   </div>
-  // );
 }
 
 export default NavBar;
