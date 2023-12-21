@@ -76,14 +76,18 @@ function NavBar({ loggedIn, handleLogoutClick }) {
   return (
     <>
       <Box px={4}>
-        <Box display="flex" justifyContent={"flex-start"} alignItems={"center"}>
+        <Box
+          display="flex"
+          justifyContent={"center"}
+          alignItems={"center"}
+          flexDirection={["column", null, null, null, null, null]}>
           {" "}
           <div className="logo-container">
             <Link to={"/"}>
               <Image
                 src={hardpostLogo}
                 alt="hardpost-logo"
-                h="150px"
+                h="175px"
                 borderRadius="full"
               />
             </Link>
