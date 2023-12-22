@@ -28,7 +28,7 @@ function OrdersPage() {
       .then((orders) => setOrders(orders));
   }, []);
 
-  console.log(orders);
+  // console.log(orders);
 
   // function to calculate the total price from an order object
   const orderPrice = (order) =>

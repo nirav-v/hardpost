@@ -3,27 +3,20 @@ import LogoutButton from "../buttons/LogoutButton";
 import { Link } from "react-router-dom";
 import {
   Box,
-  Center,
-  Container,
   Flex,
-  Avatar,
   HStack,
-  Text,
   Image,
   IconButton,
   Button,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
   useDisclosure,
   useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-
-import hardpostLogo from "../../../public/images/Hardpost-logos_transparent.png";
+import darkModeLogo from "../../../public/images/Hardpost-logos_transparent.png";
+import lightModeLogo from "../../../public/images/Hardpost-logos_black.png";
 import { useCartContext } from "../../context/CartContext";
 
 const NavLink = ({ to, children }) => {
@@ -45,6 +38,7 @@ const NavLink = ({ to, children }) => {
 };
 
 function NavBar({ loggedIn, handleLogoutClick }) {
+  const logoImage = useColorModeValue(lightModeLogo, darkModeLogo);
   const [cart, setCart] = useCartContext();
 
   let navTabs = [{ title: "Home", path: "/" }];
@@ -71,7 +65,7 @@ function NavBar({ loggedIn, handleLogoutClick }) {
           <div className="logo-container">
             <Link to={"/"}>
               <Image
-                src={hardpostLogo}
+                src={logoImage}
                 alt="hardpost-logo"
                 h="175px"
                 borderRadius="full"
