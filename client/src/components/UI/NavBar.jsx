@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import LogoutButton from "../buttons/LogoutButton";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -15,8 +14,8 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import darkModeLogo from "../../../public/images/Hardpost-logos_transparent.png";
-import lightModeLogo from "../../../public/images/Hardpost-logos_black.png";
+import darkModeLogo from "../../images/Hardpost-logos_transparent.png";
+import lightModeLogo from "../../images/Hardpost-logos_black.png";
 import { useCartContext } from "../../context/CartContext";
 
 const NavLink = ({ to, children }) => {

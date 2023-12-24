@@ -1,7 +1,6 @@
-import { User, Item } from "../../models/index.js";
+import { User, Item } from "../models/index.js";
 import Stripe from "stripe";
-import Auth from "../../util/serverAuth.js";
-import jwt from "jsonwebtoken";
+import Auth from "../util/serverAuth.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -47,6 +46,8 @@ export const createStripCheckoutSession = async (req, res) => {
     success_url: `${domain}/orders`,
     cancel_url: `${domain}?canceled=true`,
   });
+
+  // at this point - verify that user successfully completed checkout before updating order and items
 
   // mark all items from the cart as sold
   for (let item of items) {

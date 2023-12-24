@@ -5,8 +5,20 @@ import ButtonModal from "../modals/ButtonModal";
 import { Button, Text } from "@chakra-ui/react";
 import { useCartContext } from "../../context/CartContext";
 import { useEffect } from "react";
+import { Item } from "../../types/ItemTypes";
 
-function AddCartButton({ item }) {
+// type Item = {
+//   id: number;
+//   name: string;
+//   category: string;
+//   description: string;
+//   imagePath: string;
+//   price: number;
+//   sold: boolean;
+//   userId?: number;
+// };
+
+function AddCartButton({ item }: { item: Item }) {
   // get the current user's cart
   const [cart, setCart] = useCartContext();
 
@@ -23,12 +35,12 @@ function AddCartButton({ item }) {
 
   // create a set of cartIds to lookup when mapping over items below, more performant than looping again
   const cartIds = new Set();
-  cart.forEach((cartItem) => cartIds.add(cartItem.id));
+  cart.forEach((cartItem: Item) => cartIds.add(cartItem.id));
 
   // loading state to track while add to cart request is happening and finished
   const [loading, setLoading] = useState(false);
 
-  const handleAddCartClick = async (itemId) => {
+  const handleAddCartClick = async (itemId: number) => {
     setLoading(true);
 
     if (!Auth.isLoggedIn()) {
@@ -44,9 +56,9 @@ function AddCartButton({ item }) {
   };
 
   // using imported util function for deleting item
-  const handleCartDelete = async (itemId) => {
+  const handleCartDelete = async (itemId: number) => {
     if (!Auth.isLoggedIn()) {
-      const updatedCart = cart.filter((item) => item.id !== itemId);
+      const updatedCart = cart.filter((item: Item) => item.id !== itemId);
       setCart(updatedCart);
       return;
     }

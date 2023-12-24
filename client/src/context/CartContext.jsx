@@ -7,7 +7,7 @@ export const useCartContext = () => useContext(CartContext);
 
 function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
-
+  console.log(cart);
   useEffect(() => {
     // if not logged in, use local storage to store cart
     if (!Auth.isLoggedIn()) {

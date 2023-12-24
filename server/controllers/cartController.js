@@ -1,6 +1,6 @@
 import { Cart, Item, User } from "../models/index.js";
 import jwt from "jsonwebtoken";
-import Auth from "../../util/serverAuth.js";
+import Auth from "../util/serverAuth.js";
 
 export const getUserCart = async (req, res, next) => {
   try {

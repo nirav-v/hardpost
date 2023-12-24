@@ -6,6 +6,7 @@ const useItemsContext = () => useContext(ItemsContext);
 const ItemsProvider = ({ children }) => {
   const [items, setItems] = useState([]);
 
+  console.log(items);
   useEffect(() => {
     // Make the fetch request here
     fetch("/shop")

@@ -1,6 +1,6 @@
-import { Item, User } from "../../models/index.js";
-import Auth from "../../util/serverAuth.js";
-import { uploadFile } from "../../util/S3.js";
+import { Item, User } from "../models/index.js";
+import Auth from "../util/serverAuth.js";
+import { uploadFile } from "../util/S3.js";
 
 export const uploadItem = async (req, res, next) => {
   console.log("req.file", req.file); // multer adds image data as file field on req object

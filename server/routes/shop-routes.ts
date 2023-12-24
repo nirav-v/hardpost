@@ -1,5 +1,3 @@
-// const router = require("express").Router();
-// const { Item, User } = require("../models");
 import { Router } from "express";
 import { getShopItems, getItemById } from "../controllers/shopController.js";
 const router = Router();

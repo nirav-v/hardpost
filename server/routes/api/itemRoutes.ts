@@ -1,8 +1,3 @@
-// const router = require("express").Router();
-// const { Item, User } = require("../../models/");
-// const Auth = require("../../util/serverAuth");
-// const { uploadFile } = require("../../util/S3");
-// const multer = require("multer");
 import { Router } from "express";
 import {
   uploadItem,
