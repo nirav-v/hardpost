@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Auth from "../util/auth";
 import {
   List,
@@ -6,7 +6,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Center,
   Heading,
   Text,
@@ -15,9 +14,11 @@ import {
   StackDivider,
 } from "@chakra-ui/react";
 import formatTimestamp from "../util/formatTimestamp";
+import { Order } from "../types/OrderType";
 
 function OrdersPage() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  console.log(orders);
   useEffect(() => {
     fetch("/api/orders", {
       headers: {
@@ -31,7 +32,7 @@ function OrdersPage() {
   // console.log(orders);
 
   // function to calculate the total price from an order object
-  const orderPrice = (order) =>
+  const orderPrice = (order: Order) =>
     order.items.reduce(
       (accumulator, currentValue) => accumulator + currentValue.price,
       0

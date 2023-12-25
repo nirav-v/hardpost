@@ -1,7 +1,6 @@
 import Auth from "./util/auth";
 import AddItemForm from "./components/forms/AddItemForm1";
 import CartPage from "./pages/CartPage";
-import CheckoutPage from "./pages/CheckoutPage";
 import SignUpForm from "./components/forms/SignUpForm";
 import SingleItemPage from "./pages/SingleItemPage";
 import ShopPage from "./pages/ShopPage";
@@ -19,7 +18,7 @@ import CartProvider from "./context/CartContext";
 import WelcomeModal from "./components/modals/WelcomeModal";
 import ButtonModal from "./components/modals/ButtonModal";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import GoogleLoginButton from "./components/buttons/GoogleLoginButton";
+// import GoogleLoginButton from "./components/buttons/GoogleLoginButton";
 
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();

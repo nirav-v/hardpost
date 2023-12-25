@@ -1,4 +1,4 @@
-function formatTimestamp(timestamp) {
+function formatTimestamp(timestamp: string | number | Date) {
   const date = new Date(timestamp);
   const year = date.getFullYear().toString().slice(-2); // Get last two digits of the year
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
