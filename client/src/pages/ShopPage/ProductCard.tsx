@@ -1,4 +1,3 @@
-import Auth from "../../util/auth";
 import AddCartButton from "../../components/buttons/AddCartButton";
 import {
   AspectRatio,
@@ -16,8 +15,13 @@ import {
 } from "@chakra-ui/react";
 import { PriceTag } from "./PriceTag";
 import { Link as ReactRouterLink } from "react-router-dom";
+import { Item } from "../../types/ItemTypes";
 
-export const ProductCard = ({ item }) => {
+type ProductCardProps = {
+  item: Item;
+};
+
+export const ProductCard = ({ item }: ProductCardProps) => {
   return (
     <Stack
       spacing={{
@@ -30,7 +34,7 @@ export const ProductCard = ({ item }) => {
             <Image
               src={item.imagePath}
               alt={item.name}
-              opacity={item.sold ? 0.2 : null}
+              opacity={item.sold ? 0.2 : undefined}
               draggable="false"
               fallback={<Skeleton />}
               borderRadius={{

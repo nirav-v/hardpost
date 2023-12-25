@@ -1,7 +1,7 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import { Children, isValidElement, useMemo } from "react";
 
-export const ProductGrid = (props) => {
+export const ProductGrid = (props: { children: React.ReactNode }) => {
   const columns = useMemo(() => {
     const count = Children.toArray(props.children).filter(
       isValidElement

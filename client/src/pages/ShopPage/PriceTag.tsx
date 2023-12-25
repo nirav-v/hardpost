@@ -1,5 +1,26 @@
 import { HStack, Text, useColorModeValue as mode } from "@chakra-ui/react";
-export function formatPrice(value, opts = {}) {
+
+type PriceTagProps = {
+  price: number;
+  currency: string;
+  salePrice?: number;
+  rootProps?: any;
+  priceProps?: any;
+  salePriceProps?: any;
+};
+
+type PriceProps = {
+  isOnSale: boolean;
+  children: React.ReactNode;
+  textProps?: any;
+};
+
+type FormatPriceOptions = {
+  locale?: string;
+  currency?: string;
+};
+
+export function formatPrice(value: number, opts: FormatPriceOptions = {}) {
   const { locale = "en-US", currency = "USD" } = opts;
   const formatter = new Intl.NumberFormat(locale, {
     currency,
@@ -9,7 +30,7 @@ export function formatPrice(value, opts = {}) {
   return formatter.format(value);
 }
 
-export const PriceTag = (props) => {
+export const PriceTag = (props: PriceTagProps) => {
   const { price, currency, salePrice, rootProps, priceProps, salePriceProps } =
     props;
   return (
@@ -29,7 +50,7 @@ export const PriceTag = (props) => {
     </HStack>
   );
 };
-const Price = (props) => {
+const Price = (props: PriceProps) => {
   const { isOnSale, children, textProps } = props;
   const defaultColor = mode("gray.700", "gray.400");
   const onSaleColor = mode("gray.400", "gray.700");
@@ -45,7 +66,7 @@ const Price = (props) => {
     </Text>
   );
 };
-const SalePrice = (props) => (
+const SalePrice = (props: PriceTagProps) => (
   <Text
     as="span"
     fontWeight="semibold"

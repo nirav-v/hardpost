@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import FilterCheckbox from "../../components/inputs/FilterCheckbox.js";
 import { ProductCard } from "./ProductCard";
-import { ProductGrid } from "./ProductGrid";
+import { ProductGrid } from "./ProductGrid.js";
 import { useItemsContext } from "../../context/ItemsContext";
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
