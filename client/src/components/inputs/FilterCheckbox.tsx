@@ -1,7 +1,11 @@
 import { Checkbox, CheckboxGroup, Stack } from "@chakra-ui/react";
-import React from "react";
 
-function FilterCheckbox({ onChange, defaultValue }) {
+type FilterCheckboxProps = {
+  onChange: (choices: string[]) => void;
+  defaultValue: string[];
+};
+
+function FilterCheckbox({ onChange, defaultValue }: FilterCheckboxProps) {
   return (
     <CheckboxGroup
       colorScheme="green"

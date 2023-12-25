@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import FilterCheckbox from "../../components/inputs/FilterCheckbox.jsx";
+import FilterCheckbox from "../../components/inputs/FilterCheckbox.js";
 import { ProductCard } from "./ProductCard";
 import { ProductGrid } from "./ProductGrid";
 import { useItemsContext } from "../../context/ItemsContext";
