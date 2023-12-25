@@ -98,7 +98,6 @@ function App() {
                   <Route path="/" element={<ShopPage />} />
                   <Route path="/add-item" element={<AddItemForm />} />
                   <Route path="/cart" element={<CartPage />} />
-                  <Route path="/checkout" element={<CheckoutPage />} />
                   <Route path="/orders" element={<OrdersPage />} />
                   <Route path="/user-items" element={<UserItems />} />
                   <Route
