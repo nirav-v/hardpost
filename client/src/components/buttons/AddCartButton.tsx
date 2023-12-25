@@ -1,22 +1,10 @@
 import Auth from "../../util/auth";
 import { addCartItem, deleteCartItem } from "../../util/cartApi";
 import React, { useState } from "react";
-import ButtonModal from "../modals/ButtonModal";
 import { Button, Text } from "@chakra-ui/react";
 import { useCartContext } from "../../context/CartContext";
 import { useEffect } from "react";
 import { Item } from "../../types/ItemTypes";
-
-// type Item = {
-//   id: number;
-//   name: string;
-//   category: string;
-//   description: string;
-//   imagePath: string;
-//   price: number;
-//   sold: boolean;
-//   userId?: number;
-// };
 
 function AddCartButton({ item }: { item: Item }) {
   // get the current user's cart
@@ -74,19 +62,6 @@ function AddCartButton({ item }: { item: Item }) {
     button = <Text>Sold</Text>; // item is sold, render "sold" button
     return button;
   }
-
-  // if (!Auth.isLoggedIn()) {
-  //   // user not logged in, render the modal opening button to tell them to log in
-  //   button = (
-  //     <ButtonModal buttonContent="Add to Cart">
-  //       {" "}
-  //       <Text fontSize="lg" align="center">
-  //         You must have an account and be logged in to purchase this item
-  //       </Text>
-  //     </ButtonModal>
-  //   );
-  //   return button;
-  // }
 
   if (item.userId === userId) {
     button = <Text>My item</Text>; // item belongs to logged in user, render "my item" button

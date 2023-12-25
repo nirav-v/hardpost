@@ -12,7 +12,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "noEmitOnError": false, // allows code to compile even with ts errors (fix incrementally)
     "jsx": "react-jsx",
 
     /* Linting */

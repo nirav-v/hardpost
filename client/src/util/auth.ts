@@ -1,15 +1,20 @@
 import jwt_decode from "jwt-decode";
 
+type JwtPayload = {
+  exp: number;
+  iat: number;
+};
+
 const Auth = {
   isLoggedIn: function () {
-    if (!this.getToken()) return false;
     const token = this.getToken();
-    const { exp } = jwt_decode(token);
+    if (!token) return false;
+    const { exp } = jwt_decode<JwtPayload>(token);
     // true if token exists and is not expired yet
     return token && exp > Date.now() / 1000;
   },
 
-  login: (token) => {
+  login: (token: string) => {
     localStorage.setItem("token", token);
   },
   getToken: () => {
@@ -18,12 +23,13 @@ const Auth = {
 
   getPayload: function () {
     const token = this.getToken();
+    if (!token) return null;
     return jwt_decode(token);
   },
 
   returningUser: () => {
     if (localStorage.getItem("returningUser")) return true;
-    return false;
+    else return false;
   },
 };
 
