@@ -1,5 +1,5 @@
 import { Item } from "../types/ItemTypes";
-import Auth from "../util/auth";
+import Auth from "../util/auth.ts";
 import React, { useState, useEffect, createContext, useContext } from "react";
 
 type CartContextType = [Item[], React.Dispatch<React.SetStateAction<never[]>>];

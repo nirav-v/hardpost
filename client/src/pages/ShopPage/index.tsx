@@ -1,14 +1,15 @@
 import { Box } from "@chakra-ui/react";
-import FilterCheckbox from "../../components/inputs/FilterCheckbox";
+import FilterCheckbox from "../../components/inputs/FilterCheckbox.jsx";
 import { ProductCard } from "./ProductCard";
 import { ProductGrid } from "./ProductGrid";
 import { useItemsContext } from "../../context/ItemsContext";
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Item } from "../../types/ItemTypes.js";
 
 function ShopPage() {
   const [items, setItems] = useItemsContext();
-  const [filteredItems, setFilteredItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   // console.log("items state", items);
@@ -18,7 +19,7 @@ function ShopPage() {
   const paramsArray = [...searchParams];
   // create array of only param values to be used for filtering and items state, and providing default value to checkbox component
   // e.g ['decks', 'wheels']
-  const filterChoices = [];
+  const filterChoices: string[] = [];
   for (let param of paramsArray) {
     filterChoices.push(param[1]);
   }
@@ -42,7 +43,7 @@ function ShopPage() {
     <div>
       <FilterCheckbox
         defaultValue={filterChoices}
-        onChange={(choices) => {
+        onChange={(choices: string[]) => {
           setSearchParams({ category: choices });
         }}
       />
