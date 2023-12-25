@@ -1,4 +1,6 @@
 import CheckoutModal from "../../components/modals/CheckoutModal";
+import { Item } from "../../types/ItemTypes";
+import { formatPrice } from "../../util/formatPrice";
 import {
   Button,
   Flex,
@@ -8,19 +10,15 @@ import {
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-function formatPrice(value, opts = {}) {
-  const { locale = "en-US", currency = "USD" } = opts;
-  const formatter = new Intl.NumberFormat(locale, {
-    currency,
-    style: "currency",
-    maximumFractionDigits: 2,
-  });
-  return formatter.format(value);
-}
+type OrderSummaryItemProps = {
+  label: string;
+  value?: string;
+  children?: React.ReactNode;
+};
 
-const OrderSummaryItem = (props) => {
+const OrderSummaryItem = (props: OrderSummaryItemProps) => {
   const { label, value, children } = props;
   return (
     <Flex justify="space-between" fontSize="sm">
@@ -32,9 +30,17 @@ const OrderSummaryItem = (props) => {
   );
 };
 
-export const CartOrderSummary = ({ cartData, onCheckoutSubmit }) => {
+type CartOrderSummaryProps = {
+  cartData: Item[];
+  onCheckoutSubmit: () => void;
+};
+
+export const CartOrderSummary = ({
+  cartData,
+  onCheckoutSubmit,
+}: CartOrderSummaryProps) => {
   const [totalPrice, setTotalPrice] = useState(0);
-  const getTotalPrice = (cartArr) => {
+  const getTotalPrice = (cartArr: Item[]) => {
     if (cartArr.length) {
       let sum = cartArr.reduce(
         (accumulator, currentValue) => accumulator + currentValue.price,

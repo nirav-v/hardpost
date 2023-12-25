@@ -1,16 +1,14 @@
 import {
   Box,
-  HStack,
-  Icon,
   Image,
-  Link,
   Stack,
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Item } from "../../types/ItemTypes";
 
-export const CartProductMeta = ({ item }) => {
+export const CartProductMeta = ({ item }: { item: Item }) => {
   const navigate = useNavigate();
 
   return (

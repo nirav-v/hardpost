@@ -1,15 +1,13 @@
-import {
-  CloseButton,
-  Flex,
-  Link,
-  Select,
-  Stat,
-  StatNumber,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { CloseButton, Flex, Stat, StatNumber } from "@chakra-ui/react";
 import { CartProductMeta } from "./CartProductMeta";
+import { Item } from "../../types/ItemTypes";
 
-export const CartItem = ({ item, onClickDelete }) => {
+type CartItemProps = {
+  item: Item;
+  onClickDelete: () => void;
+};
+
+export const CartItem = ({ item, onClickDelete }: CartItemProps) => {
   return (
     <Flex
       direction={{

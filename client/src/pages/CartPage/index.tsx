@@ -1,10 +1,8 @@
 import Auth from "../../util/auth";
-import React, { useState, useEffect, useContext } from "react";
+
 import {
-  CloseButton,
   Flex,
   Link,
-  Select,
   useColorModeValue as mode,
   Stack,
   Box,
@@ -17,15 +15,12 @@ import { CartItem } from "./CartItem";
 import { CartOrderSummary } from "./CartOrderSummary";
 import { useCartContext } from "../../context/CartContext";
 import { loadStripe } from "@stripe/stripe-js";
-import ButtonModal from "../../components/modals/ButtonModal";
-import WelcomeModal from "../../components/modals/WelcomeModal";
-import LoginForm from "../../components/forms/LoginForm";
 
 function CartPage() {
   const [cart, setCart] = useCartContext();
 
   // using imported util function for deleting item
-  const handleCartDelete = async (itemId) => {
+  const handleCartDelete = async (itemId: number) => {
     if (!Auth.isLoggedIn()) {
       const updatedCart = cart.filter((item) => item.id !== itemId);
       setCart(updatedCart);
@@ -63,7 +58,7 @@ function CartPage() {
       "pk_test_51NpbteEHf8A5rB27b2EI52s44oXzHWFqcQqYhpohOETeB3ryMLGAhIp51yo5GbSQwyXU7LEoBAnR3fg1WXGZ8w4m00O9aMv0Bw"
     );
 
-    stripe.redirectToCheckout({ sessionId: session.id });
+    if (stripe) stripe.redirectToCheckout({ sessionId: session.id });
   };
 
   return (
