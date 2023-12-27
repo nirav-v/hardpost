@@ -2,16 +2,12 @@ import AddCartButton from "../../components/buttons/AddCartButton";
 import {
   AspectRatio,
   Box,
-  Button,
-  Center,
   HStack,
   Image,
-  Link,
   Skeleton,
   Stack,
   Text,
   useColorModeValue,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { PriceTag } from "./PriceTag";
 import { Link as ReactRouterLink } from "react-router-dom";
