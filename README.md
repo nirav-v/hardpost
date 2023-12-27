@@ -1,8 +1,8 @@
-# <p align="center">[<img src="./client/src/images/hardpost-logo.png">](https://hardpost-f79ecee5b44d.herokuapp.com/)</p>
+# <p align="center">[<img style="height: 200px; width: 200px;" src="./client/src/images/Hardpost-logos_transparent.png">](https://hardpost-f79ecee5b44d.herokuapp.com/)</p>
 
-[deployed site](https://hardpost-f79ecee5b44d.herokuapp.com/)
+## <h2 align="center"> An online marketplace to buy, sell, and trade skateboarding items. </h2>
 
-### An online marketplace to buy, sell, and trade items for the niche skateboarding community.
+## <p align="center"> [deployed site](https://hardpost-f79ecee5b44d.herokuapp.com/) </p>
 
 ## <p align="center">Motivation
 
