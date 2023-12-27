@@ -1,13 +1,12 @@
 import Auth from "../util/auth";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Image, Button, Box, Center, Heading } from "@chakra-ui/react";
-import ItemCard from "../components/UI/ItemCard";
 import { ProductGrid } from "./ShopPage/ProductGrid";
-import { ProductCard } from "./ShopPage/ProductCard";
 import { useItemsContext } from "../context/ItemsContext";
+import { Item } from "../types/ItemTypes";
 
 function UserItems() {
-  const [userItems, setUserItems] = useState([]);
+  const [userItems, setUserItems] = useState<Item[]>([]);
   const [items, setItems] = useItemsContext();
 
   // function to fetch all userItems and update state
@@ -18,10 +17,11 @@ function UserItems() {
       },
     })
       .then((res) => res.json())
-      .then((userItems) => {
+      .then((userItems: Item[]) => {
         // sort items in place by available items first
         userItems.sort((item2, item1) => {
           if (!item2.sold && item1.sold) return -1;
+          else return 0;
         });
         // update both userItems for this component, as well as global items context being used by other sibling components
         setUserItems(userItems);
@@ -33,7 +33,7 @@ function UserItems() {
     fetchItems();
   }, []);
 
-  const handleRemoveItemClick = async (itemId) => {
+  const handleRemoveItemClick = async (itemId: number) => {
     // grab the item id and send a fetch request to the delete-item route
     console.log("id removed: ", itemId);
     const response = await fetch("/api/delete-item", {
