@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FormControl,
   FormLabel,
@@ -6,7 +5,12 @@ import {
   FormHelperText,
 } from "@chakra-ui/react";
 
-function EmailInput({ value, handleEmailChange }) {
+type EmailInputProps = {
+  value?: string;
+  handleEmailChange: (event: React.FormEvent<HTMLInputElement>) => void;
+};
+
+function EmailInput({ value, handleEmailChange }: EmailInputProps) {
   return (
     <FormControl mb="8px">
       <FormLabel>Email address</FormLabel>

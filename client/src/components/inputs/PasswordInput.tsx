@@ -8,12 +8,18 @@ import {
   FormControl,
 } from "@chakra-ui/react";
 
+type PasswordInputProps = {
+  name: string;
+  value: string;
+  label?: string;
+  handleChange: (event: React.FormEvent<HTMLInputElement>) => void;
+};
+
 export default function PasswordInput({
   value,
   handleChange,
-  handleSubmit,
   label,
-}) {
+}: PasswordInputProps) {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
