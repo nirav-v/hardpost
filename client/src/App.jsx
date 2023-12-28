@@ -74,7 +74,6 @@ function App() {
                       />
                     ) : (
                       <LoginForm
-                        loggedIn={loggedIn}
                         setLoggedIn={setLoggedIn}
                         showSignUpForm={showSignUpForm}
                         setShowSignUpForm={setShowSignUpForm}

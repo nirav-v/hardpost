@@ -2,15 +2,10 @@ import { useState } from "react";
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   Divider,
-  FormControl,
-  FormLabel,
   Heading,
   HStack,
-  Input,
-  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -18,18 +13,24 @@ import PasswordInput from "../inputs/PasswordInput";
 import EmailInput from "../inputs/EmailInput";
 import Auth from "../../util/auth";
 
+type LoginFormProps = {
+  loggedIn: boolean;
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  showSignUpForm: boolean;
+  setShowSignUpForm: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 function LoginForm({
-  loggedIn,
   setLoggedIn,
   showSignUpForm,
   setShowSignUpForm,
-}) {
+}: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [loginSuccess, setLoginSuccess] = useState(true);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const url = "/api/user/login";
     const body = JSON.stringify({
@@ -59,8 +60,6 @@ function LoginForm({
       setLoginSuccess(false);
     }
   };
-
-  const handleInputChange = (event, setState) => setState(event.target.value);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -96,12 +95,16 @@ function LoginForm({
             <Stack spacing="6">
               <Stack spacing="5">
                 <EmailInput
-                  handleEmailChange={(event) => setEmail(event.target.value)}
+                  handleEmailChange={(
+                    event: React.FormEvent<HTMLInputElement>
+                  ) => setEmail(event.currentTarget.value)}
                 />
                 <PasswordInput
                   name="password"
                   value={password}
-                  handleChange={(event) => setPassword(event.target.value)}
+                  handleChange={(event: React.FormEvent<HTMLInputElement>) =>
+                    setPassword(event.currentTarget.value)
+                  }
                 />
               </Stack>
               <HStack justify="space-between">
