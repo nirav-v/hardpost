@@ -55,7 +55,7 @@ function App() {
               </Box>
             ) : null}
           </Flex>
-          <NavBar loggedIn={loggedIn} handleLogoutClick={handleLogoutClick} />
+          <NavBar loggedIn={loggedIn} />
           <ItemsProvider>
             {/* conditionally render remaining content of App (accessible react-router routes and components) based on loggedIn state */}
             {!loggedIn ? (

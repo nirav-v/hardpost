@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -18,7 +17,12 @@ import darkModeLogo from "../../images/Hardpost-logos_transparent.png";
 import lightModeLogo from "../../images/Hardpost-logos_black.png";
 import { useCartContext } from "../../context/CartContext";
 
-const NavLink = ({ to, children }) => {
+type NavLinkProps = {
+  to: string;
+  children: React.ReactNode;
+};
+
+const NavLink = ({ to, children }: NavLinkProps) => {
   return (
     <Link to={to}>
       <Box
@@ -36,7 +40,11 @@ const NavLink = ({ to, children }) => {
   );
 };
 
-function NavBar({ loggedIn, handleLogoutClick }) {
+type NavBarProps = {
+  loggedIn: boolean;
+};
+
+function NavBar({ loggedIn }: NavBarProps) {
   const logoImage = useColorModeValue(lightModeLogo, darkModeLogo);
   const [cart, setCart] = useCartContext();
 
