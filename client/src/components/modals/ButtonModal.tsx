@@ -5,13 +5,21 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
-  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 
-export default function ButtonModal({ children, buttonContent, chakraColor }) {
+type ButtonModalProps = {
+  children: React.ReactNode;
+  buttonContent: string;
+  chakraColor: string;
+};
+
+export default function ButtonModal({
+  children,
+  buttonContent,
+  chakraColor,
+}: ButtonModalProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>

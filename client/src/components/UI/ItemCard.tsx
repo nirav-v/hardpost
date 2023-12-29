@@ -1,7 +1,5 @@
-import React from "react";
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   Stack,
@@ -10,12 +8,12 @@ import {
   Image,
   Divider,
   Button,
-  ButtonGroup,
 } from "@chakra-ui/react";
 import Auth from "../../util/auth";
+import { Item } from "../../types/ItemTypes";
 
-function ItemPage({ item }) {
-  const handleAddCartClick = (itemId) => {
+function ItemPage({ item }: { item: Item }) {
+  const handleAddCartClick = (itemId: number) => {
     fetch("/api/cart", {
       method: "POST",
       body: JSON.stringify({ itemId }),
