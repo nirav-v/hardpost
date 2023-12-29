@@ -24,7 +24,7 @@ type NavLinkProps = {
 
 const NavLink = ({ to, children }: NavLinkProps) => {
   return (
-    <Link to={to}>
+    <Link to={to} data-cy={`${to}-navtab`}>
       <Box
         fontWeight="bold"
         px={2}
