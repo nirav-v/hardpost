@@ -1,32 +1,23 @@
-import { useState, useRef, Fragment } from "react";
+import React, { useState, useRef, Fragment } from "react";
 import { ProgressBar } from "react-loader-spinner";
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   Center,
   Divider,
-  FormControl,
   FormLabel,
-  Heading,
   HStack,
   Input,
   Select,
-  Link,
   Stack,
   Text,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
 } from "@chakra-ui/react";
 
 import Auth from "../../util/auth";
 function addItemForm() {
   const [loading, setLoading] = useState(false);
-  const imageInput = useRef(null);
+  const imageInput = useRef<HTMLInputElement>(null);
   // use a single form state object instead of many individual state variable
   const [formState, setFormState] = useState({
     name: "",
@@ -35,18 +26,19 @@ function addItemForm() {
     description: "",
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setFormState({
       ...formState,
-      [event.target.name]: event.target.value,
+      [event.currentTarget.name]: event.currentTarget.value,
     });
-    console.log(formState, event.target.name, event.target.value);
+    console.log(formState, event.currentTarget.name, event.currentTarget.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     // make sure name and image were provided for product
+    if (!imageInput.current || !imageInput.current.files) return;
     if (imageInput.current.files.length < 1) {
       alert("must include an image");
       return;
@@ -65,7 +57,7 @@ function addItemForm() {
 
     const url = "/api/add-item";
     formData.append("name", name);
-    formData.append("price", price);
+    formData.append("price", price.toString());
     formData.append("category", category);
     formData.append("description", description);
     formData.append("image", imageInput.current.files[0]);
@@ -147,7 +139,9 @@ function addItemForm() {
                       <Select
                         name="category"
                         placeholder="Select Category"
-                        onChange={handleChange}>
+                        onChange={
+                          handleChange as unknown as React.ChangeEventHandler<HTMLSelectElement>
+                        }>
                         <option name="category" value="decks">
                           decks
                         </option>

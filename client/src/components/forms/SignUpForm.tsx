@@ -2,15 +2,12 @@ import { useState } from "react";
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   Divider,
-  FormControl,
   FormLabel,
   Heading,
   HStack,
   Input,
-  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -18,19 +15,24 @@ import PasswordInput from "../inputs/PasswordInput";
 import EmailInput from "../inputs/EmailInput";
 import Auth from "../../util/auth";
 
+type SignUpFormProps = {
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  showSignUpForm: boolean;
+  setShowSignUpForm: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 function SignUpForm({
-  loggedIn,
   setLoggedIn,
   showSignUpForm,
   setShowSignUpForm,
-}) {
+}: SignUpFormProps) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     // validate form inputs
     if (password.length < 8) {
@@ -68,8 +70,6 @@ function SignUpForm({
       }
     }
   };
-
-  const handleInputChange = (event, setter) => setter(event.target.value);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -118,18 +118,22 @@ function SignUpForm({
                   }}
                 />
                 <EmailInput
-                  handleEmailChange={(event) => setEmail(event.target.value)}
+                  handleEmailChange={(event) =>
+                    setEmail(event.currentTarget.value)
+                  }
                 />
                 <PasswordInput
                   name="password"
                   value={password}
-                  handleChange={(event) => setPassword(event.target.value)}
+                  handleChange={(event) =>
+                    setPassword(event.currentTarget.value)
+                  }
                 />
                 <PasswordInput
                   name="confirmPassword"
                   value={confirmPassword}
                   handleChange={(event) =>
-                    setConfirmPassword(event.target.value)
+                    setConfirmPassword(event.currentTarget.value)
                   }
                 />
               </Stack>

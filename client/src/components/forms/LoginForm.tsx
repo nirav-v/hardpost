@@ -95,14 +95,14 @@ function LoginForm({
             <Stack spacing="6">
               <Stack spacing="5">
                 <EmailInput
-                  handleEmailChange={(
-                    event: React.FormEvent<HTMLInputElement>
-                  ) => setEmail(event.currentTarget.value)}
+                  handleEmailChange={(event) =>
+                    setEmail(event.currentTarget.value)
+                  }
                 />
                 <PasswordInput
                   name="password"
                   value={password}
-                  handleChange={(event: React.FormEvent<HTMLInputElement>) =>
+                  handleChange={(event) =>
                     setPassword(event.currentTarget.value)
                   }
                 />

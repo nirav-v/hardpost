@@ -67,7 +67,6 @@ function App() {
                     {/* conditionally render Login form OR Sign up form based on state */}
                     {showSignUpForm ? (
                       <SignUpForm
-                        loggedIn={loggedIn}
                         setLoggedIn={setLoggedIn}
                         showSignUpForm={showSignUpForm}
                         setShowSignUpForm={setShowSignUpForm}
