@@ -10,7 +10,7 @@ const useItemsContext = () => useContext(ItemsContext);
 const ItemsProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<Item[]>([]);
 
-  console.log(items);
+  // console.log(items);
   useEffect(() => {
     // Make the fetch request here
     fetch("/shop")
