@@ -24,7 +24,7 @@ export default function WelcomeModal() {
   // on modal close we want to also set a value in localStorage to remember they are a returning user
   const handleWelcomeClose = () => {
     onClose();
-    localStorage.setItem("returningUser", true);
+    localStorage.setItem("returningUser", true.toString());
   };
 
   return (

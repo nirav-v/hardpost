@@ -14,7 +14,6 @@ import EmailInput from "../inputs/EmailInput";
 import Auth from "../../util/auth";
 
 type LoginFormProps = {
-  loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   showSignUpForm: boolean;
   setShowSignUpForm: React.Dispatch<React.SetStateAction<boolean>>;
