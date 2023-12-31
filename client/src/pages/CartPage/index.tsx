@@ -103,7 +103,7 @@ function CartPage() {
 
             <Flex direction="column" align="center" flex="1">
               <CartOrderSummary
-                cartData={cart}
+                cart={cart}
                 onCheckoutSubmit={handleCheckoutSubmit}
               />
               <HStack mt="6" fontWeight="semibold">

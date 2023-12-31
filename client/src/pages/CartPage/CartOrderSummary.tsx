@@ -31,26 +31,25 @@ const OrderSummaryItem = (props: OrderSummaryItemProps) => {
 };
 
 type CartOrderSummaryProps = {
-  cartData: Item[];
+  cart: Item[];
   onCheckoutSubmit: () => void;
 };
 
 export const CartOrderSummary = ({
-  cartData,
+  cart,
   onCheckoutSubmit,
 }: CartOrderSummaryProps) => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const getTotalPrice = (cartArr: Item[]) => {
-    if (cartArr.length) {
-      let sum = cartArr.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.price,
-        0
-      );
-      setTotalPrice(sum);
-    }
+    let sum = cartArr.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.price,
+      0
+    );
+    setTotalPrice(sum);
   };
-  useEffect(() => getTotalPrice(cartData), [cartData]);
+  // console.log("cart state for price summary", cart);
+  useEffect(() => getTotalPrice(cart), [cart]);
 
   return (
     <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
