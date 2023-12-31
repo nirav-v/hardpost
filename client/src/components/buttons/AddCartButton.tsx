@@ -1,14 +1,17 @@
 import Auth from "../../util/auth";
-import { addCartItem, deleteCartItem } from "../../util/cartApi";
-import React, { useState } from "react";
+import { addCartItem } from "../../util/cartApi";
+import { useState } from "react";
 import { Button, Text } from "@chakra-ui/react";
 import { useCartContext } from "../../context/CartContext";
 import { useEffect } from "react";
 import { Item } from "../../types/ItemTypes";
+import { useDeleteFromCart } from "../../hooks/useDeleteFromCart";
 
 function AddCartButton({ item }: { item: Item }) {
   // get the current user's cart
   const [cart, setCart] = useCartContext();
+  const deleteFromCart = useDeleteFromCart();
+
   // loading state to track while add to cart request is happening and finished
   const [loading, setLoading] = useState(false);
 
@@ -43,19 +46,6 @@ function AddCartButton({ item }: { item: Item }) {
     setLoading(false);
   };
 
-  // using imported util function for deleting item
-  const handleCartDelete = async (itemId: number) => {
-    if (!Auth.isLoggedIn()) {
-      const updatedCart = cart.filter((item: Item) => item.id !== itemId);
-
-      setCart(updatedCart);
-      return;
-    }
-
-    const updatedItems = await deleteCartItem(itemId);
-    setCart(updatedItems);
-  };
-
   // rendering a different button under different conditions
   let button;
 
@@ -72,7 +62,7 @@ function AddCartButton({ item }: { item: Item }) {
   if (cartIds.has(item.id)) {
     button = (
       <Button
-        onClick={() => handleCartDelete(item.id)}
+        onClick={() => deleteFromCart(item.id)}
         colorScheme="red"
         width="full">
         Remove from cart

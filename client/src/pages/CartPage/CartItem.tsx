@@ -1,13 +1,15 @@
 import { CloseButton, Flex, Stat, StatNumber } from "@chakra-ui/react";
 import { CartProductMeta } from "./CartProductMeta";
 import { Item } from "../../types/ItemTypes";
+import { useDeleteFromCart } from "../../hooks/useDeleteFromCart";
 
 type CartItemProps = {
   item: Item;
-  onClickDelete: (itemId: number) => void;
 };
 
-export const CartItem = ({ item, onClickDelete }: CartItemProps) => {
+export const CartItem = ({ item }: CartItemProps) => {
+  const deleteFromCart = useDeleteFromCart();
+
   return (
     <Flex
       direction={{
@@ -36,7 +38,7 @@ export const CartItem = ({ item, onClickDelete }: CartItemProps) => {
         <CloseButton
           colorScheme="whiteAlpha"
           aria-label={`Delete ${item.name} from cart`}
-          onClick={() => onClickDelete(item.id)}
+          onClick={() => deleteFromCart(item.id)}
         />
       </Flex>
 

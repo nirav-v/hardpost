@@ -9,7 +9,6 @@ import {
   Heading,
   HStack,
 } from "@chakra-ui/react";
-import { deleteCartItem } from "../../util/cartApi";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { CartItem } from "./CartItem";
 import { CartOrderSummary } from "./CartOrderSummary";
@@ -18,19 +17,6 @@ import { loadStripe } from "@stripe/stripe-js";
 
 function CartPage() {
   const [cart, setCart] = useCartContext();
-
-  // using imported util function for deleting item
-  const handleCartDelete = async (itemId: number) => {
-    if (!Auth.isLoggedIn()) {
-      const updatedCart = cart.filter((item) => item.id !== itemId);
-      setCart(updatedCart);
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return;
-    }
-
-    const updatedItems = await deleteCartItem(itemId);
-    setCart(updatedItems);
-  };
 
   const handleCheckoutSubmit = async () => {
     if (!Auth.isLoggedIn()) {
@@ -108,7 +94,7 @@ function CartPage() {
                   return (
                     <CartItem
                       key={item.id}
-                      onClickDelete={() => handleCartDelete(item.id)}
+                      // onClickDelete={() => useDeleteFromCart(item.id)}
                       item={item}></CartItem>
                   );
                 })}
