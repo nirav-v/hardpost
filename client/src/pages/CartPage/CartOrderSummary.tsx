@@ -40,6 +40,7 @@ export const CartOrderSummary = ({
   onCheckoutSubmit,
 }: CartOrderSummaryProps) => {
   const [totalPrice, setTotalPrice] = useState(0);
+
   const getTotalPrice = (cartArr: Item[]) => {
     if (cartArr.length) {
       let sum = cartArr.reduce(
@@ -49,7 +50,6 @@ export const CartOrderSummary = ({
       setTotalPrice(sum);
     }
   };
-
   useEffect(() => getTotalPrice(cartData), [cartData]);
 
   return (

@@ -9,8 +9,10 @@ import { Item } from "../../types/ItemTypes";
 function AddCartButton({ item }: { item: Item }) {
   // get the current user's cart
   const [cart, setCart] = useCartContext();
+  // loading state to track while add to cart request is happening and finished
+  const [loading, setLoading] = useState(false);
 
-  // update cart in local storage when state changes
+  // useEffect will update cart in local storage whenever cart state changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -18,15 +20,13 @@ function AddCartButton({ item }: { item: Item }) {
   // access the current user's id by decoding the jwt in local storage
   let userId;
   if (Auth.isLoggedIn()) {
-    userId = Auth.getPayload().userId;
+    const payload = Auth.getPayload();
+    userId = payload?.userId;
   }
 
   // create a set of cartIds to lookup when mapping over items below, more performant than looping again
   const cartIds = new Set();
   cart.forEach((cartItem: Item) => cartIds.add(cartItem.id));
-
-  // loading state to track while add to cart request is happening and finished
-  const [loading, setLoading] = useState(false);
 
   const handleAddCartClick = async (itemId: number) => {
     setLoading(true);
@@ -47,6 +47,7 @@ function AddCartButton({ item }: { item: Item }) {
   const handleCartDelete = async (itemId: number) => {
     if (!Auth.isLoggedIn()) {
       const updatedCart = cart.filter((item: Item) => item.id !== itemId);
+
       setCart(updatedCart);
       return;
     }

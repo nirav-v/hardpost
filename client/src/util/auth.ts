@@ -3,6 +3,9 @@ import jwt_decode from "jwt-decode";
 type JwtPayload = {
   exp: number;
   iat: number;
+  userId: number;
+  username: string;
+  email: string;
 };
 
 const Auth = {
@@ -21,7 +24,7 @@ const Auth = {
     return localStorage.getItem("token");
   },
 
-  getPayload: function () {
+  getPayload: function (): JwtPayload | null {
     const token = this.getToken();
     if (!token) return null;
     return jwt_decode(token);

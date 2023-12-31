@@ -4,7 +4,7 @@ import { Item } from "../../types/ItemTypes";
 
 type CartItemProps = {
   item: Item;
-  onClickDelete: () => void;
+  onClickDelete: (itemId: number) => void;
 };
 
 export const CartItem = ({ item, onClickDelete }: CartItemProps) => {
@@ -36,7 +36,7 @@ export const CartItem = ({ item, onClickDelete }: CartItemProps) => {
         <CloseButton
           colorScheme="whiteAlpha"
           aria-label={`Delete ${item.name} from cart`}
-          onClick={onClickDelete}
+          onClick={() => onClickDelete(item.id)}
         />
       </Flex>
 
@@ -53,7 +53,7 @@ export const CartItem = ({ item, onClickDelete }: CartItemProps) => {
         <CloseButton
           fontSize="sm"
           textDecor="underline"
-          onClick={onClickDelete}>
+          onClick={() => onClickDelete(item.id)}>
           Delete
         </CloseButton>
         {/* <QuantitySelect

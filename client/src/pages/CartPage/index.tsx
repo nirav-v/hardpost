@@ -24,6 +24,7 @@ function CartPage() {
     if (!Auth.isLoggedIn()) {
       const updatedCart = cart.filter((item) => item.id !== itemId);
       setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
       return;
     }
 
