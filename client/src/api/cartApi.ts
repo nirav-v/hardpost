@@ -1,6 +1,16 @@
 import Auth from "../util/auth";
 
 export const cartApi = {
+  getCartItems: async () => {
+    const res = await fetch("/api/cart", {
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    });
+    const cart = await res.json();
+    return cart;
+  },
+
   addCartItem: async (itemId: number) => {
     const res = await fetch("/api/cart", {
       method: "POST",

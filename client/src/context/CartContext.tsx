@@ -1,3 +1,4 @@
+import { cartApi } from "../api/cartApi.ts";
 import { Item } from "../types/ItemTypes";
 import Auth from "../util/auth.ts";
 import React, { useState, useEffect, createContext, useContext } from "react";
@@ -13,21 +14,15 @@ function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<Item[]>([]);
   // console.log(cart);
   useEffect(() => {
-    // if not logged in, use local storage to store cart
-    if (!Auth.isLoggedIn()) {
-      const localCartData = localStorage.getItem("cart");
-      const cart = localCartData ? JSON.parse(localCartData) : [];
-      setCart(cart);
-      return; // not logged in, return before api call below
-    }
+    // get cart from local storage and update the cart, used for when user is not logged in
+    const localCartData = localStorage.getItem("cart");
+    const cart = localCartData ? JSON.parse(localCartData) : [];
+    setCart(cart);
 
-    fetch("/api/cart", {
-      headers: {
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setCart(data));
+    // if user is logged in, get their cart items from database and update the cart
+    if (Auth.isLoggedIn()) {
+      cartApi.getCartItems().then((data) => setCart(data));
+    }
   }, [Auth.isLoggedIn()]);
 
   return (
