@@ -13,22 +13,21 @@ const ItemsProvider = ({ children }: { children: React.ReactNode }) => {
 
   // console.log(items);
   useEffect(() => {
-    shopApi
-      .getAllItems()
-      .then((items: Item[]) => {
+    const fetchItems = async () => {
+      try {
+        const items: Item[] = await shopApi.getAllItems();
         // sort items in place by available items first
         items.sort((item2, item1) => {
           if (!item2.sold && item1.sold) return -1;
           return 0;
         });
-
         // set the global items state
         setItems(items);
-      })
-      .catch((error) => {
-        // Handle any errors
-        console.error(error);
-      });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchItems();
   }, []);
 
   return (
