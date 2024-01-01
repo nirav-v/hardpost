@@ -1,4 +1,4 @@
-export const itemApi = {
+export const shopApi = {
   getAllItems: async () => {
     try {
       const response = await fetch("/shop");

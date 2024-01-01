@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { Item } from "../types/ItemTypes";
-import { itemApi } from "../api/shopApi";
+import { shopApi } from "../api/shopApi";
 
 type ItemsContextType = [Item[], React.Dispatch<React.SetStateAction<Item[]>>];
 
@@ -13,7 +13,7 @@ const ItemsProvider = ({ children }: { children: React.ReactNode }) => {
 
   // console.log(items);
   useEffect(() => {
-    itemApi
+    shopApi
       .getAllItems()
       .then((items: Item[]) => {
         // sort items in place by available items first

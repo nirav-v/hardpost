@@ -1,7 +1,7 @@
 import { CloseButton, Flex, Stat, StatNumber } from "@chakra-ui/react";
 import { CartProductMeta } from "./CartProductMeta";
 import { Item } from "../../types/ItemTypes";
-import { useDeleteFromCart } from "../../hooks/useDeleteFromCart";
+import { useDeleteFromCart } from "../../hooks/cartHooks";
 
 type CartItemProps = {
   item: Item;
@@ -55,7 +55,7 @@ export const CartItem = ({ item }: CartItemProps) => {
         <CloseButton
           fontSize="sm"
           textDecor="underline"
-          onClick={() => onClickDelete(item.id)}>
+          onClick={() => deleteFromCart(item.id)}>
           Delete
         </CloseButton>
         {/* <QuantitySelect
