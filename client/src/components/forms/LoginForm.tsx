@@ -12,6 +12,7 @@ import {
 import PasswordInput from "../inputs/PasswordInput";
 import EmailInput from "../inputs/EmailInput";
 import Auth from "../../util/auth";
+import { userApi } from "../../api/userApi";
 
 type LoginFormProps = {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,27 +32,10 @@ function LoginForm({
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const url = "/api/user/login";
-    const body = JSON.stringify({
-      email: email,
-      password: password,
-    }); // request body can only be sent as a string, parsed back to object by the server
-    // send post request to server
-
-    const response = await fetch(url, {
-      method: "POST",
-      body: body,
-      headers: {
-        "Content-Type": "application/json", // tells server that data is in json format
-      },
-    });
-
-    if (response.status === 200) {
-      const token = await response.json();
-      // sets token in local storage
-      Auth.login(token);
-      // console.log("set token in local storage", token);
-      // localStorage.setItem("currentUserId", loginResult.userId);
+    // make api request to log user in
+    const token = await userApi.login({ email, password });
+    if (token) {
+      Auth.login(token); // set token in local storage
       setEmail("");
       setPassword("");
       setLoggedIn(true);
