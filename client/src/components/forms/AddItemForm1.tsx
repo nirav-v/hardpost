@@ -14,7 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import Auth from "../../util/auth";
+import { shopApi } from "../../api/shopApi";
 function addItemForm() {
   const [loading, setLoading] = useState(false);
   const imageInput = useRef<HTMLInputElement>(null);
@@ -55,26 +55,15 @@ function addItemForm() {
 
     const formData = new FormData(); // used to send image with rest of form data
 
-    const url = "/api/add-item";
     formData.append("name", name);
     formData.append("price", price.toString());
     formData.append("category", category);
     formData.append("description", description);
     formData.append("image", imageInput.current.files[0]);
 
-    console.log(formData);
+    const result = await shopApi.addItem(formData);
 
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    });
-    console.log(response);
-    const result = await response.json();
-    console.log(result);
-
+    setLoading(false);
     // redirect to shop page
     location.replace("/");
   };

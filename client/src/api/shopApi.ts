@@ -1,3 +1,5 @@
+import { endpoints } from "./endpoints";
+
 export const shopApi = {
   getAllItems: async () => {
     try {
@@ -7,5 +9,13 @@ export const shopApi = {
     } catch (error) {
       console.log(error);
     }
+  },
+
+  addItem: async (body: FormData) => {
+    const { url, options } = endpoints.addItem;
+    try {
+      const response = await fetch(url, options(body));
+      return response.json();
+    } catch (error) {}
   },
 };

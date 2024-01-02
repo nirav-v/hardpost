@@ -1,18 +1,40 @@
-type LoginBody = { email: string; password: string };
+import Auth from "../util/auth";
+
+export type LoginBodyType = { email: string; password: string };
+
+export type SignUpBodyType = LoginBodyType & { username: string };
+
+const createFetchOptions = (body: LoginBodyType) => {
+  return {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json", // tells server that data is in json format
+    },
+  };
+};
 
 export const endpoints = {
   login: {
     url: "api/user/login",
-    options: (body: LoginBody) => {
+    options: (body: LoginBodyType) => createFetchOptions(body),
+  },
+
+  signup: {
+    url: "api/user/signup",
+    options: (body: SignUpBodyType) => createFetchOptions(body),
+  },
+
+  addItem: {
+    url: "/api/add-item",
+    options: (body: FormData) => {
       return {
         method: "POST",
-        body: JSON.stringify(body),
+        body: body,
         headers: {
-          "Content-Type": "application/json", // tells server that data is in json format
+          Authorization: `Bearer ${Auth.getToken()}`,
         },
       };
     },
   },
-
-  signup: "api/user/signup",
 };

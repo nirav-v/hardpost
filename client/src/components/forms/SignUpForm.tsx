@@ -14,6 +14,7 @@ import {
 import PasswordInput from "../inputs/PasswordInput";
 import EmailInput from "../inputs/EmailInput";
 import Auth from "../../util/auth";
+import { userApi } from "../../api/userApi";
 
 type SignUpFormProps = {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -40,28 +41,19 @@ function SignUpForm({
     } else if (password !== confirmPassword) {
       setErrorMessage("passwords do not match");
     } else {
-      // send sign up post request to server, // request body can only be sent as a string, parsed back to object by the server
-      const response = await fetch("/api/user/signup", {
-        method: "POST",
-        body: JSON.stringify({
-          username: userName,
-          email: email,
-          password: password,
-        }),
-        headers: {
-          "Content-Type": "application/json", // tells server that data is in json format
-        },
+      // send sign up post request to server, token sent back from api and set in localStorage
+      const token = await userApi.signUp({
+        username: userName,
+        email: email,
+        password: password,
       });
 
-      // token sent back from api and set in localStorage
-      const token = await response.json();
-      Auth.login(token);
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      setUserName("");
-
-      if (response.status === 201) {
+      if (token) {
+        Auth.login(token);
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setUserName("");
         setLoggedIn(true);
       } else {
         setErrorMessage(
