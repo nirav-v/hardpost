@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Auth from "../util/auth";
 import {
   List,
   ListItem,
@@ -15,18 +14,13 @@ import {
 } from "@chakra-ui/react";
 import formatTimestamp from "../util/formatTimestamp";
 import { Order } from "../types/OrderType";
+import { ordersApi } from "../api/ordersApi";
 
 function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
-  console.log(orders);
+
   useEffect(() => {
-    fetch("/api/orders", {
-      headers: {
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((orders) => setOrders(orders));
+    ordersApi.getAllOrders().then((orders) => setOrders(orders));
   }, []);
 
   // console.log(orders);
