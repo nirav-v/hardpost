@@ -10,7 +10,6 @@ const useItemsContext = () => useContext(ItemsContext);
 
 const ItemsProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<Item[]>([]);
-
   // console.log(items);
   useEffect(() => {
     const fetchItems = async () => {
