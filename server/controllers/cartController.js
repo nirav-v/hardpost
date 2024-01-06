@@ -1,6 +1,6 @@
 import { Cart, Item, User } from "../models/index.js";
 import jwt from "jsonwebtoken";
-import Auth from "../util/serverAuth.ts";
+import Auth from "../util/serverAuth.js";
 
 export const getUserCart = async (req, res) => {
   try {
@@ -45,14 +45,7 @@ export const addCartItem = async (req, res) => {
   const itemId = req.body.itemId;
 
   let itemQuantity = 1; // default the quantity to 1
-  // const existingItems = await cart.getItems({
-  //   where: { id: itemId }, //should return array of of one or zero items in cart with that id
-  // });
-  // // for updating quantity of an existing cart item
-  // if (existingItems.length > 0) {
-  //   const currentQuantity = existingItems[0].cartItem.quantity;
-  //   itemQuantity = currentQuantity + 1;
-  // }
+
   // find the item and add it with a the correct quantity
   const itemToAdd = await Item.findByPk(itemId);
   const addedItem = await cart.addItem(itemToAdd, {

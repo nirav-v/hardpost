@@ -2,7 +2,6 @@ import { Item, User, Cart } from "../models";
 import { addCartItem, getUserCart } from "./cartController";
 import jwt from "jsonwebtoken";
 import { mockCart, mockUsers, mockItems } from "./mockData";
-import { resolveCaa } from "dns";
 
 describe("cart controller", () => {
   const req = {
