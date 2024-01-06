@@ -1,3 +1,12 @@
+export const mockCart = {
+  id: 1,
+  createdAt: "2023-10-21T20:05:31.000Z",
+  updatedAt: " 2023-10-21T20:05:31.000Z",
+  userId: 1,
+  getItems: () => mockItems,
+  addItem: () => {},
+};
+
 export const mockUsers = [
   {
     id: 4,

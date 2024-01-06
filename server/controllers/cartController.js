@@ -12,10 +12,7 @@ export const getUserCart = async (req, res) => {
     const token = req.headers.authorization.split(" ")[1];
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-
-    console.log("payload: ", payload);
-    const users = await User.findAll();
-    console.log(users);
+    // console.log("payload: ", payload);
 
     const loggedInUser = await User.findOne({
       where: { email: payload.email },
@@ -23,7 +20,7 @@ export const getUserCart = async (req, res) => {
     if (loggedInUser) {
       const cart = await loggedInUser.getCart();
       const cartItems = await cart.getItems(); //magic method from many to many association between Cart and Item
-      console.log(cartItems);
+      // console.log(cartItems);
       res.json(cartItems);
     } else {
       res.send("not logged in");
@@ -33,7 +30,7 @@ export const getUserCart = async (req, res) => {
   }
 };
 
-export const addCartItem = async (req, res, next) => {
+export const addCartItem = async (req, res) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({
@@ -47,15 +44,15 @@ export const addCartItem = async (req, res, next) => {
 
   const itemId = req.body.itemId;
 
-  let itemQuantity = 1; // default the quantity to one for cases where item is not in cart
-  const existingItems = await cart.getItems({
-    where: { id: itemId }, //should return array of of one or zero items in cart with that id
-  });
-  // for updating quantity of an existing cart item
-  if (existingItems.length > 0) {
-    const currentQuantity = existingItems[0].cartItem.quantity;
-    itemQuantity = currentQuantity + 1;
-  }
+  let itemQuantity = 1; // default the quantity to 1
+  // const existingItems = await cart.getItems({
+  //   where: { id: itemId }, //should return array of of one or zero items in cart with that id
+  // });
+  // // for updating quantity of an existing cart item
+  // if (existingItems.length > 0) {
+  //   const currentQuantity = existingItems[0].cartItem.quantity;
+  //   itemQuantity = currentQuantity + 1;
+  // }
   // find the item and add it with a the correct quantity
   const itemToAdd = await Item.findByPk(itemId);
   const addedItem = await cart.addItem(itemToAdd, {
