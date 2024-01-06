@@ -46,7 +46,10 @@ app.use("*", (req, res, next) =>
 
 // see available magic methods on User instances based on the model associations we defined
 // console.log("magic user methods", Object.keys(User.prototype));
-// console.log("magic cart methods", Object.keys(Cart.prototype));
+// console.log(
+//   "magic cart methods",
+//   Cart.prototype,
+// );
 // console.log("magic Order methods", Object.keys(Order.prototype));
 // console.log("magic Order methods", Object.keys(Item.prototype));
 

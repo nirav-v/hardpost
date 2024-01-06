@@ -1,10 +1,7 @@
-import { User } from "../models/index.js";
+import { Cart, User } from "../models/index.js";
 import jwt from "jsonwebtoken";
 
-// TODO: add logic to signup and login routes to accept list of itemIds from the client side local storage cart and insert them into the user's real cart in db
-
 export const signUpUser = async (req, res) => {
-  console.log(req.body);
   const { username, email, password } = req.body;
   //   check if user exists already
   const existingUser = await User.findOne({
@@ -25,6 +22,15 @@ export const signUpUser = async (req, res) => {
 
   // create a cart to associate with the new user
   const userCart = await newUser.createCart();
+
+  // add items to the users cart
+  const addCartItems = [];
+  for (const item of req.body.cart) {
+    addCartItems.push(userCart.addItem(item.id));
+  }
+
+  // wait for all items to be added to the users cart
+  await Promise.all(addCartItems);
 
   // create jwt
   const token = jwt.sign(
@@ -65,12 +71,18 @@ export const loginUser = async (req, res) => {
       }
     );
 
-    // set and save logged in user on session object
-    // req.session.userId = existingUser.id;
-    // req.session.save(function (err) {
-    //   if (err) return next(err);
-    // });
-    // console.log(req.session);
+    const userCart = await existingUser.getCart();
+
+    const addCartItems = [];
+    for (const item of req.body.cart) {
+      // avoid adding the users own items to their cart
+      if (item.userId !== existingUser.id) {
+        addCartItems.push(userCart.addItem(item.id));
+      }
+    }
+    // wait for all items to be added to the users cart
+    await Promise.all(addCartItems);
+
     return res.status(200).json(token);
   }
   // if wrong password

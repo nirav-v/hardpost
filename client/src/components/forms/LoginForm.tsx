@@ -33,15 +33,12 @@ function LoginForm({
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // check for items in the local storage cart to send to the backend
-    let cart: Item[];
-    const localCart = localStorage.getItem("cart");
-    cart = localCart ? JSON.parse(localCart) : [];
+
     // make api request to log user in
     const token = await userApi.login({
       email,
       password,
-      cart,
+      cart: Auth.getCart(),
     });
     if (token) {
       Auth.login(token); // set token in local storage

@@ -1,4 +1,5 @@
 import jwt_decode from "jwt-decode";
+import { Item } from "../types/ItemTypes";
 
 type JwtPayload = {
   exp: number;
@@ -28,6 +29,14 @@ const Auth = {
     const token = this.getToken();
     if (!token) return null;
     return jwt_decode(token);
+  },
+
+  // check for items in the local storage cart to send to the backend
+  getCart: () => {
+    let cart: Item[];
+    const localCart = localStorage.getItem("cart");
+    cart = localCart ? JSON.parse(localCart) : [];
+    return cart;
   },
 
   returningUser: () => {

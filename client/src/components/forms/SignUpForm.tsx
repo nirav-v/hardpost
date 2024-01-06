@@ -46,7 +46,7 @@ function SignUpForm({
         username: userName,
         email,
         password,
-        cart: localStorage.getItem("cart" || []),
+        cart: Auth.getCart(),
       });
 
       if (token) {
