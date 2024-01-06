@@ -1,6 +1,8 @@
 import { User } from "../models/index.js";
 import jwt from "jsonwebtoken";
 
+// TODO: add logic to signup and login routes to accept list of itemIds from the client side local storage cart and insert them into the user's real cart in db
+
 export const signUpUser = async (req, res) => {
   const { username, email, password } = req.body;
   //   check if user exists already
@@ -37,7 +39,6 @@ export const signUpUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   // check db for matching username
-
   const existingUser = await User.findOne({
     where: {
       email: req.body.email,
