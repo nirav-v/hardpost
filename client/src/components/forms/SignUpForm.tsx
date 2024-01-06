@@ -44,8 +44,9 @@ function SignUpForm({
       // send sign up post request to server, token sent back from api and set in localStorage
       const token = await userApi.signUp({
         username: userName,
-        email: email,
-        password: password,
+        email,
+        password,
+        cart: localStorage.getItem("cart" || []),
       });
 
       if (token) {

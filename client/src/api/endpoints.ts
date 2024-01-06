@@ -1,6 +1,11 @@
+import { Item } from "../types/ItemTypes";
 import Auth from "../util/auth";
 
-export type LoginBodyType = { email: string; password: string };
+export type LoginBodyType = {
+  email: string;
+  password: string;
+  cart: Item[];
+};
 
 export type SignUpBodyType = LoginBodyType & { username: string };
 

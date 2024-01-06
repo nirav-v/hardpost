@@ -13,6 +13,7 @@ import PasswordInput from "../inputs/PasswordInput";
 import EmailInput from "../inputs/EmailInput";
 import Auth from "../../util/auth";
 import { userApi } from "../../api/userApi";
+import { Item } from "../../types/ItemTypes";
 
 type LoginFormProps = {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,8 +33,16 @@ function LoginForm({
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    // check for items in the local storage cart to send to the backend
+    let cart: Item[];
+    const localCart = localStorage.getItem("cart");
+    cart = localCart ? JSON.parse(localCart) : [];
     // make api request to log user in
-    const token = await userApi.login({ email, password });
+    const token = await userApi.login({
+      email,
+      password,
+      cart,
+    });
     if (token) {
       Auth.login(token); // set token in local storage
       setEmail("");
