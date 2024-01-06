@@ -1,5 +1,7 @@
+import ButtonModal from "../../components/modals/ButtonModal";
 import CheckoutModal from "../../components/modals/CheckoutModal";
 import { Item } from "../../types/ItemTypes";
+import Auth from "../../util/auth";
 import { formatPrice } from "../../util/formatPrice";
 import {
   Button,
@@ -51,6 +53,28 @@ export const CartOrderSummary = ({
   // console.log("cart state for price summary", cart);
   useEffect(() => getTotalPrice(cart), [cart]);
 
+  // conditionally render normal checkout button if logged in, or modal opening button if not
+  let checkoutButton;
+  if (Auth.isLoggedIn()) {
+    checkoutButton = (
+      <Button
+        onClick={onCheckoutSubmit}
+        colorScheme="blue"
+        size="lg"
+        fontSize="md">
+        Checkout
+      </Button>
+    );
+  } else {
+    checkoutButton = (
+      <ButtonModal buttonContent="Checkout" chakraColor="blue">
+        <Text fontSize="lg" p={12} fontWeight={"bold"} width={"70%"}>
+          You must log into your account to place an order
+        </Text>
+      </ButtonModal>
+    );
+  }
+
   return (
     <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
       <Heading size="md">Order Summary</Heading>
@@ -77,13 +101,7 @@ export const CartOrderSummary = ({
         </Flex>
       </Stack>
       <CheckoutModal />
-      <Button
-        onClick={onCheckoutSubmit}
-        colorScheme="blue"
-        size="lg"
-        fontSize="md">
-        Checkout
-      </Button>
+      {checkoutButton}
     </Stack>
   );
 };

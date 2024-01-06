@@ -19,11 +19,6 @@ function CartPage() {
   const [cart, setCart] = useCartContext();
 
   const handleCheckoutSubmit = async () => {
-    if (!Auth.isLoggedIn()) {
-      alert("Please log in to checkout");
-      return;
-    }
-
     if (!cart.length) return;
 
     const domain = `${window.location.protocol}//${window.location.host}`;

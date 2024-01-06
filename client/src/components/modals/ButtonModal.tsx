@@ -29,7 +29,7 @@ export default function ButtonModal({
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent w="80%">
+        <ModalContent w="80%" alignItems={"center"}>
           <ModalHeader></ModalHeader>
           <ModalCloseButton />
           {children}
