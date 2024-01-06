@@ -1,8 +1,8 @@
 import { Cart, Item, User } from "../models/index.js";
 import jwt from "jsonwebtoken";
-import Auth from "../util/serverAuth.js";
+import Auth from "../util/serverAuth.ts";
 
-export const getUserCart = async (req, res, next) => {
+export const getUserCart = async (req, res) => {
   try {
     if (!req.headers.authorization)
       return res.status(401).send({
@@ -14,13 +14,16 @@ export const getUserCart = async (req, res, next) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
     console.log("payload: ", payload);
+    const users = await User.findAll();
+    console.log(users);
+
     const loggedInUser = await User.findOne({
       where: { email: payload.email },
     });
     if (loggedInUser) {
       const cart = await loggedInUser.getCart();
       const cartItems = await cart.getItems(); //magic method from many to many association between Cart and Item
-      // console.log(cart);
+      console.log(cartItems);
       res.json(cartItems);
     } else {
       res.send("not logged in");
