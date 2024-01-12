@@ -51,7 +51,8 @@ function AddCartButton({ item }: { item: Item }) {
       <Button
         onClick={() => deleteFromCart(item.id)}
         colorScheme="red"
-        width="full">
+        width="full"
+        data-cy="remove-from-cart-btn">
         Remove from cart
       </Button>
     ); // item is in cart, return "remove from cart button"
@@ -61,7 +62,11 @@ function AddCartButton({ item }: { item: Item }) {
   if (!cartIds.has(item.id)) {
     // item is not in cart, return "add to cart button"
     button = (
-      <Button onClick={handleAddCartClick} colorScheme="blue" width="full">
+      <Button
+        onClick={handleAddCartClick}
+        colorScheme="blue"
+        width="full"
+        data-cy="add-to-cart-btn">
         {loading ? "adding to your cart..." : "Add to cart"}
       </Button>
     );

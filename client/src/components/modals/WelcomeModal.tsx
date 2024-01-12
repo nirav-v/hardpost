@@ -48,7 +48,11 @@ export default function WelcomeModal() {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleWelcomeClose}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={handleWelcomeClose}
+              data-cy="close-btn">
               Close
             </Button>
           </ModalFooter>
