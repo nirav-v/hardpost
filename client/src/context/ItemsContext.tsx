@@ -1,6 +1,7 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
-import { Item } from "../types/ItemTypes";
-import { shopApi } from "../api/shopApi";
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import { Item } from '../types/ItemTypes';
+import { shopApi } from '../api/shopApi';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 type ItemsContextType = [Item[], React.Dispatch<React.SetStateAction<Item[]>>];
 
@@ -11,6 +12,14 @@ const useItemsContext = () => useContext(ItemsContext);
 const ItemsProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<Item[]>([]);
   // console.log(items);
+  const queryClient = useQueryClient();
+
+  const queryItems = useQuery({
+    queryKey: ['items'],
+    queryFn: shopApi.getAllItems,
+  });
+  console.log(queryItems);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
