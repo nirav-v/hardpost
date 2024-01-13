@@ -47,9 +47,9 @@ function UserItems() {
 
     const deletedItem = await response.json();
 
-    // const updatedItems = items.filter((item) => item.id !== deletedItem.id);
+    const updatedItems = items.filter(item => item.id !== deletedItem.id);
 
-    // setItems(updatedItems);
+    setItems(updatedItems);
 
     fetchItems();
   };

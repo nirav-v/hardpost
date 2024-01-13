@@ -1,18 +1,37 @@
-import { Box } from "@chakra-ui/react";
-import FilterCheckbox from "../../components/inputs/FilterCheckbox.js";
-import { ProductCard } from "./ProductCard";
-import { ProductGrid } from "./ProductGrid.js";
-import { useItemsContext } from "../../context/ItemsContext";
-import { useSearchParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Item } from "../../types/ItemTypes.js";
+import { Box } from '@chakra-ui/react';
+import FilterCheckbox from '../../components/inputs/FilterCheckbox.js';
+import { ProductCard } from './ProductCard';
+import { ProductGrid } from './ProductGrid.js';
+import { useItemsContext } from '../../context/ItemsContext';
+import { useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Item } from '../../types/ItemTypes.js';
+import { shopApi } from '../../api/shopApi.js';
+import { useQuery } from '@tanstack/react-query';
 
 function ShopPage() {
-  const [items, setItems] = useItemsContext();
+  // const [items, setItems] = useItemsContext();
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // console.log("items state", items);
+  // request items from api then sort returned data
+  const {
+    isPending,
+    isError,
+    data: itemData,
+    error,
+  } = useQuery<Item[]>({
+    queryKey: ['items'],
+    queryFn: shopApi.getAllItems,
+  });
+
+  if (itemData)
+    itemData.sort((item2, item1) => {
+      if (!item2.sold && item1.sold) return -1;
+      return 0;
+    });
+
+  console.log(itemData);
 
   // searchParams object doesn't show any iterable param values, so spreading it into array gives get nested array of [key, value] query params
   // e.g [['category', 'decks'], ['category', 'wheels']]
@@ -27,17 +46,19 @@ function ShopPage() {
   useEffect(() => {
     // console.log("params array", paramsArray);
     // console.log("filter choices", filterChoices);
-    if (filterChoices.length) {
+    if (filterChoices.length && itemData) {
       // get filtered array of items with matching category
-      const updatedItems = items.filter((item) =>
+
+      const updatedItems = itemData.filter(item =>
         filterChoices.includes(item.category)
       );
       setFilteredItems(updatedItems);
+
       return;
     }
 
-    setFilteredItems(items);
-  }, [filterChoices.length, items]);
+    setFilteredItems(itemData ? itemData : []);
+  }, [filterChoices.length, itemData]);
 
   return (
     <div>
@@ -52,17 +73,17 @@ function ShopPage() {
           maxW="7xl"
           mx="auto"
           px={{
-            base: "4",
-            md: "8",
-            lg: "12",
+            base: '4',
+            md: '8',
+            lg: '12',
           }}
           py={{
-            base: "6",
-            md: "8",
-            lg: "12",
+            base: '6',
+            md: '8',
+            lg: '12',
           }}>
           <ProductGrid>
-            {filteredItems.map((item) => (
+            {filteredItems.map(item => (
               <ProductCard key={item.id} item={item} />
             ))}
           </ProductGrid>

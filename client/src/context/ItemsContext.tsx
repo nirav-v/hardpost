@@ -1,47 +1,47 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { Item } from '../types/ItemTypes';
 import { shopApi } from '../api/shopApi';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { UseQueryResult, useQuery } from '@tanstack/react-query';
 
-type ItemsContextType = [Item[], React.Dispatch<React.SetStateAction<Item[]>>];
+type ItemsContextType = UseQueryResult<Item[], Error>;
 
-const ItemsContext = createContext<ItemsContextType>([[], () => {}]); // default values to be filled with items and setItems from useState
+const ItemsContext = createContext<ItemsContextType>({
+  data: undefined,
+  error: null,
+}); // default values to be filled with items and setItems from useState
 
 const useItemsContext = () => useContext(ItemsContext);
 
 const ItemsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [items, setItems] = useState<Item[]>([]);
+  // const [items, setItems] = useState<Item[]>([]);
   // console.log(items);
-  const queryClient = useQueryClient();
 
-  const queryItems = useQuery({
+  const itemsQuery = useQuery<Item[]>({
     queryKey: ['items'],
     queryFn: shopApi.getAllItems,
   });
-  console.log(queryItems);
+  console.log(itemsQuery);
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const items: Item[] = await shopApi.getAllItems();
-        // sort items in place by available items first
-        items.sort((item2, item1) => {
-          if (!item2.sold && item1.sold) return -1;
-          return 0;
-        });
-        // set the global items state
-        setItems(items);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchItems();
-  }, []);
+  // useEffect(() => {
+  //   const fetchItems = async () => {
+  //     try {
+  //       const items: Item[] = await shopApi.getAllItems();
+  //       // sort items in place by available items first
+  //       items.sort((item2, item1) => {
+  //         if (!item2.sold && item1.sold) return -1;
+  //         return 0;
+  //       });
+  //       // set the global items state
+  //       setItems(items);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchItems();
+  // }, []);
 
   return (
-    <ItemsContext.Provider value={[items, setItems]}>
-      {children}
-    </ItemsContext.Provider>
+    <ItemsContext.Provider value={itemsQuery}>{children}</ItemsContext.Provider>
   );
 };
 
