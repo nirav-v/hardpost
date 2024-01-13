@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Input,
   InputGroup,
@@ -6,7 +6,7 @@ import {
   Button,
   FormLabel,
   FormControl,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 type PasswordInputProps = {
   name: string;
@@ -16,6 +16,7 @@ type PasswordInputProps = {
 };
 
 export default function PasswordInput({
+  name,
   value,
   handleChange,
   label,
@@ -28,16 +29,17 @@ export default function PasswordInput({
       <FormLabel>{label}</FormLabel>
       <InputGroup>
         <Input
+          name={name}
           value={value}
           onChange={handleChange}
           mb="8px"
           pr="4.5rem"
-          type={show ? "text" : "password"}
+          type={show ? 'text' : 'password'}
           placeholder="Enter password"
         />
         <InputRightElement width="4.5rem">
           <Button h="1.75rem" size="sm" onClick={handleClick}>
-            {show ? "Hide" : "Show"}
+            {show ? 'Hide' : 'Show'}
           </Button>
         </InputRightElement>
       </InputGroup>
