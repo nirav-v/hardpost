@@ -2,9 +2,9 @@ import Auth from '../util/auth';
 import { useState, useEffect } from 'react';
 import { Image, Button, Box, Center, Heading } from '@chakra-ui/react';
 import { ProductGrid } from './ShopPage/ProductGrid';
-import { useItemsContext } from '../context/ItemsContext';
 import { Item } from '../types/ItemTypes';
 import { useItemsQuery } from '../hooks/reactQueryHooks';
+import { userApi } from '../api/userApi';
 
 function UserItems() {
   const [userItems, setUserItems] = useState<Item[]>([]);
@@ -12,13 +12,9 @@ function UserItems() {
   const { isPending, isError, data: items, error } = useItemsQuery();
 
   // function to fetch all userItems and update state
-  const fetchItems = () => {
-    fetch('/api/get-items', {
-      headers: {
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    })
-      .then(res => res.json())
+  const fetchItems = async () => {
+    await userApi
+      .getUserItems()
       .then((userItems: Item[]) => {
         // sort items in place by available items first
         userItems.sort((item2, item1) => {
@@ -49,11 +45,7 @@ function UserItems() {
 
     const deletedItem = await response.json();
 
-    const updatedItems = items?.filter(item => item.id !== deletedItem.id);
-
-    // setItems(updatedItems);
-
-    fetchItems();
+    // fetchItems();
   };
 
   return (

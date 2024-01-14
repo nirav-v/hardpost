@@ -8,3 +8,10 @@ export const useItemsQuery = () => {
     queryFn: shopApi.getAllItems,
   });
 };
+
+export const useUserItemsQuery = () => {
+  return useQuery<Item[]>({
+    queryKey: ['items'],
+    queryFn: shopApi.getAllItems,
+  });
+};

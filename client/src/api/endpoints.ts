@@ -1,5 +1,5 @@
-import { Item } from "../types/ItemTypes";
-import Auth from "../util/auth";
+import { Item } from '../types/ItemTypes';
+import Auth from '../util/auth';
 
 export type LoginBodyType = {
   email: string;
@@ -11,30 +11,30 @@ export type SignUpBodyType = LoginBodyType & { username: string };
 
 const createFetchOptions = (body: LoginBodyType) => {
   return {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(body),
     headers: {
-      "Content-Type": "application/json", // tells server that data is in json format
+      'Content-Type': 'application/json', // tells server that data is in json format
     },
   };
 };
 
 export const endpoints = {
   login: {
-    url: "api/user/login",
+    url: 'api/user/login',
     options: (body: LoginBodyType) => createFetchOptions(body),
   },
 
   signup: {
-    url: "api/user/signup",
+    url: 'api/user/signup',
     options: (body: SignUpBodyType) => createFetchOptions(body),
   },
 
   addItem: {
-    url: "/api/add-item",
+    url: '/api/add-item',
     options: (body: FormData) => {
       return {
-        method: "POST",
+        method: 'POST',
         body: body,
         headers: {
           Authorization: `Bearer ${Auth.getToken()}`,

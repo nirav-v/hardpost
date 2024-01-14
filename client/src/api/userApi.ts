@@ -1,5 +1,6 @@
-import { endpoints } from "./endpoints";
-import { LoginBodyType, SignUpBodyType } from "./endpoints";
+import Auth from '../util/auth';
+import { endpoints } from './endpoints';
+import { LoginBodyType, SignUpBodyType } from './endpoints';
 
 export const userApi = {
   signUp: async (body: SignUpBodyType) => {
@@ -20,6 +21,20 @@ export const userApi = {
       else return null;
     } catch (error) {
       console.log(error);
+    }
+  },
+
+  getUserItems: async () => {
+    try {
+      const response = await fetch('/api/get-items', {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      });
+      if (response.status === 200) return response.json();
+      else return null;
+    } catch (error) {
+      console.error(error);
     }
   },
 
