@@ -24,8 +24,6 @@ function ShopPage() {
       return 0;
     });
 
-  console.log(itemData);
-
   // searchParams object doesn't show any iterable param values, so spreading it into array gives get nested array of [key, value] query params
   // e.g [['category', 'decks'], ['category', 'wheels']]
   const paramsArray = [...searchParams];
@@ -52,6 +50,8 @@ function ShopPage() {
 
     setFilteredItems(itemData ? itemData : []);
   }, [filterChoices.length, itemData]);
+
+  if (isPending) return <div>Loading.....</div>;
 
   return (
     <div>
