@@ -4,10 +4,12 @@ import { Image, Button, Box, Center, Heading } from '@chakra-ui/react';
 import { ProductGrid } from './ShopPage/ProductGrid';
 import { useItemsContext } from '../context/ItemsContext';
 import { Item } from '../types/ItemTypes';
+import { useItemsQuery } from '../hooks/reactQueryHooks';
 
 function UserItems() {
   const [userItems, setUserItems] = useState<Item[]>([]);
-  const [items, setItems] = useItemsContext();
+  // const [items, setItems] = useItemsContext();
+  const { isPending, isError, data: items, error } = useItemsQuery();
 
   // function to fetch all userItems and update state
   const fetchItems = () => {
@@ -47,9 +49,9 @@ function UserItems() {
 
     const deletedItem = await response.json();
 
-    const updatedItems = items.filter(item => item.id !== deletedItem.id);
+    const updatedItems = items?.filter(item => item.id !== deletedItem.id);
 
-    setItems(updatedItems);
+    // setItems(updatedItems);
 
     fetchItems();
   };

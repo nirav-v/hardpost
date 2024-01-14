@@ -5,10 +5,7 @@ import { UseQueryResult, useQuery } from '@tanstack/react-query';
 
 type ItemsContextType = UseQueryResult<Item[], Error>;
 
-const ItemsContext = createContext<ItemsContextType>({
-  data: undefined,
-  error: null,
-}); // default values to be filled with items and setItems from useState
+const ItemsContext = createContext<ItemsContextType | null>(null); // default values to be filled with items and setItems from useState
 
 const useItemsContext = () => useContext(ItemsContext);
 

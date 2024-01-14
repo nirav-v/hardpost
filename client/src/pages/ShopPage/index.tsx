@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { Item } from '../../types/ItemTypes.js';
 import { shopApi } from '../../api/shopApi.js';
 import { useQuery } from '@tanstack/react-query';
+import { useItemsQuery } from '../../hooks/reactQueryHooks.js';
 
 function ShopPage() {
   // const [items, setItems] = useItemsContext();
@@ -15,15 +16,7 @@ function ShopPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // request items from api then sort returned data
-  const {
-    isPending,
-    isError,
-    data: itemData,
-    error,
-  } = useQuery<Item[]>({
-    queryKey: ['items'],
-    queryFn: shopApi.getAllItems,
-  });
+  const { isPending, isError, data: itemData, error } = useItemsQuery();
 
   if (itemData)
     itemData.sort((item2, item1) => {

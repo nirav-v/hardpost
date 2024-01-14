@@ -1,6 +1,6 @@
-import AddCartButton from "../components/buttons/AddCartButton";
-import { useItemsContext } from "../context/ItemsContext";
-import { useParams } from "react-router-dom";
+import AddCartButton from '../components/buttons/AddCartButton';
+import { useItemsContext } from '../context/ItemsContext';
+import { useParams } from 'react-router-dom';
 import {
   Center,
   Card,
@@ -12,25 +12,27 @@ import {
   Heading,
   Divider,
   ButtonGroup,
-} from "@chakra-ui/react";
-import { Item } from "../types/ItemTypes";
+} from '@chakra-ui/react';
+import { Item } from '../types/ItemTypes';
+import { useItemsQuery } from '../hooks/reactQueryHooks';
 
-const SingleItemPage = () => {
-  const [items, setItems] = useItemsContext();
+const SingleItemPage = function () {
+  // const [items, setItems] = useItemsContext();
+  const { isPending, isError, data: items, error } = useItemsQuery();
 
   const params = useParams();
 
   let item: Item | undefined;
 
-  if (params.itemId) {
+  if (params.itemId && items) {
     const itemId = parseInt(params.itemId);
-    item = items.find((item) => item.id === itemId);
+    item = items.find(item => item.id === itemId);
   }
 
-  if (!item)
+  if (isError || !item)
     return (
       <Text textAlign="center">
-        {" "}
+        {' '}
         something went wrong with loading this item
       </Text>
     );
