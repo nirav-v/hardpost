@@ -24,6 +24,8 @@ export const userApi = {
     }
   },
 
+  logout: async () => {},
+
   getUserItems: async () => {
     try {
       const response = await fetch('/api/get-items', {
@@ -38,5 +40,18 @@ export const userApi = {
     }
   },
 
-  logout: async () => {},
+  deleteUserItem: async (itemId: number) => {
+    try {
+      await fetch('/api/delete-item', {
+        method: 'POST',
+        body: JSON.stringify({ itemId }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      });
+    } catch (error) {
+      console.log(console.error);
+    }
+  },
 };

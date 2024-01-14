@@ -1,58 +1,37 @@
-import Auth from '../util/auth';
-import { useState, useEffect } from 'react';
 import { Image, Button, Box, Center, Heading } from '@chakra-ui/react';
 import { ProductGrid } from './ShopPage/ProductGrid';
-import { Item } from '../types/ItemTypes';
-import { useItemsQuery } from '../hooks/reactQueryHooks';
+import { useUserItemsQuery } from '../hooks/reactQueryHooks';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userApi } from '../api/userApi';
 
 function UserItems() {
-  const [userItems, setUserItems] = useState<Item[]>([]);
-  // const [items, setItems] = useItemsContext();
-  const { isPending, isError, data: items, error } = useItemsQuery();
+  const queryClient = useQueryClient();
+  // fetching all out user's items from db
+  const userItems = useUserItemsQuery();
+  // mutation to delete user items from db and refetch afterwards
+  const deleteUserItem = useMutation({
+    mutationFn: (itemId: number) => userApi.deleteUserItem(itemId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['userItems'] }),
+  });
 
-  // function to fetch all userItems and update state
-  const fetchItems = async () => {
-    await userApi
-      .getUserItems()
-      .then((userItems: Item[]) => {
-        // sort items in place by available items first
-        userItems.sort((item2, item1) => {
-          if (!item2.sold && item1.sold) return -1;
-          else return 0;
-        });
-        // update both userItems for this component, as well as global items context being used by other sibling components
-        setUserItems(userItems);
-      })
-      .catch(err => console.log(err));
-  };
-
-  useEffect(() => {
-    fetchItems();
-  }, []);
+  // sort items in place by available items first
+  userItems.data?.sort((item2, item1) => {
+    if (!item2.sold && item1.sold) return -1;
+    else return 0;
+  });
 
   const handleRemoveItemClick = async (itemId: number) => {
     // grab the item id and send a fetch request to the delete-item route
     console.log('id removed: ', itemId);
-    const response = await fetch('/api/delete-item', {
-      method: 'POST',
-      body: JSON.stringify({ itemId }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    });
-
-    const deletedItem = await response.json();
-
+    deleteUserItem.mutate(itemId);
     // fetchItems();
   };
 
   return (
     <div>
-      {userItems.length ? (
+      {userItems.data?.length ? (
         <ProductGrid>
-          {userItems.map(item => (
+          {userItems.data?.map(item => (
             <div key={item.id}>
               <Box boxSize="sm">
                 <Image src={item.imagePath} boxSize="300px" objectFit="cover" />
