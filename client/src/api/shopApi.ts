@@ -1,9 +1,9 @@
-import { endpoints } from "./endpoints";
+import { endpoints } from './endpoints';
 
 export const shopApi = {
   getAllItems: async () => {
     try {
-      const response = await fetch("/shop");
+      const response = await fetch('/shop');
       const data = await response.json();
       return data;
     } catch (error) {
@@ -16,6 +16,8 @@ export const shopApi = {
     try {
       const response = await fetch(url, options(body));
       return response.json();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   },
 };

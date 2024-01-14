@@ -1,5 +1,5 @@
-import React, { useState, useRef, Fragment } from "react";
-import { ProgressBar } from "react-loader-spinner";
+import React, { useState, useRef, Fragment } from 'react';
+import { ProgressBar } from 'react-loader-spinner';
 import {
   Box,
   Button,
@@ -12,18 +12,31 @@ import {
   Select,
   Stack,
   Text,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
+import { shopApi } from '../../api/shopApi';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
-import { shopApi } from "../../api/shopApi";
 function addItemForm() {
-  const [loading, setLoading] = useState(false);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const addItemMutation = useMutation({
+    mutationFn: (data: FormData) => shopApi.addItem(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+      navigate('/');
+    },
+    onError: () => console.error(console.error),
+  });
+
   const imageInput = useRef<HTMLInputElement>(null);
   // use a single form state object instead of many individual state variable
   const [formState, setFormState] = useState({
-    name: "",
-    category: "",
+    name: '',
+    category: '',
     price: 0,
-    description: "",
+    description: '',
   });
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -40,37 +53,32 @@ function addItemForm() {
     // make sure name and image were provided for product
     if (!imageInput.current || !imageInput.current.files) return;
     if (imageInput.current.files.length < 1) {
-      alert("must include an image");
+      alert('must include an image');
       return;
     }
 
     const { name, price, category, description } = formState;
 
     if (name.length < 1) {
-      alert("must fill in the item name field");
+      alert('must fill in the item name field');
       return;
     }
 
-    setLoading(true);
-
     const formData = new FormData(); // used to send image with rest of form data
+    formData.append('name', name);
+    formData.append('price', price.toString());
+    formData.append('category', category);
+    formData.append('description', description);
+    formData.append('image', imageInput.current.files[0]);
 
-    formData.append("name", name);
-    formData.append("price", price.toString());
-    formData.append("category", category);
-    formData.append("description", description);
-    formData.append("image", imageInput.current.files[0]);
-
-    const result = await shopApi.addItem(formData);
-
-    setLoading(false);
-    // redirect to shop page
-    location.replace("/");
+    // const result = await shopApi.addItem(formData);
+    // run the mutation and pass in the form data
+    addItemMutation.mutate(formData);
   };
 
   return (
     <Fragment>
-      {loading ? (
+      {addItemMutation.isPending ? (
         <Fragment>
           <h3>Uploading your item - please do not refresh or close the page</h3>
           <ProgressBar
@@ -86,14 +94,14 @@ function addItemForm() {
       ) : (
         <Fragment>
           {/* replacement form below */}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={event => handleSubmit(event)}>
             <Container
               maxW="lg"
-              py={{ base: "12", md: "16" }}
-              px={{ base: "0", sm: "8" }}>
+              py={{ base: '12', md: '16' }}
+              px={{ base: '0', sm: '8' }}>
               <Stack spacing="8">
                 <Stack spacing="6">
-                  <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
+                  <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
                     <Center height="50px">
                       <Text fontSize="4xl">
                         Fill out your item's info below
@@ -102,11 +110,11 @@ function addItemForm() {
                   </Stack>
                 </Stack>
                 <Box
-                  py={{ base: "0", sm: "8" }}
-                  px={{ base: "4", sm: "10" }}
-                  bg={{ base: "transparent", sm: "bg.surface" }}
-                  boxShadow={{ base: "none", sm: "md" }}
-                  borderRadius={{ base: "none", sm: "xl" }}>
+                  py={{ base: '0', sm: '8' }}
+                  px={{ base: '4', sm: '10' }}
+                  bg={{ base: 'transparent', sm: 'bg.surface' }}
+                  boxShadow={{ base: 'none', sm: 'md' }}
+                  borderRadius={{ base: 'none', sm: 'xl' }}>
                   <Stack spacing="6">
                     <Stack spacing="2">
                       <FormLabel>Item Name</FormLabel>
