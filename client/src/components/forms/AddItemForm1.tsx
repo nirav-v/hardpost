@@ -24,7 +24,7 @@ function addItemForm() {
   const addItemMutation = useMutation({
     mutationFn: (data: FormData) => shopApi.addItem(data),
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({ queryKey: ['items', 'userItems'] });
       navigate('/');
     },
     onError: () => console.error(console.error),
@@ -61,6 +61,16 @@ function addItemForm() {
 
     if (name.length < 1) {
       alert('must fill in the item name field');
+      return;
+    }
+
+    if (!category) {
+      alert('must select a category');
+      return;
+    }
+
+    if (price <= 0) {
+      alert('please make sure you provide a price');
       return;
     }
 
