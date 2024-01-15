@@ -11,7 +11,7 @@ function UserItems() {
   // mutation to delete user items from db and refetch afterwards
   const deleteUserItem = useMutation({
     mutationFn: (itemId: number) => userApi.deleteUserItem(itemId),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['userItems'] }),
+    onSuccess: () => queryClient.invalidateQueries(),
   });
 
   // sort items in place by available items first
@@ -22,7 +22,6 @@ function UserItems() {
 
   const handleRemoveItemClick = async (itemId: number) => {
     // grab the item id and send a fetch request to the delete-item route
-    console.log('id removed: ', itemId);
     deleteUserItem.mutate(itemId);
     // fetchItems();
   };

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   List,
   ListItem,
@@ -11,18 +10,13 @@ import {
   Box,
   Stack,
   StackDivider,
-} from "@chakra-ui/react";
-import formatTimestamp from "../util/formatTimestamp";
-import { Order } from "../types/OrderType";
-import { ordersApi } from "../api/ordersApi";
+} from '@chakra-ui/react';
+import formatTimestamp from '../util/formatTimestamp';
+import { Order } from '../types/OrderType';
+import { useOrdersQuery } from '../hooks/reactQueryHooks';
 
 function OrdersPage() {
-  const [orders, setOrders] = useState<Order[]>([]);
-
-  useEffect(() => {
-    ordersApi.getAllOrders().then((orders) => setOrders(orders));
-  }, []);
-
+  const { data: orders, isPending, isError } = useOrdersQuery();
   // console.log(orders);
 
   // function to calculate the total price from an order object
@@ -32,14 +26,16 @@ function OrdersPage() {
       0
     );
 
+  if (isPending) return <div>Fetching your orders...</div>;
+
   return (
     <div>
-      {orders.length ? (
+      {orders?.length ? (
         <List spacing={5}>
           <Center height="100px">
             <Heading>Your Orders</Heading>
           </Center>
-          {orders.map((order) => {
+          {orders.map(order => {
             return (
               <ListItem key={order.id}>
                 <Card>
@@ -54,9 +50,9 @@ function OrdersPage() {
                       <Box>
                         <Heading size="xs">
                           {order.items.length} Item
-                          {order.items.length > 1 ? "s" : ""} Ordered
+                          {order.items.length > 1 ? 's' : ''} Ordered
                         </Heading>
-                        {order.items.map((item) => (
+                        {order.items.map(item => (
                           <Text key={item.id} pt="2" fontSize="sm">
                             {item.name}
                           </Text>
