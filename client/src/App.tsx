@@ -17,6 +17,7 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import CartProvider from './context/CartContext';
 import WelcomeModal from './components/modals/WelcomeModal';
 import ButtonModal from './components/modals/ButtonModal';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import { GoogleOAuthProvider } from "@react-oauth/google";
 // import GoogleLoginButton from "./components/buttons/GoogleLoginButton";
@@ -48,6 +49,7 @@ function App() {
     <Fragment>
       {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}> */}
       <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
         <CartProvider>
           <Flex justifyContent="right" mr={2}>
             <Button mr={0} onClick={toggleColorMode}>
