@@ -1,9 +1,9 @@
-import { Item, User } from "../models/index.js";
-import Auth from "../util/serverAuth.js";
-import { uploadFile } from "../util/S3.js";
+import { Item, User } from '../models/index.js';
+import Auth from '../util/serverAuth.js';
+import { uploadFile } from '../util/S3.js';
 
 export const uploadItem = async (req, res, next) => {
-  console.log("req.file", req.file); // multer adds image data as file field on req object
+  console.log('req.file', req.file); // multer adds image data as file field on req object
 
   try {
     const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
@@ -28,7 +28,7 @@ export const uploadItem = async (req, res, next) => {
     });
     res.json({ createdItem: item });
   } catch (err) {
-    console.log(err, "something went wrong");
+    console.log(err, 'something went wrong');
   }
 };
 
@@ -58,14 +58,16 @@ export const deleteItem = async (req, res, next) => {
   const userItems = await loggedInUser.getItems();
 
   const itemId = req.body.itemId;
-
-  for (let item of userItems) {
-    if (item.id === itemId) {
-      const deletedItem = await item.destroy();
-      return res.status(201).json(deletedItem);
-    }
-  }
-  res.send("cannot find item with that id");
+  const itemToDelete = await Item.findByPk(itemId);
+  console.log(itemToDelete);
+  await itemToDelete.destroy();
+  // for (let item of userItems) {
+  //   if (item.id === itemId) {
+  //     const deletedItem = await item.destroy();
+  //     return res.status(201).json(deletedItem);
+  //   }
+  // }
+  res.send('cannot find item with that id');
 };
 
 export const getUserItems = async (req, res) => {
