@@ -10,7 +10,7 @@ import UserItems from './pages/UserItems';
 import NavBar from './components/UI/NavBar';
 import { Routes, Route } from 'react-router-dom';
 import { Fragment, useEffect, useState } from 'react';
-import { ItemsProvider } from './context/ItemsContext';
+// import { ItemsProvider } from './context/ItemsContext';
 import LogoutButton from './components/buttons/LogoutButton';
 import { Button, Box, Container, useColorMode, Flex } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
@@ -63,55 +63,55 @@ function App() {
             ) : null}
           </Flex>
           <NavBar loggedIn={loggedIn} />
-          <ItemsProvider>
-            {/* conditionally render remaining content of App (accessible react-router routes and components) based on loggedIn state */}
-            {!loggedIn ? (
-              <div>
-                <Container centerContent>
-                  {Auth.returningUser() ? null : <WelcomeModal />}
-                  {/* <GoogleLoginButton /> */}
-                  <ButtonModal chakraColor={'teal'} buttonContent="Log In">
-                    {/* conditionally render Login form OR Sign up form based on state */}
-                    {showSignUpForm ? (
-                      <SignUpForm
-                        setLoggedIn={setLoggedIn}
-                        showSignUpForm={showSignUpForm}
-                        setShowSignUpForm={setShowSignUpForm}
-                      />
-                    ) : (
-                      <LoginForm
-                        setLoggedIn={setLoggedIn}
-                        showSignUpForm={showSignUpForm}
-                        setShowSignUpForm={setShowSignUpForm}
-                      />
-                    )}
-                  </ButtonModal>
-                </Container>
-                <Routes>
-                  <Route path="/" element={<ShopPage />} />
-                  <Route
-                    path="/single-item/:itemId"
-                    element={<SingleItemPage />}
-                  />
-                  <Route path="/cart" element={<CartPage />} />
-                </Routes>
-              </div>
-            ) : (
-              <div>
-                <Routes>
-                  <Route path="/" element={<ShopPage />} />
-                  <Route path="/add-item" element={<AddItemForm />} />
-                  <Route path="/cart" element={<CartPage />} />
-                  <Route path="/orders" element={<OrdersPage />} />
-                  <Route path="/user-items" element={<UserItems />} />
-                  <Route
-                    path="/single-item/:itemId"
-                    element={<SingleItemPage />}
-                  />
-                </Routes>
-              </div>
-            )}
-          </ItemsProvider>
+          {/* <ItemsProvider> */}
+          {/* conditionally render remaining content of App (accessible react-router routes and components) based on loggedIn state */}
+          {!loggedIn ? (
+            <div>
+              <Container centerContent>
+                {Auth.returningUser() ? null : <WelcomeModal />}
+                {/* <GoogleLoginButton /> */}
+                <ButtonModal chakraColor={'teal'} buttonContent="Log In">
+                  {/* conditionally render Login form OR Sign up form based on state */}
+                  {showSignUpForm ? (
+                    <SignUpForm
+                      setLoggedIn={setLoggedIn}
+                      showSignUpForm={showSignUpForm}
+                      setShowSignUpForm={setShowSignUpForm}
+                    />
+                  ) : (
+                    <LoginForm
+                      setLoggedIn={setLoggedIn}
+                      showSignUpForm={showSignUpForm}
+                      setShowSignUpForm={setShowSignUpForm}
+                    />
+                  )}
+                </ButtonModal>
+              </Container>
+              <Routes>
+                <Route path="/" element={<ShopPage />} />
+                <Route
+                  path="/single-item/:itemId"
+                  element={<SingleItemPage />}
+                />
+                <Route path="/cart" element={<CartPage />} />
+              </Routes>
+            </div>
+          ) : (
+            <div>
+              <Routes>
+                <Route path="/" element={<ShopPage />} />
+                <Route path="/add-item" element={<AddItemForm />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/user-items" element={<UserItems />} />
+                <Route
+                  path="/single-item/:itemId"
+                  element={<SingleItemPage />}
+                />
+              </Routes>
+            </div>
+          )}
+          {/* </ItemsProvider> */}
         </CartProvider>
       </QueryClientProvider>
       {/* </GoogleOAuthProvider> */}

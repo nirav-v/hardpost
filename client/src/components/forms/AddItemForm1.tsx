@@ -44,7 +44,7 @@ function addItemForm() {
       ...formState,
       [event.currentTarget.name]: event.currentTarget.value,
     });
-    console.log(formState, event.currentTarget.name, event.currentTarget.value);
+    // console.log(formState, event.currentTarget.name, event.currentTarget.value);
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
