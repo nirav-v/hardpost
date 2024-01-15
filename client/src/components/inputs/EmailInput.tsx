@@ -28,6 +28,7 @@ function EmailInput({ value, handleEmailChange }: EmailInputProps) {
         type="email"
         onChange={handleEmailChange}
         placeholder="email"
+        data-cy="email-input"
       />
       <FormHelperText>We'll never share your email.</FormHelperText>
     </FormControl>

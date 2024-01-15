@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -11,11 +11,11 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
-} from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import darkModeLogo from "../../images/Hardpost-logos_transparent.png";
-import lightModeLogo from "../../images/Hardpost-logos_black.png";
-import { useCartContext } from "../../context/CartContext";
+} from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import darkModeLogo from '../../images/Hardpost-logos_transparent.png';
+import lightModeLogo from '../../images/Hardpost-logos_black.png';
+import { useCartContext } from '../../context/CartContext';
 
 type NavLinkProps = {
   to: string;
@@ -29,10 +29,10 @@ const NavLink = ({ to, children }: NavLinkProps) => {
         fontWeight="bold"
         px={2}
         py={1}
-        rounded={"md"}
+        rounded={'md'}
         _hover={{
-          textDecoration: "none",
-          bg: useColorModeValue("gray.200", "gray.700"),
+          textDecoration: 'none',
+          bg: useColorModeValue('gray.200', 'gray.700'),
         }}>
         {children}
       </Box>
@@ -48,13 +48,13 @@ function NavBar({ loggedIn }: NavBarProps) {
   const logoImage = useColorModeValue(lightModeLogo, darkModeLogo);
   const [cart, setCart] = useCartContext();
 
-  let navTabs = [{ title: "Home", path: "/" }];
+  let navTabs = [{ title: 'Home', path: '/' }];
   if (loggedIn) {
     navTabs = [
-      { title: "Home", path: "/" },
-      { title: "Post Item", path: "/add-item" },
-      { title: "My items", path: "/user-items" },
-      { title: "My Orders", path: "/orders" },
+      { title: 'Home', path: '/' },
+      { title: 'Post Item', path: '/add-item' },
+      { title: 'My items', path: '/user-items' },
+      { title: 'My Orders', path: '/orders' },
     ];
   }
 
@@ -65,12 +65,12 @@ function NavBar({ loggedIn }: NavBarProps) {
       <Box px={4}>
         <Box
           display="flex"
-          justifyContent={"center"}
-          alignItems={"center"}
-          flexDirection={["column", null, null, null, null, null]}>
-          {" "}
+          justifyContent={'center'}
+          alignItems={'center'}
+          flexDirection={['column', null, null, null, null, null]}>
+          {' '}
           <div className="logo-container">
-            <Link to={"/"}>
+            <Link to={'/'}>
               <Image
                 src={logoImage}
                 alt="hardpost-logo"
@@ -79,20 +79,20 @@ function NavBar({ loggedIn }: NavBarProps) {
               />
             </Link>
           </div>
-          <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+          <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
             <IconButton
-              size={"md"}
+              size={'md'}
               icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-              aria-label={"Open Menu"}
-              display={{ md: "none" }}
+              aria-label={'Open Menu'}
+              display={{ md: 'none' }}
               onClick={isOpen ? onClose : onOpen}
             />
-            <HStack spacing={8} alignItems={"center"}>
+            <HStack spacing={8} alignItems={'center'}>
               <HStack
-                as={"nav"}
+                as={'nav'}
                 spacing={4}
-                display={{ base: "none", md: "flex" }}>
-                {navTabs.map((tab) => (
+                display={{ base: 'none', md: 'flex' }}>
+                {navTabs.map(tab => (
                   <NavLink to={tab.path} key={tab.title}>
                     {tab.title}
                   </NavLink>
@@ -100,22 +100,22 @@ function NavBar({ loggedIn }: NavBarProps) {
                 <NavLink to="/cart">Cart: {cart.length} items</NavLink>
               </HStack>
             </HStack>
-            <Flex alignItems={"center"}>
+            <Flex alignItems={'center'}>
               <Menu>
                 <MenuButton
                   as={Button}
-                  rounded={"full"}
-                  variant={"link"}
-                  cursor={"pointer"}
+                  rounded={'full'}
+                  variant={'link'}
+                  cursor={'pointer'}
                   minW={0}></MenuButton>
               </Menu>
             </Flex>
           </Flex>
-        </Box>{" "}
+        </Box>{' '}
         {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4}>
-              {navTabs.map((tab) => (
+          <Box pb={4} display={{ md: 'none' }}>
+            <Stack as={'nav'} spacing={4}>
+              {navTabs.map(tab => (
                 <NavLink to={tab.path} key={tab.title}>
                   {tab.title}
                 </NavLink>

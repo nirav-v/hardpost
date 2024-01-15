@@ -57,16 +57,14 @@ export const deleteItem = async (req, res, next) => {
   // get all items of the logged in user and find one where the id is in the req.body
   const userItems = await loggedInUser.getItems();
 
-  const itemId = req.body.itemId;
-  const itemToDelete = await Item.findByPk(itemId);
-  console.log(itemToDelete);
-  await itemToDelete.destroy();
-  // for (let item of userItems) {
-  //   if (item.id === itemId) {
-  //     const deletedItem = await item.destroy();
-  //     return res.status(201).json(deletedItem);
-  //   }
-  // }
+  const { itemId } = req.body;
+
+  for (let item of userItems) {
+    if (item.id === itemId) {
+      const deletedItem = await item.destroy();
+      return res.status(201).json(deletedItem);
+    }
+  }
   res.send('cannot find item with that id');
 };
 

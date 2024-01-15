@@ -100,7 +100,8 @@ function SignUpForm({
                   onClick={event => {
                     event.preventDefault();
                     setShowSignUpForm(!showSignUpForm);
-                  }}>
+                  }}
+                  data-cy="showLoginForm-btn">
                   Log in
                 </Button>
               </Text>

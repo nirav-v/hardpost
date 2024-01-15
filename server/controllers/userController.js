@@ -106,7 +106,7 @@ export const loginUser = async (req, res) => {
 
     for (const cartItem of localCart) {
       // avoid adding the users own items to their cart
-      if (cartItem.userId === existingUser.id) continue;
+      if (cartItem.userId !== existingUser.id) continue;
 
       const validCartItem = checkIfCartItemExists(localCart, items);
 

@@ -1,4 +1,4 @@
-import Auth from "../../util/auth";
+import Auth from '../../util/auth';
 
 import {
   Flex,
@@ -8,14 +8,15 @@ import {
   Box,
   Heading,
   HStack,
-} from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
-import { CartItem } from "./CartItem";
-import { CartOrderSummary } from "./CartOrderSummary";
-import { useCartContext } from "../../context/CartContext";
-import { loadStripe } from "@stripe/stripe-js";
+} from '@chakra-ui/react';
+import { Link as ReactRouterLink } from 'react-router-dom';
+import { CartItem } from './CartItem';
+import { CartOrderSummary } from './CartOrderSummary';
+import { useCartContext } from '../../context/CartContext';
+import { loadStripe } from '@stripe/stripe-js';
 
 function CartPage() {
+  console.log('cart page render');
   const [cart, setCart] = useCartContext();
 
   const handleCheckoutSubmit = async () => {
@@ -23,21 +24,21 @@ function CartPage() {
 
     const domain = `${window.location.protocol}//${window.location.host}`;
 
-    const res = await fetch("/api/create-checkout-session", {
-      method: "POST",
+    const res = await fetch('/api/create-checkout-session', {
+      method: 'POST',
       body: JSON.stringify({
         domain: domain,
         cart,
       }),
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": domain,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': domain,
         Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
     const session = await res.json();
     const stripe = await loadStripe(
-      "pk_test_51NpbteEHf8A5rB27b2EI52s44oXzHWFqcQqYhpohOETeB3ryMLGAhIp51yo5GbSQwyXU7LEoBAnR3fg1WXGZ8w4m00O9aMv0Bw"
+      'pk_test_51NpbteEHf8A5rB27b2EI52s44oXzHWFqcQqYhpohOETeB3ryMLGAhIp51yo5GbSQwyXU7LEoBAnR3fg1WXGZ8w4m00O9aMv0Bw'
     );
 
     if (stripe) stripe.redirectToCheckout({ sessionId: session.id });
@@ -48,36 +49,36 @@ function CartPage() {
       <div>
         <Box
           maxW={{
-            base: "3xl",
-            lg: "7xl",
+            base: '3xl',
+            lg: '7xl',
           }}
           mx="auto"
           px={{
-            base: "4",
-            md: "8",
-            lg: "12",
+            base: '4',
+            md: '8',
+            lg: '12',
           }}
           py={{
-            base: "6",
-            md: "8",
-            lg: "12",
+            base: '6',
+            md: '8',
+            lg: '12',
           }}>
           <Stack
             direction={{
-              base: "column",
-              lg: "row",
+              base: 'column',
+              lg: 'row',
             }}
             align={{
-              lg: "flex-start",
+              lg: 'flex-start',
             }}
             spacing={{
-              base: "8",
-              md: "16",
+              base: '8',
+              md: '16',
             }}>
             <Stack
               spacing={{
-                base: "8",
-                md: "10",
+                base: '8',
+                md: '10',
               }}
               flex="2">
               <Heading fontSize="2xl" fontWeight="extrabold">
@@ -85,7 +86,7 @@ function CartPage() {
               </Heading>
 
               <Stack spacing="6">
-                {cart.map((item) => {
+                {cart.map(item => {
                   return (
                     <CartItem
                       key={item.id}
@@ -106,7 +107,7 @@ function CartPage() {
                 <Link
                   as={ReactRouterLink}
                   to="/"
-                  color={mode("blue.500", "blue.200")}>
+                  color={mode('blue.500', 'blue.200')}>
                   Continue shopping
                 </Link>
               </HStack>

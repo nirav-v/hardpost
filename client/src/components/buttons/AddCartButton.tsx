@@ -1,9 +1,9 @@
-import Auth from "../../util/auth";
-import { useState } from "react";
-import { Button, Text } from "@chakra-ui/react";
-import { useCartContext } from "../../context/CartContext";
-import { Item } from "../../types/ItemTypes";
-import { useAddToCart, useDeleteFromCart } from "../../hooks/cartHooks";
+import Auth from '../../util/auth';
+import { useState } from 'react';
+import { Button, Text } from '@chakra-ui/react';
+import { useCartContext } from '../../context/CartContext';
+import { Item } from '../../types/ItemTypes';
+import { useAddToCart, useDeleteFromCart } from '../../hooks/cartHooks';
 
 function AddCartButton({ item }: { item: Item }) {
   // get the current user's cart
@@ -26,11 +26,11 @@ function AddCartButton({ item }: { item: Item }) {
   cart.forEach((cartItem: Item) => cartIds.add(cartItem.id));
 
   const handleAddCartClick = async () => {
-    setLoading(true);
-
+    // setLoading(true);
+    setCart([...cart, item]);
     await addToCart(item);
 
-    setLoading(false);
+    // setLoading(false);
   };
 
   // rendering a different button under different conditions
@@ -67,7 +67,7 @@ function AddCartButton({ item }: { item: Item }) {
         colorScheme="blue"
         width="full"
         data-cy="add-to-cart-btn">
-        {loading ? "adding to your cart..." : "Add to cart"}
+        {loading ? 'adding to your cart...' : 'Add to cart'}
       </Button>
     );
     return button;

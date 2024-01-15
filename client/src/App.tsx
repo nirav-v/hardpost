@@ -70,7 +70,10 @@ function App() {
               <Container centerContent>
                 {Auth.returningUser() ? null : <WelcomeModal />}
                 {/* <GoogleLoginButton /> */}
-                <ButtonModal chakraColor={'teal'} buttonContent="Log In">
+                <ButtonModal
+                  chakraColor={'teal'}
+                  buttonContent="Log In"
+                  cypress="login-btn">
                   {/* conditionally render Login form OR Sign up form based on state */}
                   {showSignUpForm ? (
                     <SignUpForm

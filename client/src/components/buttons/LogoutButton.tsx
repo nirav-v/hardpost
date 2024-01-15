@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button } from '@chakra-ui/react';
 
 type LogoutButtonProps = {
   onClick: () => void;
@@ -7,7 +7,7 @@ type LogoutButtonProps = {
 
 const LogoutButton = ({ onClick, children }: LogoutButtonProps) => {
   return (
-    <Button onClick={onClick} colorScheme="red">
+    <Button onClick={onClick} colorScheme="red" data-cy="logout-btn">
       {children}
     </Button>
   );
