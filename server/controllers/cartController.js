@@ -1,15 +1,15 @@
-import { Cart, Item, User } from "../models/index.js";
-import jwt from "jsonwebtoken";
-import Auth from "../util/serverAuth.js";
+import { Cart, Item, User } from '../models/index.js';
+import jwt from 'jsonwebtoken';
+import Auth from '../util/serverAuth.ts';
 
 export const getUserCart = async (req, res) => {
   try {
     if (!req.headers.authorization)
       return res.status(401).send({
-        unauthorized: "no token provided in headers, please log in first",
+        unauthorized: 'no token provided in headers, please log in first',
       });
-    console.log("auth header: ", req.headers.authorization.split(" ")[1]);
-    const token = req.headers.authorization.split(" ")[1];
+    console.log('auth header: ', req.headers.authorization.split(' ')[1]);
+    const token = req.headers.authorization.split(' ')[1];
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     // console.log("payload: ", payload);
@@ -23,7 +23,7 @@ export const getUserCart = async (req, res) => {
       // console.log(cartItems);
       res.json(cartItems);
     } else {
-      res.send("not logged in");
+      res.send('not logged in');
     }
   } catch (err) {
     console.log(err);
@@ -52,7 +52,7 @@ export const addCartItem = async (req, res) => {
     through: { quantity: itemQuantity },
   }); // specify value for extra fields that were created in the cart-item junction table
   // respond with the updated cart items
-  res.redirect("/api/cart");
+  res.redirect('/api/cart');
 };
 
 export const deleteCartItem = async (req, res, next) => {
@@ -66,5 +66,5 @@ export const deleteCartItem = async (req, res, next) => {
   if (cartItems.length > 0) {
     const deletedItem = await cartItems[0].cartItem.destroy();
   }
-  res.redirect("/api/cart");
+  res.redirect('/api/cart');
 };
