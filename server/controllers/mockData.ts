@@ -1,3 +1,29 @@
+class MockUser {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+
+  constructor(id, username, email, password) {
+    this.id = id;
+    this.username = username;
+    this.email = email;
+    this.password = password;
+  }
+
+  getItems() {
+    return mockItems;
+  }
+
+  addItem() {
+    return new Promise(res => res);
+  }
+
+  checkPassword(p1, p2) {
+    return p1 === p2;
+  }
+}
+
 export const mockCart = {
   id: 1,
   createdAt: '2023-10-21T20:05:31.000Z',
