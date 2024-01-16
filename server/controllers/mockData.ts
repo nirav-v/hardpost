@@ -35,9 +35,6 @@ export const mockCart = {
 
 export const mockUsers = [
   {
-    dataValues: {
-      id: 4,
-    },
     id: 4,
     username: 'nirav',
     email: 'nirav@mail.com',

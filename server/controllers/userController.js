@@ -2,7 +2,7 @@ import { Cart, Item, User } from '../models/index.js';
 import jwt from 'jsonwebtoken';
 
 // util function for verifying the items from users local storage cart before adding them to cart in database
-const checkIfCartItemExists = async (cartItem, items) => {
+export const checkIfCartItemExists = (cartItem, items) => {
   //  check this case: for each local cart item added, we also have to check if its id still exists in the database as the owner may have already deleted it
   for (const item of items) {
     if (item.id === cartItem.id) {
@@ -77,7 +77,7 @@ export const loginUser = async (req, res) => {
         email: req.body.email,
       },
     });
-
+    console.log(existingUser);
     if (!existingUser) {
       return res.status(404).send({ error: 'incorrect credentials' });
     }
@@ -90,7 +90,7 @@ export const loginUser = async (req, res) => {
       {
         username: existingUser.username,
         email: existingUser.email,
-        userId: existingUser.dataValues.id,
+        userId: existingUser.id,
       },
       process.env.JWT_SECRET,
       {
