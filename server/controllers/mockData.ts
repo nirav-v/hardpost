@@ -1,10 +1,17 @@
+type MockUserType = {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+};
+
 class MockUser {
   id: number;
   username: string;
   email: string;
   password: string;
 
-  constructor(id, username, email, password) {
+  constructor({ id, username, email, password }: MockUserType) {
     this.id = id;
     this.username = username;
     this.email = email;
@@ -12,15 +19,19 @@ class MockUser {
   }
 
   getItems() {
-    return mockItems;
+    return new Promise(res => res(mockItems));
   }
 
   addItem() {
     return new Promise(res => res);
   }
 
-  checkPassword(p1, p2) {
+  checkPassword(p1: string, p2: string) {
     return p1 === p2;
+  }
+
+  getCart() {
+    return new Promise(res => res(mockCart));
   }
 }
 
@@ -33,22 +44,19 @@ export const mockCart = {
   addItem: () => new Promise(res => res),
 };
 
-export const mockUsers = [
-  {
+export const mockUsers: MockUserType[] = [
+  new MockUser({
     id: 4,
     username: 'nirav',
     email: 'nirav@mail.com',
     password: 'password',
-    getCart: () => mockCart,
-    checkPassword: (p1, p2) => p1 === p2,
-  },
-  {
+  }),
+  new MockUser({
     id: 8,
     username: 'bo',
     email: 'bo@mail.com',
     password: '$2b$10$yIsKTlyky1QY0ITtezOg8.9HsVT7iM/Rot.2FdFxTj2LkSrzVc4/O',
-    getCart: () => mockCart,
-  },
+  }),
 ];
 
 export const mockItems = [
