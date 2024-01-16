@@ -1,27 +1,53 @@
-import { checkIfCartItemExists } from './userController';
-import { mockItems } from './mockData';
+import { checkIfCartItemExists, loginUser } from './userController';
+import { mockItems, mockUsers } from './mockData';
+import { Item, User } from '../models';
+import jwt from 'jsonwebtoken';
+
+describe('checks if cart item exists in an array of items', () => {
+  test('util function correctly verifies if a local cart item still exists in the database items', () => {
+    const localCartItem = mockItems[0];
+
+    expect(checkIfCartItemExists(localCartItem, mockItems)).toBe(true);
+  });
+
+  test('checkIfCartItemExists util function returns false if passed an invalid item', () => {
+    const invalidCartItem = { ...mockItems[0], id: 34532985734957 };
+
+    expect(checkIfCartItemExists(invalidCartItem, mockItems)).toBe(false);
+  });
+});
 
 describe('user controller tests', () => {
-  test('util function correctly verifies if a local cart item has already been deleted from the database', () => {
-    const localCartItem = {
-      id: 1,
-      name: 'real mason silva ',
-      category: 'decks',
-      price: 34234,
-      description: 'gae',
-      imagePath:
-        'https://public-hardpost-bucket.s3.amazonaws.com/real-mason-deck.jpga8e313f43991c035daa2873b0b7e9b0052fc980ab42fad8e2da0c7657cb3a31c',
-      sold: false,
-      userId: 1,
-      user: {
-        id: 1,
-        username: 'nirav',
+  // MOCKS -----------
+  const res = {
+    status: jest.fn().mockImplementation(code => res),
+    send: jest.fn(),
+    json: jest.fn(),
+    redirect: jest.fn(),
+  };
+
+  jest
+    .spyOn(User, 'findOne')
+    .mockImplementation(() => new Promise(res => res(mockUsers[0])));
+
+  jest.spyOn(jwt, 'sign').mockImplementation(() => 'fake jwt');
+
+  jest
+    .spyOn(Item, 'findAll')
+    .mockImplementation(() => new Promise(res => res(mockItems)));
+
+  // TESTS ----------------
+  test('user login controller logic', async () => {
+    const req = {
+      body: {
         email: 'nirav@mail.com',
-        password:
-          '$2b$10$i6yloJad9M3Hzrs8oVXMHeMnLOjKhgo/9lIvYsGyO20prOU.e53XW',
+        password: 'password',
+        cart: [...mockItems], // local storage cart sent with request
       },
     };
 
-    expect(checkIfCartItemExists(localCartItem, mockItems)).toBe(true);
+    await loginUser(req, res);
+
+    expect(res.json).toHaveBeenCalledWith(jwt.sign());
   });
 });
