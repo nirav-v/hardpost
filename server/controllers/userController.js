@@ -77,7 +77,7 @@ export const loginUser = async (req, res) => {
         email: req.body.email,
       },
     });
-    console.log(existingUser);
+
     if (!existingUser) {
       return res.status(404).send({ error: 'incorrect credentials' });
     }

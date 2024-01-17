@@ -18,6 +18,10 @@ class MockUser {
     this.password = password;
   }
 
+  getCart() {
+    return new Promise(res => res(mockCart));
+  }
+
   getItems() {
     return new Promise(res => res(mockItems));
   }
@@ -28,10 +32,6 @@ class MockUser {
 
   checkPassword(p1: string, p2: string) {
     return p1 === p2;
-  }
-
-  getCart() {
-    return new Promise(res => res(mockCart));
   }
 }
 
