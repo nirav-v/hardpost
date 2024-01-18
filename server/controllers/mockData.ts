@@ -5,6 +5,18 @@ type MockUserType = {
   password: string;
 };
 
+type MockItemType = {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  imagePath: string;
+  sold: boolean;
+  userId: number;
+  user: MockUserType;
+};
+
 export class MockUser {
   id: number;
   username: string;
@@ -47,6 +59,41 @@ export class MockUser {
   }
 }
 
+export class MockItem {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  imagePath: string;
+  userId: number;
+  user: MockUserType;
+
+  constructor({
+    id,
+    name,
+    category,
+    price,
+    description,
+    imagePath,
+    userId,
+    user,
+  }: MockItemType) {
+    this.id = id;
+    this.name = name;
+    this.category = category;
+    this.price = price;
+    this.description = description;
+    this.imagePath = imagePath;
+    this.userId = userId;
+    this.user = user;
+  }
+
+  findAll() {
+    new Promise(res => res(mockItems));
+  }
+}
+
 export const mockCart = {
   id: 1,
   createdAt: '2023-10-21T20:05:31.000Z',
@@ -72,7 +119,7 @@ export const mockUsers: MockUserType[] = [
 ];
 
 export const mockItems = [
-  {
+  new MockItem({
     id: 1,
     name: 'real mason silva ',
     category: 'decks',
@@ -88,8 +135,9 @@ export const mockItems = [
       email: 'nirav@mail.com',
       password: '$2b$10$i6yloJad9M3Hzrs8oVXMHeMnLOjKhgo/9lIvYsGyO20prOU.e53XW',
     },
-  },
-  {
+  }),
+
+  new MockItem({
     id: 16,
     name: 'real mason silva ',
     category: 'decks',
@@ -105,5 +153,5 @@ export const mockItems = [
       email: 'nirav@mail.com',
       password: '$2b$10$i6yloJad9M3Hzrs8oVXMHeMnLOjKhgo/9lIvYsGyO20prOU.e53XW',
     },
-  },
+  }),
 ];
