@@ -5,7 +5,7 @@ type MockUserType = {
   password: string;
 };
 
-class MockUser {
+export class MockUser {
   id: number;
   username: string;
   email: string;
@@ -16,6 +16,18 @@ class MockUser {
     this.username = username;
     this.email = email;
     this.password = password;
+  }
+
+  create() {
+    return mockUsers[0];
+  }
+
+  findAll() {
+    return new Promise(res => res(mockItems));
+  }
+
+  findOne() {
+    return new Promise(res => res(mockUsers[0]));
   }
 
   getCart() {
@@ -55,7 +67,7 @@ export const mockUsers: MockUserType[] = [
     id: 8,
     username: 'bo',
     email: 'bo@mail.com',
-    password: '$2b$10$yIsKTlyky1QY0ITtezOg8.9HsVT7iM/Rot.2FdFxTj2LkSrzVc4/O',
+    password: 'password',
   }),
 ];
 

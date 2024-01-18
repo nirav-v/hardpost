@@ -18,6 +18,22 @@ describe('checking if local cart item still exists', () => {
 });
 
 describe('user controller tests', () => {
+  beforeEach(() => {
+    jest
+      .spyOn(User, 'findOne')
+      .mockImplementation(() => new Promise(res => res(mockUsers[0])));
+
+    jest
+      .spyOn(User, 'create')
+      .mockImplementation(() => new Promise(res => res(mockUsers[0])));
+
+    jest.spyOn(jwt, 'sign').mockImplementation(() => 'fake jwt');
+
+    jest
+      .spyOn(Item, 'findAll')
+      .mockImplementation(() => new Promise(res => res(mockItems)));
+  });
+
   // MOCKS -----------
   const req = {
     body: {
@@ -33,29 +49,21 @@ describe('user controller tests', () => {
     redirect: jest.fn(),
   };
 
-  jest
-    .spyOn(User, 'findOne')
-    .mockImplementation(() => new Promise(res => res(mockUsers[0])));
-
-  jest.spyOn(User, 'create').mockImplementation(() => mockUsers[0]);
-
-  jest.spyOn(jwt, 'sign').mockImplementation(() => 'fake jwt');
-
-  const token = jwt.sign();
-
-  jest
-    .spyOn(Item, 'findAll')
-    .mockImplementation(() => new Promise(res => res(mockItems)));
-
   // TESTS ----------------
   test('login controller calls res.json with a jwt', async () => {
+    const token = jwt.sign();
     await loginUser(req, res);
 
     expect(res.json).toHaveBeenCalledWith(token);
   });
 
   test('sign up controller calls res.json with a jwt', async () => {
+    const token = jwt.sign();
     await signUpUser(req, res);
     expect(res.json).toHaveBeenCalledWith(token);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 });

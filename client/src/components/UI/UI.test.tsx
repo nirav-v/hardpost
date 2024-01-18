@@ -1,13 +1,13 @@
 import '@testing-library/jest-dom';
 import ButtonModal from '../modals/ButtonModal';
 import { BrowserRouter } from 'react-router-dom';
-import CartProvider from '../../context/CartContext';
+import CartProvider, { CartContext } from '../../context/CartContext';
 import { expect } from '@jest/globals';
 import NavBar from './NavBar';
 import { render, fireEvent, screen } from '@testing-library/react';
 
 describe('App', () => {
-  it('renders button modal', () => {
+  it('renders button modal correctly', () => {
     const buttonText = 'open test modal';
 
     render(
@@ -25,9 +25,9 @@ describe('App', () => {
   it('renders navbar ', () => {
     render(
       <BrowserRouter>
-        <CartProvider>
+        <CartContext.Provider value={[[], () => {}]}>
           <NavBar loggedIn={false} />
-        </CartProvider>
+        </CartContext.Provider>
       </BrowserRouter>
     );
   });
