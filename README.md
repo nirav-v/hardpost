@@ -10,11 +10,7 @@ The prices of skateboarding hard-goods are at an all time high. Skateboarders ty
 
 ## <p align="center">Description
 
-<<<<<<< HEAD
 The concept is straightforward. Skateboarders can create an account and make posts of items they have for sale, including an image and price tag. Other users can browse those items, add them to their cart, and then must be logged in with an account to purchase those items.
-=======
-The concept is straightforward. Skateboarders can create and account and make posts of items they have for sale, including an image and price tag. Other users can browse those items, add them to their cart, and then must be logged in with an account to purchase those items.
->>>>>>> ccccd784b99f61eaa4ad02a99f289723fa20fdfa
 
 ## <p align="center">Technologies used
 
@@ -42,11 +38,7 @@ The concept is straightforward. Skateboarders can create and account and make po
 
 ## <p align="center">Testing
 
-<<<<<<< HEAD
 - For unit testing, run 'npm run test' in both client and server folders individually (runs jest tests).
-=======
-- For unit tests run 'npm run test' in both client and server folders individually (runs jest tests).
->>>>>>> ccccd784b99f61eaa4ad02a99f289723fa20fdfa
 - For integration testing, run 'npm start' at root of the project to start up the client and server. Then cd into the client and run 'npm run cypress', select chrome as the browser testing environment
 
 ## <p align="center"> Relational Database Design
