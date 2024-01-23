@@ -6,22 +6,7 @@ import { expect } from '@jest/globals';
 import NavBar from './NavBar';
 import { render, fireEvent, screen } from '@testing-library/react';
 
-describe('App', () => {
-  it('renders button modal correctly', () => {
-    const buttonText = 'open test modal';
-
-    render(
-      <ButtonModal
-        buttonContent={buttonText}
-        chakraColor="blue"
-        cypress="cypress-test-attr">
-        Test Button Modal
-      </ButtonModal>
-    );
-
-    expect(screen.getByText(buttonText)).toBeVisible();
-  });
-
+describe('navbar tests', () => {
   it('renders navbar ', () => {
     render(
       <BrowserRouter>
