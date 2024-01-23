@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Item } from '../../types/ItemTypes.js';
 
-import { useItemsQuery } from '../../hooks/reactQueryHooks.js';
+import { useItemsQuery } from '../../hooks/useItemsQuery';
 
 function ShopPage() {
   // const [items, setItems] = useItemsContext();

@@ -1,6 +1,6 @@
 import { Image, Button, Box, Center, Heading } from '@chakra-ui/react';
 import { ProductGrid } from './ShopPage/ProductGrid';
-import { useUserItemsQuery } from '../hooks/reactQueryHooks';
+import { useUserItemsQuery } from '../hooks/useUserItemsQuery';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userApi } from '../api/userApi';
 

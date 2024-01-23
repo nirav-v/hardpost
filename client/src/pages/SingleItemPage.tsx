@@ -14,7 +14,7 @@ import {
   ButtonGroup,
 } from '@chakra-ui/react';
 import { Item } from '../types/ItemTypes';
-import { useItemsQuery } from '../hooks/reactQueryHooks';
+import { useItemsQuery } from '../hooks/useItemsQuery';
 
 const SingleItemPage = function () {
   // const [items, setItems] = useItemsContext();
