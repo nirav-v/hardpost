@@ -1,5 +1,4 @@
 import AddCartButton from '../components/buttons/AddCartButton';
-import { useItemsContext } from '../context/ItemsContext';
 import { useParams } from 'react-router-dom';
 import {
   Center,
