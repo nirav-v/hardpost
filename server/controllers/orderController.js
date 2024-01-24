@@ -1,6 +1,6 @@
-import { User, Item } from "../models/index.js";
-import Stripe from "stripe";
-import Auth from "../util/serverAuth.js";
+import { User, Item } from '../models/index.js';
+import Stripe from 'stripe';
+import Auth from '../util/serverAuth.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -9,25 +9,15 @@ export const createStripCheckoutSession = async (req, res) => {
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
   const userCart = await loggedInUser.getCart();
-  const items = await userCart.getItems();
-  const order = await loggedInUser.createOrder();
-  // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
-  await order.addItems(
-    items.map((item) => {
-      item.orderItem = { quantity: item.cartItem.quantity };
-      return item;
-    })
-  );
-  await userCart.setItems(null); //clear user's cart after order is placed
+  const cartItems = await userCart.getItems();
 
   let { domain } = req.body;
-  const { cart } = req.body;
 
   const line_items = [];
-  for (const item of cart) {
+  for (const item of cartItems) {
     line_items.push({
       price_data: {
-        currency: "usd",
+        currency: 'usd',
         product_data: {
           name: item.name,
           images: [`${item.imagePath}`],
@@ -38,28 +28,40 @@ export const createStripCheckoutSession = async (req, res) => {
     });
   }
 
-  console.log("line_items: ", line_items);
+  // console.log('line_items: ', line_items);
 
   const session = await stripe.checkout.sessions.create({
     line_items: line_items,
-    mode: "payment",
+    mode: 'payment',
     success_url: `${domain}/orders`,
     cancel_url: `${domain}?canceled=true`,
+    customer_email: payload.email,
   });
 
   // at this point - verify that user successfully completed checkout before updating order and items
+  // --- move order processing logic below to webhook for after session is completed -----
+  // const order = await loggedInUser.createOrder();
+  // // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
+  // await order.addItems(
+  //   cartItems.map(item => {
+  //     item.orderItem = { quantity: item.cartItem.quantity };
+  //     return item;
+  //   })
+  // );
+  // await userCart.setItems(null); //clear user's cart after order is placed
+  // // mark all items from the cart as sold
+  // for (let item of cartItems) {
+  //   Item.update({ sold: true }, { where: { id: item.id } });
+  // }
 
-  // mark all items from the cart as sold
-  for (let item of items) {
-    Item.update({ sold: true }, { where: { id: item.id } });
-  }
+  // console.log(items);
 
-  console.log(items);
-
+  // id sent back to client where its used to redirect to stripe checkout page
   res.json({ id: session.id });
 };
 
 export const createOrder = async (req, res, next) => {
+  console.log('in create order middleware #####');
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
@@ -68,7 +70,7 @@ export const createOrder = async (req, res, next) => {
   const order = await loggedInUser.createOrder();
   // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
   await order.addItems(
-    items.map((item) => {
+    items.map(item => {
       item.orderItem = { quantity: item.cartItem.quantity };
       return item;
     })
@@ -76,19 +78,19 @@ export const createOrder = async (req, res, next) => {
   await cart.setItems(null); //clear user's cart after order is placed
   const updatedItems = await cart.getItems();
   console.log(updatedItems);
-  res.status(201).redirect("/orders");
+  res.status(201).redirect('/orders');
 };
 
 export const getUserOrders = async (req, res, next) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
-  console.log("PAYLOAD: ", payload);
+  // console.log('PAYLOAD: ', payload);
 
   const loggedInUser = await User.findOne({
     where: { email: payload.email },
   });
   const orders = await loggedInUser.getOrders({
-    include: ["items"],
+    include: ['items'],
   }); // tells sequelize to also load all items associated with each order
   res.send(orders);
 };

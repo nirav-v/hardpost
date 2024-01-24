@@ -1,31 +1,32 @@
-import { Router } from "express";
-import bodyParser from "body-parser";
-
+import { Router } from 'express';
+import bodyParser from 'body-parser';
+import Stripe from 'stripe';
 import {
   createOrder,
   createStripCheckoutSession,
   getUserOrders,
-} from "../../controllers/orderController.js";
+} from '../../controllers/orderController.js';
+import Item from '../../models/Item.js';
+import User from '../../models/User.js';
+import { fulfillOrder } from '../../util/fulfillOrder.js';
+
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+let stripe: Stripe;
+if (stripeSecretKey) {
+  stripe = new Stripe(stripeSecretKey, {
+    apiVersion: '2023-08-16',
+  });
+}
 
 const router = Router();
 
-router.post(
-  "/webhook",
-  bodyParser.raw({ type: "application/json" }),
-  (request, response) => {
-    const payload = request.body;
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-    console.log("Got payload: " + payload);
+router.post('/create-checkout-session', createStripCheckoutSession);
 
-    response.status(200).end();
-  }
-);
+router.get('/orders', getUserOrders);
 
-router.post("/create-checkout-session", createStripCheckoutSession);
-
-router.get("/orders", getUserOrders);
-
-router.post("/create-order", createOrder);
+router.post('/create-order', createOrder);
 
 // module.exports = router;
 export default router;

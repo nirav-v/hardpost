@@ -8,7 +8,7 @@ export const getUserCart = async (req, res) => {
       return res.status(401).send({
         unauthorized: 'no token provided in headers, please log in first',
       });
-    console.log('auth header: ', req.headers.authorization.split(' ')[1]);
+
     const token = req.headers.authorization.split(' ')[1];
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);

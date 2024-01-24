@@ -20,6 +20,7 @@ import sequelize from './config/database.js';
 // import models to map to db tables
 // const { User, Cart, Order, Item } = require("./models");
 import { User, Cart, Order, Item } from './models/index.js';
+import { webhookMiddleware } from './controllers/webhook.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,14 +28,22 @@ const port = process.env.PORT || 3000;
 app.use(express.static('dist'));
 
 app.use(cors()); //allow for client side requests without getting CORS error
-app.use(bodyParser.urlencoded({ extended: true })); // to parse incoming req body
+
 app.use(express.static(path.join(__dirname, 'public')));
 // serving files from images folder
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+app.post(
+  '/webhook',
+  bodyParser.raw({ type: 'application/json' }),
+  webhookMiddleware
+);
+
 app.use(express.json()); // needed to send json req.body in insomnia post requests
 
 // using modular route files
+
+app.use(bodyParser.urlencoded({ extended: true })); // to parse incoming req body
 app.use('/api', apiRoutes);
 app.use(shopRoutes);
 
