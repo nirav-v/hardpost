@@ -14,13 +14,16 @@ import { CartItem } from './CartItem';
 import { CartOrderSummary } from './CartOrderSummary';
 import { useCartContext } from '../../context/CartContext';
 import { loadStripe } from '@stripe/stripe-js';
+import { useCartQuery } from '../../hooks/useCartQuery';
 
 function CartPage() {
   console.log('cart page render');
   const [cart, setCart] = useCartContext();
+  const cartData = useCartQuery();
+  console.log(cartData);
 
   const handleCheckoutSubmit = async () => {
-    if (!cart.length) return;
+    if (!cart || !cart.length) return;
 
     const domain = `${window.location.protocol}//${window.location.host}`;
 
@@ -86,7 +89,7 @@ function CartPage() {
               </Heading>
 
               <Stack spacing="6">
-                {cart.map(item => {
+                {cart?.map(item => {
                   return (
                     <CartItem
                       key={item.id}

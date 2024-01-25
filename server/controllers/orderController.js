@@ -12,7 +12,6 @@ export const createStripCheckoutSession = async (req, res) => {
   const cartItems = await userCart.getItems();
 
   let { domain } = req.body;
-
   const line_items = [];
   for (const item of cartItems) {
     line_items.push({
