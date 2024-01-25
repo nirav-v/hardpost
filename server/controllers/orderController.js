@@ -38,30 +38,10 @@ export const createStripCheckoutSession = async (req, res) => {
     customer_email: payload.email,
   });
 
-  // at this point - verify that user successfully completed checkout before updating order and items
-  // --- move order processing logic below to webhook for after session is completed -----
-  // const order = await loggedInUser.createOrder();
-  // // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
-  // await order.addItems(
-  //   cartItems.map(item => {
-  //     item.orderItem = { quantity: item.cartItem.quantity };
-  //     return item;
-  //   })
-  // );
-  // await userCart.setItems(null); //clear user's cart after order is placed
-  // // mark all items from the cart as sold
-  // for (let item of cartItems) {
-  //   Item.update({ sold: true }, { where: { id: item.id } });
-  // }
-
-  // console.log(items);
-
-  // id sent back to client where its used to redirect to stripe checkout page
   res.json({ id: session.id });
 };
 
 export const createOrder = async (req, res, next) => {
-  console.log('in create order middleware #####');
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
@@ -83,8 +63,6 @@ export const createOrder = async (req, res, next) => {
 
 export const getUserOrders = async (req, res, next) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-
-  // console.log('PAYLOAD: ', payload);
 
   const loggedInUser = await User.findOne({
     where: { email: payload.email },

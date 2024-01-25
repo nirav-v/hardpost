@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // serving files from images folder
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+// Stripe webhook route - must go before express.json() middleware below
 app.post(
   '/webhook',
   bodyParser.raw({ type: 'application/json' }),
@@ -40,10 +41,9 @@ app.post(
 );
 
 app.use(express.json()); // needed to send json req.body in insomnia post requests
+app.use(bodyParser.urlencoded({ extended: true })); // to parse incoming req body
 
 // using modular route files
-
-app.use(bodyParser.urlencoded({ extended: true })); // to parse incoming req body
 app.use('/api', apiRoutes);
 app.use(shopRoutes);
 
