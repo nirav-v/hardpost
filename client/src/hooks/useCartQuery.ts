@@ -6,5 +6,6 @@ export const useCartQuery = () => {
   return useQuery<Item[]>({
     queryKey: ['cart'],
     queryFn: cartApi.getCartItems,
+    placeholderData: [],
   });
 };
