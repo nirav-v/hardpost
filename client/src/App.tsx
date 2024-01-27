@@ -8,7 +8,7 @@ import LoginForm from './components/forms/LoginForm';
 import OrdersPage from './pages/OrdersPage';
 import UserItems from './pages/UserItems';
 import NavBar from './components/UI/NavBar';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import { Fragment, useEffect, useState } from 'react';
 // import { ItemsProvider } from './context/ItemsContext';
 import LogoutButton from './components/buttons/LogoutButton';
@@ -63,9 +63,10 @@ function App() {
             ) : null}
           </Flex>
           <NavBar loggedIn={loggedIn} />
+
           {/* <ItemsProvider> */}
           {/* conditionally render remaining content of App (accessible react-router routes and components) based on loggedIn state */}
-          {!loggedIn ? (
+          {!loggedIn && (
             <div>
               <Container centerContent>
                 {Auth.returningUser() ? null : <WelcomeModal />}
@@ -90,31 +91,10 @@ function App() {
                   )}
                 </ButtonModal>
               </Container>
-              <Routes>
-                <Route path="/" element={<ShopPage />} />
-                <Route
-                  path="/single-item/:itemId"
-                  element={<SingleItemPage />}
-                />
-                <Route path="/cart" element={<CartPage />} />
-              </Routes>
-            </div>
-          ) : (
-            <div>
-              <Routes>
-                <Route path="/" element={<ShopPage />} />
-                <Route path="/add-item" element={<AddItemForm />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/orders" element={<OrdersPage />} />
-                <Route path="/user-items" element={<UserItems />} />
-                <Route
-                  path="/single-item/:itemId"
-                  element={<SingleItemPage />}
-                />
-              </Routes>
             </div>
           )}
-          {/* </ItemsProvider> */}
+          {/* Outlet renders all child routes of App defined in createBrowserRouter */}
+          <Outlet />
         </CartProvider>
       </QueryClientProvider>
       {/* </GoogleOAuthProvider> */}
