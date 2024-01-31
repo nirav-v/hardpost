@@ -7,7 +7,7 @@ import NavBar from './NavBar';
 import { render, fireEvent, screen } from '@testing-library/react';
 
 describe('navbar tests', () => {
-  it('renders navbar ', () => {
+  it('renders navbar when not logged in', async () => {
     render(
       <BrowserRouter>
         <CartContext.Provider value={[[], () => {}]}>
@@ -15,5 +15,20 @@ describe('navbar tests', () => {
         </CartContext.Provider>
       </BrowserRouter>
     );
+
+    const navLinks = await screen.findAllByRole('link');
+    expect(navLinks).toHaveLength(3);
+  });
+  it('renders navbar when logged in', async () => {
+    render(
+      <BrowserRouter>
+        <CartContext.Provider value={[[], () => {}]}>
+          <NavBar loggedIn={true} />
+        </CartContext.Provider>
+      </BrowserRouter>
+    );
+
+    const navLinks = await screen.findAllByRole('link');
+    expect(navLinks).toHaveLength(6);
   });
 });
