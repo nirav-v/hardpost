@@ -13,10 +13,9 @@ import ShopPage from './pages/ShopPage/index.tsx';
 import CartPage from './pages/CartPage/index.tsx';
 import SingleItemPage from './pages/SingleItemPage.tsx';
 import AddItemForm from './components/forms/AddItemForm1';
-
-import Auth from './util/auth.ts';
 import OrdersPage from './pages/OrdersPage.tsx';
 import UserItems from './pages/UserItems.tsx';
+import UserProvider from './context/UserContext.tsx';
 
 // 2. Add your color mode config
 const config = {
@@ -78,7 +77,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {/* <BrowserRouter> */}
     <ChakraProvider theme={theme}>
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </ChakraProvider>
     {/* </BrowserRouter> */}
   </React.StrictMode>

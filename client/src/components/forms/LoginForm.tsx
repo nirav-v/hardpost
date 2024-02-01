@@ -69,8 +69,7 @@ function LoginForm({
                   onClick={event => {
                     event.preventDefault();
                     setShowSignUpForm(!showSignUpForm);
-                  }}
-                  data-cy="showSignUpForm-btn">
+                  }}>
                   Sign up
                 </Button>
               </Text>
@@ -105,10 +104,7 @@ function LoginForm({
                 </Button>
               </HStack>
               <Stack spacing="6">
-                <Button
-                  type="submit"
-                  colorScheme="cyan"
-                  data-cy="loginSubmit-btn">
+                <Button type="submit" colorScheme="cyan">
                   Log in
                 </Button>
                 <HStack>
