@@ -48,15 +48,12 @@ function NavBar({ loggedIn }: NavBarProps) {
   const logoImage = useColorModeValue(lightModeLogo, darkModeLogo);
   const [cart, setCart] = useCartContext();
 
-  let navTabs = [{ title: 'Home', path: '/' }];
-  if (loggedIn) {
-    navTabs = [
-      { title: 'Home', path: '/' },
-      { title: 'Post Item', path: '/add-item' },
-      { title: 'My items', path: '/user-items' },
-      { title: 'My Orders', path: '/orders' },
-    ];
-  }
+  let navTabs = [
+    { title: 'Home', path: '/' },
+    { title: 'Post Item', path: '/add-item' },
+    { title: 'My items', path: '/user-items' },
+    { title: 'My Orders', path: '/orders' },
+  ];
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
