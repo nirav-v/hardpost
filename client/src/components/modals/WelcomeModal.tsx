@@ -10,8 +10,8 @@ import {
   ModalCloseButton,
   Text,
   useDisclosure,
-} from "@chakra-ui/react";
-import { useEffect } from "react";
+} from '@chakra-ui/react';
+import { useEffect } from 'react';
 
 export default function WelcomeModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,7 +24,7 @@ export default function WelcomeModal() {
   // on modal close we want to also set a value in localStorage to remember they are a returning user
   const handleWelcomeClose = () => {
     onClose();
-    localStorage.setItem("returningUser", true.toString());
+    localStorage.setItem('returningUser', true.toString());
   };
 
   return (
@@ -33,17 +33,21 @@ export default function WelcomeModal() {
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalHeader> Welcome to HardPost!</ModalHeader>
+          <ModalHeader textAlign={'center'}> Welcome to HardPost!</ModalHeader>
 
           <ModalBody>
-            <Heading size="lg">First time users please read</Heading>
+            <Heading size="lg">
+              We noticed you might be new here so please read the following
+            </Heading>
             <br />
             <Text fontSize="lg">
               This platform is still in development. Therefore, all current
               purchases and sales are simulated, and no actual orders and
-              charges will be made. Please feel free to post and delete test
+              charges will be made. To see the full functionality, please
+              login/signup with a fake email, feel free to post and delete test
               items, add items to your cart, and navigate through the checkout
-              process. Fake credit card numbers will be provided to test with.
+              process. Dummy credit card numbers are provided for the Stripe
+              checkout page.
             </Text>
           </ModalBody>
 
