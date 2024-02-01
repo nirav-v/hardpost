@@ -8,9 +8,12 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from 'react-router-dom';
+import ProtectedRoute from './components/auth/ProtectedRoute.tsx';
 import ShopPage from './pages/ShopPage/index.tsx';
 import CartPage from './pages/CartPage/index.tsx';
 import SingleItemPage from './pages/SingleItemPage.tsx';
+import AddItemForm from './components/forms/AddItemForm1';
+
 import Auth from './util/auth.ts';
 import OrdersPage from './pages/OrdersPage.tsx';
 import UserItems from './pages/UserItems.tsx';
@@ -41,8 +44,30 @@ const routes = [
       { path: '/', element: <ShopPage /> },
       { path: '/cart', element: <CartPage /> },
       { path: 'single-item/:itemId', element: <SingleItemPage /> },
-      { path: '/orders', element: <OrdersPage /> },
-      { path: 'user-items', element: <SingleItemPage /> },
+      {
+        path: '/orders',
+        element: (
+          <ProtectedRoute>
+            <OrdersPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'user-items',
+        element: (
+          <ProtectedRoute>
+            <UserItems />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'add-item',
+        element: (
+          <ProtectedRoute>
+            <AddItemForm />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ];

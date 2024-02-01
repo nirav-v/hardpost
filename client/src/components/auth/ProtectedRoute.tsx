@@ -1,8 +1,7 @@
 // check if the user is logged in before rendering the children, if not navigate back to the base route
 
-import React, { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren } from 'react';
 import Auth from '../../util/auth';
-import { redirect, useNavigate } from 'react-router-dom';
 
 export default function ProtectedRoute({ children }: PropsWithChildren) {
   const isLoggedIn = Auth.isLoggedIn();
