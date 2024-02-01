@@ -13,10 +13,9 @@ import WelcomeModal from './components/modals/WelcomeModal';
 import ButtonModal from './components/modals/ButtonModal';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ColorModeBtn from './components/buttons/colorModeBtn';
 
 function App() {
-  const { colorMode, toggleColorMode } = useColorMode();
-
   // react query to be passed tp app via context provider
   const queryClient = new QueryClient();
 
@@ -42,9 +41,7 @@ function App() {
         <ReactQueryDevtools initialIsOpen={false} />
         <CartProvider>
           <Flex justifyContent="right" mr={2}>
-            <Button mr={0} onClick={toggleColorMode}>
-              {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-            </Button>
+            <ColorModeBtn />
             {/* conditionally render log out button */}
             {loggedIn ? (
               <Box>
