@@ -14,6 +14,7 @@ import CartPage from './pages/CartPage/index.tsx';
 import SingleItemPage from './pages/SingleItemPage.tsx';
 import AddItemForm from './components/forms/AddItemForm1';
 import OrdersPage from './pages/OrdersPage.tsx';
+import ErrorPage from './pages/ErrorPage.tsx';
 import UserItems from './pages/UserItems.tsx';
 import UserProvider from './context/UserContext.tsx';
 
@@ -39,6 +40,7 @@ const routes = [
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       { path: '/', element: <ShopPage /> },
       { path: '/cart', element: <CartPage /> },
