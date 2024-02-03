@@ -13,8 +13,6 @@ export default function ProtectedRoute({ children }: PropsWithChildren) {
   const location = useLocation();
   const path = location.pathname;
 
-  console.log(path);
-
   // switch the message user sees based on the page they attempt to view
   let message;
   switch (path) {
@@ -36,7 +34,7 @@ export default function ProtectedRoute({ children }: PropsWithChildren) {
           <Box paddingTop="4" maxW="md" fontSize={'25px'}>
             Please log in to {message}
           </Box>
-          <LoginDisplay setLoggedIn={setLoggedIn} />;
+          {/* <LoginDisplay setLoggedIn={setLoggedIn} />; */}
         </Container>
       </div>
     );
