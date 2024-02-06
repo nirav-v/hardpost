@@ -18,12 +18,12 @@ import { useCartQuery } from '../../hooks/useCartQuery';
 
 function CartPage() {
   console.log('cart page render');
-  // const [cart, setCart] = useCartContext();
-  const cartData = useCartQuery();
-  const cart = cartData.data;
+  const [cart, setCart] = useCartContext();
+  // const cartData = useCartQuery();
+  // const cart = cartData.data;
 
   const handleCheckoutSubmit = async () => {
-    // if (!cart || !cart.length) return;
+    if (!cart || !cart.length) return;
 
     const domain = `${window.location.protocol}//${window.location.host}`;
 
