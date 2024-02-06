@@ -1,15 +1,32 @@
-import { Button } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
+import { useUserContext } from '../../context/UserContext';
 
 type LogoutButtonProps = {
-  onClick: () => void;
   children: React.ReactNode;
 };
 
-const LogoutButton = ({ onClick, children }: LogoutButtonProps) => {
+const LogoutButton = ({ children }: LogoutButtonProps) => {
+  const [loggedIn, setLoggedIn] = useUserContext();
+
+  const handleLogoutClick = () => {
+    localStorage.removeItem('token');
+    // reload the homepage, needed to trigger check loggedIn check
+    window.location.replace(window.location.origin);
+  };
+
   return (
-    <Button onClick={onClick} colorScheme="red" data-cy="logout-btn">
-      {children}
-    </Button>
+    <>
+      {loggedIn && (
+        <Box>
+          <Button
+            onClick={handleLogoutClick}
+            colorScheme="red"
+            data-cy="logout-btn">
+            {children}
+          </Button>{' '}
+        </Box>
+      )}
+    </>
   );
 };
 

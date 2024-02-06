@@ -13,6 +13,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ColorModeBtn from './components/buttons/colorModeBtn';
 import LoginDisplay from './components/UI/LoginDisplay';
 import { useUserContext } from './context/UserContext';
+import LoginModal from './components/modals/LoginModal';
 
 function App() {
   // react query to be passed tp app via context provider
@@ -24,12 +25,6 @@ function App() {
     if (Auth.isLoggedIn()) setLoggedIn(true);
   }, []);
 
-  const handleLogoutClick = () => {
-    localStorage.removeItem('token');
-    // reload the homepage, needed to trigger check loggedIn check
-    window.location.replace(window.location.origin);
-  };
-
   return (
     <Fragment>
       <QueryClientProvider client={queryClient}>
@@ -38,28 +33,10 @@ function App() {
           <Flex justifyContent="right" mr={2}>
             <ColorModeBtn />
             {/* conditionally render log out button */}
-            {loggedIn && (
-              <Box>
-                <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>{' '}
-              </Box>
-            )}
+            <LogoutButton>Logout</LogoutButton>
           </Flex>
           <NavBar loggedIn={loggedIn} />
-
-          {/* conditionally render remaining content of App (accessible react-router routes and components) based on loggedIn state */}
-          {!loggedIn && (
-            <div>
-              <Container centerContent>
-                {Auth.returningUser() ? null : <WelcomeModal />}
-                <ButtonModal
-                  chakraColor={'teal'}
-                  buttonContent="Log In"
-                  cypress="login-btn">
-                  <LoginDisplay setLoggedIn={setLoggedIn} />
-                </ButtonModal>
-              </Container>
-            </div>
-          )}
+          <LoginModal />
           {/* Outlet renders all child routes of App defined in createBrowserRouter */}
           <Outlet />
         </CartProvider>
