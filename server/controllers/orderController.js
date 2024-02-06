@@ -41,33 +41,43 @@ export const createStripCheckoutSession = async (req, res) => {
 };
 
 export const createOrder = async (req, res, next) => {
-  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+  try {
+    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
-  const loggedInUser = await User.findOne({ where: { email: payload.email } });
-  const cart = await loggedInUser.getCart();
-  const items = await cart.getItems();
-  const order = await loggedInUser.createOrder();
-  // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
-  await order.addItems(
-    items.map(item => {
-      item.orderItem = { quantity: item.cartItem.quantity };
-      return item;
-    })
-  );
-  await cart.setItems(null); //clear user's cart after order is placed
-  const updatedItems = await cart.getItems();
-  console.log(updatedItems);
-  res.status(201).redirect('/orders');
+    const loggedInUser = await User.findOne({
+      where: { email: payload.email },
+    });
+    const cart = await loggedInUser.getCart();
+    const items = await cart.getItems();
+    const order = await loggedInUser.createOrder();
+    // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
+    await order.addItems(
+      items.map(item => {
+        item.orderItem = { quantity: item.cartItem.quantity };
+        return item;
+      })
+    );
+    await cart.setItems(null); //clear user's cart after order is placed
+    const updatedItems = await cart.getItems();
+    console.log(updatedItems);
+    res.status(201).redirect('/orders');
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getUserOrders = async (req, res, next) => {
-  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+  try {
+    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
-  const loggedInUser = await User.findOne({
-    where: { email: payload.email },
-  });
-  const orders = await loggedInUser.getOrders({
-    include: ['items'],
-  }); // tells sequelize to also load all items associated with each order
-  res.send(orders);
+    const loggedInUser = await User.findOne({
+      where: { email: payload.email },
+    });
+    const orders = await loggedInUser.getOrders({
+      include: ['items'],
+    }); // tells sequelize to also load all items associated with each order
+    res.send(orders);
+  } catch (error) {
+    console.log(error);
+  }
 };
