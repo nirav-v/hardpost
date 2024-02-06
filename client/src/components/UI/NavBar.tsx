@@ -16,6 +16,9 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import darkModeLogo from '../../images/Hardpost-logos_transparent.png';
 import lightModeLogo from '../../images/Hardpost-logos_black.png';
 import { useCartContext } from '../../context/CartContext';
+import ColorModeBtn from '../buttons/colorModeBtn';
+import LogoutButton from '../buttons/LogoutButton';
+import LoginModal from '../modals/LoginModal';
 
 type NavLinkProps = {
   to: string;
@@ -59,6 +62,11 @@ function NavBar({ loggedIn }: NavBarProps) {
 
   return (
     <>
+      <Flex justifyContent="right" mr={2}>
+        <ColorModeBtn />
+        {/* conditionally render log out button */}
+        <LogoutButton>Logout</LogoutButton>
+      </Flex>
       <Box px={4}>
         <Box
           display="flex"
@@ -122,6 +130,8 @@ function NavBar({ loggedIn }: NavBarProps) {
           </Box>
         ) : null}
       </Box>
+      {/* login button */}
+      <LoginModal />
     </>
   );
 }

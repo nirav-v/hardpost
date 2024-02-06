@@ -30,13 +30,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <CartProvider>
-          <Flex justifyContent="right" mr={2}>
-            <ColorModeBtn />
-            {/* conditionally render log out button */}
-            <LogoutButton>Logout</LogoutButton>
-          </Flex>
           <NavBar loggedIn={loggedIn} />
-          <LoginModal />
           {/* Outlet renders all child routes of App defined in createBrowserRouter */}
           <Outlet />
         </CartProvider>
