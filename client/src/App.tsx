@@ -6,14 +6,9 @@ import { Fragment, useEffect, useState } from 'react';
 import LogoutButton from './components/buttons/LogoutButton';
 import { Button, Box, Container, useColorMode, Flex } from '@chakra-ui/react';
 import CartProvider from './context/CartContext';
-import WelcomeModal from './components/modals/WelcomeModal';
-import ButtonModal from './components/modals/ButtonModal';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ColorModeBtn from './components/buttons/colorModeBtn';
-import LoginDisplay from './components/UI/LoginDisplay';
 import { useUserContext } from './context/UserContext';
-import LoginModal from './components/modals/LoginModal';
 
 function App() {
   // react query to be passed tp app via context provider
