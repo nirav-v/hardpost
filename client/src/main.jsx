@@ -1,13 +1,9 @@
 import './styles/main.css';
-import React, { Children, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import {
-  BrowserRouter,
-  RouterProvider,
-  createBrowserRouter,
-} from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from './components/auth/ProtectedRoute.tsx';
 import ShopPage from './pages/ShopPage/index.tsx';
 import CartPage from './pages/CartPage/index.tsx';

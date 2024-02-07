@@ -3,6 +3,7 @@ import { ProductGrid } from '../ShopPage/ProductGrid';
 import { useUserItemsQuery } from '../../hooks/useUserItemsQuery';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userApi } from '../../api/userApi';
+import { ProductCard } from '../ShopPage/ProductCard';
 
 function UserItems() {
   const queryClient = useQueryClient();
@@ -13,7 +14,7 @@ function UserItems() {
     mutationFn: (itemId: number) => userApi.deleteUserItem(itemId),
     onSuccess: () => queryClient.invalidateQueries(),
   });
-
+  console.log(userItems.data);
   // sort items in place by available items first
   userItems.data?.sort((item2, item1) => {
     if (!item2.sold && item1.sold) return -1;
@@ -32,15 +33,13 @@ function UserItems() {
         <ProductGrid>
           {userItems.data?.map(item => (
             <div key={item.id}>
-              <Box boxSize="sm">
-                <Image src={item.imagePath} boxSize="300px" objectFit="cover" />
-                <Button
-                  onClick={() => handleRemoveItemClick(item.id)}
-                  colorScheme="red"
-                  size="xs">
-                  Delete Item
-                </Button>
-              </Box>
+              <ProductCard item={item} />
+              <Button
+                onClick={() => handleRemoveItemClick(item.id)}
+                colorScheme="red"
+                size="xs">
+                Delete Item
+              </Button>
             </div>
           ))}
         </ProductGrid>

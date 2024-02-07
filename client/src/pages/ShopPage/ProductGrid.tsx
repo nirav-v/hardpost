@@ -1,5 +1,5 @@
-import { SimpleGrid } from "@chakra-ui/react";
-import { Children, isValidElement, useMemo } from "react";
+import { SimpleGrid } from '@chakra-ui/react';
+import { Children, isValidElement, useMemo } from 'react';
 
 export const ProductGrid = (props: { children: React.ReactNode }) => {
   const columns = useMemo(() => {
@@ -13,16 +13,17 @@ export const ProductGrid = (props: { children: React.ReactNode }) => {
       xl: Math.min(5, count),
     };
   }, [props.children]);
+
   return (
     <SimpleGrid
       columns={columns}
       columnGap={{
-        base: "4",
-        md: "6",
+        base: '4',
+        md: '6',
       }}
       rowGap={{
-        base: "8",
-        md: "10",
+        base: '8',
+        md: '10',
       }}
       {...props}
     />
