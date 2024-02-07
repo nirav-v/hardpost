@@ -50,7 +50,7 @@ const itemData = [
     price: 30,
     description: '54mm, Formula 4 Conical Full Shape',
     imagePath:
-      'https://public-hardpost-bucket.s3.amazonaws.com/spitfiref4wheels.jpg4f00b35e787dfeb151a411b7e3c99d77bb69ad60dbfd6451bbfc244514b94fe4',
+      'https://public-hardpost-bucket.s3.amazonaws.com/spitfiref4wheels.jpg85991e3e6b98ece6f265b503541d54f0c3b7663d6274d9946abc4c2dc9eda664',
     sold: false,
     userId: 1,
   },

@@ -74,6 +74,7 @@ export const getUserItems = async (req, res) => {
   // find all items that have a userId matching req.session.userId
   const userItems = await Item.findAll({
     where: { userId: loggedInUser.id },
+    include: { model: User },
   });
   res.status(200).send(userItems);
 };
