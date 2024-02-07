@@ -11,11 +11,11 @@ import {
 import ProtectedRoute from './components/auth/ProtectedRoute.tsx';
 import ShopPage from './pages/ShopPage/index.tsx';
 import CartPage from './pages/CartPage/index.tsx';
-import SingleItemPage from './pages/SingleItemPage.tsx';
+import SingleItemPage from './pages/SingleItemPage/index.tsx';
 import AddItemForm from './components/forms/AddItemForm1';
-import OrdersPage from './pages/OrdersPage.tsx';
-import ErrorPage from './pages/ErrorPage.tsx';
-import UserItems from './pages/UserItems.tsx';
+import OrdersPage from './pages/OrdersPage/index.tsx';
+import ErrorPage from './pages/ErrorPage/index.tsx';
+import UserItems from './pages/UserItemsPage/index.tsx';
 import UserProvider from './context/UserContext.tsx';
 
 // 2. Add your color mode config

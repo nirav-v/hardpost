@@ -1,4 +1,4 @@
-import AddCartButton from '../components/buttons/AddCartButton';
+import AddCartButton from '../../components/buttons/AddCartButton';
 import { useParams } from 'react-router-dom';
 import {
   Center,
@@ -12,8 +12,8 @@ import {
   Divider,
   ButtonGroup,
 } from '@chakra-ui/react';
-import { Item } from '../types/ItemTypes';
-import { useItemsQuery } from '../hooks/useItemsQuery';
+import { Item } from '../../types/ItemTypes';
+import { useItemsQuery } from '../../hooks/useItemsQuery';
 
 const SingleItemPage = function () {
   // const [items, setItems] = useItemsContext();
