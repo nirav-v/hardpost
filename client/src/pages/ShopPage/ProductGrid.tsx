@@ -1,4 +1,4 @@
-import { SimpleGrid } from '@chakra-ui/react';
+import { Box, SimpleGrid } from '@chakra-ui/react';
 import { Children, isValidElement, useMemo } from 'react';
 
 export const ProductGrid = (props: { children: React.ReactNode }) => {
@@ -15,17 +15,31 @@ export const ProductGrid = (props: { children: React.ReactNode }) => {
   }, [props.children]);
 
   return (
-    <SimpleGrid
-      columns={columns}
-      columnGap={{
+    <Box
+      maxW="7xl"
+      mx="auto"
+      px={{
         base: '4',
-        md: '6',
+        md: '8',
+        lg: '12',
       }}
-      rowGap={{
-        base: '8',
-        md: '10',
-      }}
-      {...props}
-    />
+      py={{
+        base: '6',
+        md: '8',
+        lg: '12',
+      }}>
+      <SimpleGrid
+        columns={columns}
+        columnGap={{
+          base: '4',
+          md: '6',
+        }}
+        rowGap={{
+          base: '8',
+          md: '10',
+        }}
+        {...props}
+      />
+    </Box>
   );
 };

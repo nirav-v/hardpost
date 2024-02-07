@@ -14,7 +14,7 @@ function UserItems() {
     mutationFn: (itemId: number) => userApi.deleteUserItem(itemId),
     onSuccess: () => queryClient.invalidateQueries(),
   });
-  console.log(userItems.data);
+
   // sort items in place by available items first
   userItems.data?.sort((item2, item1) => {
     if (!item2.sold && item1.sold) return -1;
