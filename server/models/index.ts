@@ -1,20 +1,14 @@
-// const User = require("./User");
-// const Item = require("./Item");
-// const Cart = require("./Cart");
-// const CartItem = require("./Cart-Item");
-// const Order = require("./Order");
-// const OrderItem = require("./Order-Item");
-// const Comment = require("./Comment");
-import User from "./User.js";
-import Item from "./Item.js";
-import Cart from "./Cart.js";
-import CartItem from "./Cart-Item.js";
-import Order from "./Order.js";
-import OrderItem from "./Order-Item.js";
-import Comment from "./Comment.js";
+// Documentation for typing sequelize models https://sequelize.org/docs/v6/other-topics/typescript/#the-case-of-modelinit
+import User from './User.js';
+import Item from './Item.js';
+import Cart from './Cart.js';
+import CartItem from './Cart-Item.js';
+import Order from './Order.js';
+import OrderItem from './Order-Item.js';
+import Comment from './Comment.js';
 
 // define model associations
-Item.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
+Item.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Item); // users and items have a one to many association
 User.hasOne(Cart); // One to one relation between a Cart and User
 Cart.belongsTo(User);

@@ -38,7 +38,7 @@ export const signUpUser = async (req, res) => {
     const userCart = await newUser.createCart();
 
     // add items to the users cart
-    const addCartItems = [];
+    const addCartItems: Promise<void>[] = [];
     const items = await Item.findAll();
 
     for (const cartItem of localCart) {
@@ -82,7 +82,7 @@ export const loginUser = async (req, res) => {
       return res.status(404).send({ error: 'incorrect credentials' });
     }
     // compare password using instance method defined on user model, return error message if wrong
-    if (!existingUser.checkPassword(req.body.password, existingUser.password))
+    if (!existingUser.checkPassword(req.body.password))
       return res.status(404).send({ error: 'incorrect credentials' });
 
     // create jwt
@@ -100,7 +100,7 @@ export const loginUser = async (req, res) => {
 
     const userCart = await existingUser.getCart();
 
-    const addCartItems = [];
+    const addCartItems: Promise<void>[] = [];
 
     const items = await Item.findAll();
 
