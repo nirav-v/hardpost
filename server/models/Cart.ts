@@ -6,6 +6,7 @@ import {
   Model,
   HasManyAddAssociationMixin,
   HasManyGetAssociationsMixin,
+  HasManySetAssociationsMixin,
 } from 'sequelize';
 import sequelize from '../config/database.js';
 import Item from './Item.js';
@@ -14,6 +15,7 @@ class Cart extends Model {
   // cart item magic methods
   declare addItem: HasManyAddAssociationMixin<Item, number>;
   declare getItems: HasManyGetAssociationsMixin<Item>;
+  declare setItems: HasManySetAssociationsMixin<Item[], number>;
 }
 
 Cart.init(

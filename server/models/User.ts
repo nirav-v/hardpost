@@ -8,6 +8,7 @@ import {
   HasOneCreateAssociationMixin,
   HasOneGetAssociationMixin,
   HasManyGetAssociationsMixin,
+  HasManyCreateAssociationMixin,
 } from 'sequelize';
 import bcrypt from 'bcrypt';
 import sequelize from '../config/database.js';
@@ -20,10 +21,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare password: string;
   declare email: string;
   declare username: string;
-  // createdAt can be undefined during creation
-  declare createdAt: CreationOptional<Date>;
-  // updatedAt can be undefined during creation
-  declare updatedAt: CreationOptional<Date>;
+
   // typing all the association magic methods for a User
   // user cart methods
   declare createCart: HasOneCreateAssociationMixin<Cart>;
@@ -31,6 +29,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   // user item methods
   declare getItems: HasManyGetAssociationsMixin<Item>;
   // user order methods
+  declare createOrder: HasManyCreateAssociationMixin<Order>;
   declare getOrders: HasManyGetAssociationsMixin<Order>;
   // instance method for verifying password with
   checkPassword(loginPw: string) {
@@ -66,8 +65,6 @@ User.init(
         len: [6, 30],
       },
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
   },
   {
     hooks: {

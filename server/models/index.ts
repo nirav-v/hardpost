@@ -17,6 +17,8 @@ Item.belongsToMany(Cart, { through: CartItem }); // many to many relation betwee
 Order.belongsTo(User); // one-to-many relation between users and orders
 User.hasMany(Order);
 Order.belongsToMany(Item, { through: OrderItem }); // sets many-to-many relationship between Orders and Items
+
+// reconsider this association - if users can only post one of each item type then technically an item should only be associated with one order as multiple users should not be able to order the same single item
 Item.belongsToMany(Order, { through: OrderItem });
 
 User.hasMany(Comment);

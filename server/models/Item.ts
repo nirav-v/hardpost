@@ -1,9 +1,19 @@
 // const { Sequelize, Model, DataTypes } = require("sequelize");
 // const sequelize = require("../config/database.js");
-import { Sequelize, Model, DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
+import { Sequelize, Model, DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
 
-class Item extends Model {}
+class Item extends Model {
+  declare id: number;
+  declare userId: number;
+  declare name: string;
+  declare category: string;
+  declare price: number;
+  declare description: string;
+  declare imagePath: string;
+  // added as property on Item returned from cart.getItems
+  declare cartItem: Item;
+}
 
 Item.init(
   {
@@ -39,7 +49,7 @@ Item.init(
     sequelize, // We need to pass the connection instance
     timestamps: false,
     underscored: false,
-    modelName: "item", // We need to choose the model name
+    modelName: 'item', // We need to choose the model name
   }
 );
 

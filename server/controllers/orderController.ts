@@ -2,17 +2,38 @@ import { User, Item } from '../models/index.js';
 import Stripe from 'stripe';
 import Auth from '../util/serverAuth.js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: '2023-08-16',
+});
+
+type LineItemsType = {
+  price_data: {
+    currency: string;
+    product_data: {
+      name: string;
+      images: string[];
+    };
+    unit_amount: number;
+  };
+};
 
 export const createStripCheckoutSession = async (req, res) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
+
+  if (!loggedInUser) {
+    res.status(404).json({
+      error: `could not find user account matching with email ${payload.email}`,
+    });
+    return;
+  }
+
   const userCart = await loggedInUser.getCart();
   const cartItems = await userCart.getItems();
 
   let { domain } = req.body;
-  const line_items = [];
+  const line_items: LineItemsType[] = [];
   for (const item of cartItems) {
     line_items.push({
       price_data: {
@@ -23,7 +44,6 @@ export const createStripCheckoutSession = async (req, res) => {
         },
         unit_amount: item.price * 100,
       },
-      quantity: 1,
     });
   }
 
@@ -47,17 +67,20 @@ export const createOrder = async (req, res, next) => {
     const loggedInUser = await User.findOne({
       where: { email: payload.email },
     });
+
+    if (!loggedInUser) {
+      res.status(404).json({
+        error: `could not find user account matching with email ${payload.email}`,
+      });
+      return;
+    }
+
     const cart = await loggedInUser.getCart();
     const items = await cart.getItems();
     const order = await loggedInUser.createOrder();
     // pass in the updated array of cart items with an updated orderItem property that specifies the item quantity
-    await order.addItems(
-      items.map(item => {
-        item.orderItem = { quantity: item.cartItem.quantity };
-        return item;
-      })
-    );
-    await cart.setItems(null); //clear user's cart after order is placed
+    await order.addItems(items);
+    await cart.setItems([]); //clear user's cart after order is placed
     const updatedItems = await cart.getItems();
     console.log(updatedItems);
     res.status(201).redirect('/orders');
@@ -73,6 +96,14 @@ export const getUserOrders = async (req, res, next) => {
     const loggedInUser = await User.findOne({
       where: { email: payload.email },
     });
+
+    if (!loggedInUser) {
+      res.status(404).json({
+        error: `could not find user account matching with email ${payload.email}`,
+      });
+      return;
+    }
+
     const orders = await loggedInUser.getOrders({
       include: ['items'],
     }); // tells sequelize to also load all items associated with each order

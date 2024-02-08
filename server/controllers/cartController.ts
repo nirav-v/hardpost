@@ -38,7 +38,7 @@ export const addCartItem = async (req, res) => {
   });
   const cart = await Cart.findOne({
     where: {
-      userId: loggedInUser.id,
+      userId: loggedInUser?.id,
     },
   }); // fetch the users cart
 
@@ -48,9 +48,9 @@ export const addCartItem = async (req, res) => {
 
   // find the item and add it with a the correct quantity
   const itemToAdd = await Item.findByPk(itemId);
-  const addedItem = await cart.addItem(itemToAdd, {
-    through: { quantity: itemQuantity },
-  }); // specify value for extra fields that were created in the cart-item junction table
+  if (itemToAdd) {
+    await cart?.addItem(itemToAdd); // specify value for extra fields that were created in the cart-item junction table
+  }
   // respond with the updated cart items
   res.redirect('/api/cart');
 };
@@ -60,10 +60,11 @@ export const deleteCartItem = async (req, res, next) => {
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
   const itemId = req.body.itemId;
-  const cart = await loggedInUser.getCart(); // get the users cart
-  const cartItems = await cart.getItems({ where: { id: itemId } }); // get items from user's cart matching the req body id - returns array of matching items
-  // delete that item from the cartItems table
-  if (cartItems.length > 0) {
+  const cart = await loggedInUser?.getCart(); // get the users cart
+  const cartItems = await cart?.getItems({ where: { id: itemId } }); // get items from user's cart matching the req body id - returns array of matching items
+  // delete that item from cartItems table
+  console.log(cartItems);
+  if (cartItems && cartItems.length > 0) {
     const deletedItem = await cartItems[0].cartItem.destroy();
   }
   res.redirect('/api/cart');
