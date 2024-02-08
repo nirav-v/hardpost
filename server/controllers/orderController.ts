@@ -15,6 +15,7 @@ type LineItemsType = {
     };
     unit_amount: number;
   };
+  quantity: number;
 };
 
 export const createStripCheckoutSession = async (req, res) => {
@@ -44,6 +45,7 @@ export const createStripCheckoutSession = async (req, res) => {
         },
         unit_amount: item.price * 100,
       },
+      quantity: 1, // should always be 1 by default
     });
   }
 
