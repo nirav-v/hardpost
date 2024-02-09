@@ -34,7 +34,7 @@ export default function ProtectedRoute({ children }: PropsWithChildren) {
           <Box paddingTop="4" maxW="md" fontSize={'25px'}>
             Please log in to {message}
           </Box>
-          {/* <LoginDisplay setLoggedIn={setLoggedIn} />; */}
+          <LoginDisplay setLoggedIn={setLoggedIn} />;
         </Container>
       </div>
     );
