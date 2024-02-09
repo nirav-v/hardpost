@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "kill": "killall node",
     "start": "cd server && tsc --allowJs && cd dist && nodemon server.js & cd client && npm run dev",
-    "seed": "cd server && node seeds.js"
+    "seed": "cd server/dist && node seeds.js"
   },
   "keywords": [],
   "author": "",

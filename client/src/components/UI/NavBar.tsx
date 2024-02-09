@@ -11,6 +11,8 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Text,
+  Badge,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import darkModeLogo from '../../images/Hardpost-logos_transparent.png';
@@ -19,6 +21,7 @@ import { useCartContext } from '../../context/CartContext';
 import ColorModeBtn from '../buttons/ColorModeBtn';
 import LogoutButton from '../buttons/LogoutButton';
 import LoginModal from '../modals/LoginModal';
+import { FaShoppingCart } from 'react-icons/fa';
 
 type NavLinkProps = {
   to: string;
@@ -85,6 +88,7 @@ function NavBar({ loggedIn }: NavBarProps) {
             </Link>
           </Box>
           <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+            {/* sm screen nav toggle buttton */}
             <IconButton
               size={'md'}
               icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -92,6 +96,7 @@ function NavBar({ loggedIn }: NavBarProps) {
               display={{ md: 'none' }}
               onClick={isOpen ? onClose : onOpen}
             />
+            {/* md + screen navbar */}
             <HStack spacing={8} alignItems={'center'}>
               <HStack
                 as={'nav'}
@@ -102,7 +107,16 @@ function NavBar({ loggedIn }: NavBarProps) {
                     {tab.title}
                   </NavLink>
                 ))}
-                <NavLink to="/cart">Cart: {cart.length} items</NavLink>
+                <NavLink to="/cart">
+                  <Box display={'flex'} justifyContent="space-evenly">
+                    <Text p={1}>
+                      <FaShoppingCart />
+                    </Text>
+                    <Text fontSize={'15px'} pt={0}>
+                      <Badge>{cart.length} items</Badge>
+                    </Text>
+                  </Box>
+                </NavLink>
               </HStack>
             </HStack>
             <Flex alignItems={'center'}>
@@ -117,6 +131,7 @@ function NavBar({ loggedIn }: NavBarProps) {
             </Flex>
           </Flex>
         </Box>{' '}
+        {/* sm screen navbar */}
         {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4} alignItems={'center'}>
@@ -125,7 +140,9 @@ function NavBar({ loggedIn }: NavBarProps) {
                   {tab.title}
                 </NavLink>
               ))}
-              <NavLink to="/cart">Cart: {cart.length} items</NavLink>
+              <NavLink to="/cart">
+                <FaShoppingCart /> {cart.length} items
+              </NavLink>
             </Stack>
           </Box>
         ) : null}
