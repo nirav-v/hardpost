@@ -13,6 +13,7 @@ import {
   Stack,
   Text,
   Badge,
+  Tag,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import darkModeLogo from '../../images/Hardpost-logos_transparent.png';
@@ -54,6 +55,8 @@ function NavBar({ loggedIn }: NavBarProps) {
   const logoImage = useColorModeValue(lightModeLogo, darkModeLogo);
   const [cart, setCart] = useCartContext();
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   let navTabs = [
     // { title: 'Home', path: '/' },
     { title: 'Post Item', path: '/add-item' },
@@ -61,7 +64,18 @@ function NavBar({ loggedIn }: NavBarProps) {
     { title: 'My Orders', path: '/orders' },
   ];
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cartNavLink = (
+    <NavLink to="/cart">
+      <Box display={'flex'} justifyContent="space-evenly">
+        <Text p={1}>
+          <FaShoppingCart />
+        </Text>
+        <Text fontSize={'15px'} pt={0}>
+          <Tag>{cart.length} items in cart</Tag>
+        </Text>
+      </Box>
+    </NavLink>
+  );
 
   return (
     <>
@@ -107,16 +121,7 @@ function NavBar({ loggedIn }: NavBarProps) {
                     {tab.title}
                   </NavLink>
                 ))}
-                <NavLink to="/cart">
-                  <Box display={'flex'} justifyContent="space-evenly">
-                    <Text p={1}>
-                      <FaShoppingCart />
-                    </Text>
-                    <Text fontSize={'15px'} pt={0}>
-                      <Badge>{cart.length} items</Badge>
-                    </Text>
-                  </Box>
-                </NavLink>
+                {cartNavLink}
               </HStack>
             </HStack>
             <Flex alignItems={'center'}>
@@ -140,9 +145,7 @@ function NavBar({ loggedIn }: NavBarProps) {
                   {tab.title}
                 </NavLink>
               ))}
-              <NavLink to="/cart">
-                <FaShoppingCart /> {cart.length} items
-              </NavLink>
+              {cartNavLink}
             </Stack>
           </Box>
         ) : null}
