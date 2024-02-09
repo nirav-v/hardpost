@@ -16,7 +16,7 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import darkModeLogo from '../../images/Hardpost-logos_transparent.png';
 import lightModeLogo from '../../images/Hardpost-logos_black.png';
 import { useCartContext } from '../../context/CartContext';
-import ColorModeBtn from '../buttons/colorModeBtn';
+import ColorModeBtn from '../buttons/ColorModeBtn';
 import LogoutButton from '../buttons/LogoutButton';
 import LoginModal from '../modals/LoginModal';
 
@@ -52,7 +52,7 @@ function NavBar({ loggedIn }: NavBarProps) {
   const [cart, setCart] = useCartContext();
 
   let navTabs = [
-    { title: 'Home', path: '/' },
+    // { title: 'Home', path: '/' },
     { title: 'Post Item', path: '/add-item' },
     { title: 'My items', path: '/user-items' },
     { title: 'My Orders', path: '/orders' },
@@ -72,9 +72,9 @@ function NavBar({ loggedIn }: NavBarProps) {
           display="flex"
           justifyContent={'center'}
           alignItems={'center'}
-          flexDirection={['column', null, null, null, null, null]}>
+          flexDirection={['column', 'column', 'row']}>
           {' '}
-          <div className="logo-container">
+          <Box className="logo-container" m={4}>
             <Link to={'/'}>
               <Image
                 src={logoImage}
@@ -83,7 +83,7 @@ function NavBar({ loggedIn }: NavBarProps) {
                 borderRadius="full"
               />
             </Link>
-          </div>
+          </Box>
           <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
             <IconButton
               size={'md'}
@@ -119,7 +119,7 @@ function NavBar({ loggedIn }: NavBarProps) {
         </Box>{' '}
         {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
-            <Stack as={'nav'} spacing={4}>
+            <Stack as={'nav'} spacing={4} alignItems={'center'}>
               {navTabs.map(tab => (
                 <NavLink to={tab.path} key={tab.title}>
                   {tab.title}
