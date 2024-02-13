@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "start": "node server.js",
+    "start": "node dist/server.js",
     "start-server": "killall node || true && npm start"
   },
   "dependencies": {
