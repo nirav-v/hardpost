@@ -1,8 +1,9 @@
 import { Cart, Item, User } from '../models/index.js';
 import jwt from 'jsonwebtoken';
 import Auth from '../util/serverAuth.js';
+import { Request, Response } from 'express';
 
-export const getUserCart = async (req, res) => {
+export const getUserCart = async (req: Request, res: Response) => {
   try {
     if (!req.headers.authorization)
       return res.status(401).send({
@@ -30,7 +31,7 @@ export const getUserCart = async (req, res) => {
   }
 };
 
-export const addCartItem = async (req, res) => {
+export const addCartItem = async (req: Request, res: Response) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({
@@ -55,7 +56,7 @@ export const addCartItem = async (req, res) => {
   res.redirect('/api/cart');
 };
 
-export const deleteCartItem = async (req, res, next) => {
+export const deleteCartItem = async (req: Request, res: Response) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });

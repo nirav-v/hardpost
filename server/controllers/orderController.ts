@@ -1,6 +1,7 @@
 import { User, Item } from '../models/index.js';
 import Stripe from 'stripe';
 import Auth from '../util/serverAuth.js';
+import { NextFunction, Request, Response } from 'express';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2023-08-16',
@@ -18,7 +19,10 @@ type LineItemsType = {
   quantity: number;
 };
 
-export const createStripCheckoutSession = async (req, res) => {
+export const createStripCheckoutSession = async (
+  req: Request,
+  res: Response
+) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
@@ -62,7 +66,7 @@ export const createStripCheckoutSession = async (req, res) => {
   res.json({ id: session.id });
 };
 
-export const createOrder = async (req, res, next) => {
+export const createOrder = async (req: Request, res: Response) => {
   try {
     const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
@@ -91,7 +95,7 @@ export const createOrder = async (req, res, next) => {
   }
 };
 
-export const getUserOrders = async (req, res, next) => {
+export const getUserOrders = async (req: Request, res: Response) => {
   try {
     const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 

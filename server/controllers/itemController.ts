@@ -1,8 +1,12 @@
 import { Item, User } from '../models/index.js';
 import Auth from '../util/serverAuth.js';
 import { uploadFile } from '../util/S3.js';
+import { Request, Response } from 'express';
 
-export const uploadItem = async (req, res, next) => {
+export const uploadItem = async (
+  req: Request & { file?: any },
+  res: Response
+) => {
   console.log('req.file', req.file); // multer adds image data as file field on req object
 
   try {
@@ -32,14 +36,14 @@ export const uploadItem = async (req, res, next) => {
   }
 };
 
-export const editItem = async (req, res, next) => {
+export const editItem = async (req: Request, res: Response) => {
   // construct a new item object from the arguments passed through the req.body
   // - should receive id, name, category, price, description, image
   const { id, name, category, price, description, image } = req.body;
   // return row from database as an Item object and re-assign its properties to our updated data
   const updatedItem = await Item.findByPk(id);
   if (updatedItem) {
-    updatedItem.userId = req.session.userId;
+    // updatedItem.userId = req.session.userId;
     updatedItem.id = id;
     updatedItem.name = name;
     updatedItem.category = category;
@@ -52,7 +56,7 @@ export const editItem = async (req, res, next) => {
   res.json(updatedItem);
 };
 
-export const deleteItem = async (req, res, next) => {
+export const deleteItem = async (req: Request, res: Response) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
 
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
@@ -73,7 +77,7 @@ export const deleteItem = async (req, res, next) => {
   res.send('cannot find item with that id');
 };
 
-export const getUserItems = async (req, res) => {
+export const getUserItems = async (req: Request, res: Response) => {
   const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
   const loggedInUser = await User.findOne({ where: { email: payload.email } });
   // find all items that have a userId matching req.session.userId

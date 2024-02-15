@@ -1,6 +1,7 @@
-import { Item, User } from "../models/index.js";
+import { Request, Response } from 'express';
+import { Item, User } from '../models/index.js';
 
-export const getShopItems = async (req, res) => {
+export const getShopItems = async (req: Request, res: Response) => {
   try {
     let items = await Item.findAll({ include: User });
 
@@ -10,7 +11,7 @@ export const getShopItems = async (req, res) => {
   }
 };
 
-export const getItemById = async (req, res) => {
+export const getItemById = async (req: Request, res: Response) => {
   const item = await Item.findByPk(req.params.itemId);
   res.status(200).json(item);
 };

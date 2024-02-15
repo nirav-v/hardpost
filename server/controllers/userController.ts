@@ -1,8 +1,9 @@
+import { Request, Response } from 'express';
 import { Cart, Item, User } from '../models/index.js';
 import jwt from 'jsonwebtoken';
 
 // util function for verifying the items from users local storage cart before adding them to cart in database
-export const checkIfCartItemExists = (cartItem, items) => {
+export const checkIfCartItemExists = (cartItem: Item, items: Item[]) => {
   //  check this case: for each local cart item added, we also have to check if its id still exists in the database as the owner may have already deleted it
   for (const item of items) {
     if (item.id === cartItem.id) {
@@ -14,7 +15,7 @@ export const checkIfCartItemExists = (cartItem, items) => {
   return false;
 };
 
-export const signUpUser = async (req, res) => {
+export const signUpUser = async (req: Request, res: Response) => {
   try {
     const { username, email, password, cart: localCart } = req.body;
     //   check if user exists already
@@ -68,7 +69,7 @@ export const signUpUser = async (req, res) => {
   }
 };
 
-export const loginUser = async (req, res) => {
+export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, cart: localCart } = req.body;
     // check db for matching username
