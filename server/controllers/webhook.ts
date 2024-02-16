@@ -51,7 +51,7 @@ export const webhookMiddleware = async (request, response, next) => {
     const userEmail = session.customer_email;
 
     // Fulfill the purchase...
-    await fulfillOrder(userEmail); // not working..
+    if (userEmail) await fulfillOrder(userEmail);
   }
 
   response.status(201).send('IN THE STRIPE WEBHOOK');
