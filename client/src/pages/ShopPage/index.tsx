@@ -23,12 +23,14 @@ function ShopPage() {
   return (
     <div>
       <FilterCheckbox setFilteredItems={setFilteredItems} itemData={itemData} />
-      {filteredItems.length && (
+      {filteredItems.length ? (
         <ProductGrid>
           {filteredItems.map(item => (
             <ProductCard key={item.id} item={item} />
           ))}
         </ProductGrid>
+      ) : (
+        <div>sorry no items match those filters</div>
       )}
     </div>
   );
