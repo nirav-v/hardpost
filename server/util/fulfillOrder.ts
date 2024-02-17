@@ -1,6 +1,6 @@
 import { Item, User } from '../models/index.js';
 
-export const fulfillOrder = async userEmail => {
+export const fulfillOrder = async (userEmail: string) => {
   try {
     const loggedInUser = await User.findOne({ where: { email: userEmail } });
 
