@@ -1,7 +1,3 @@
-// const express = require("express");
-// const cors = require("cors");
-// const bodyParser = require("body-parser");
-// const path = require("path");
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -10,8 +6,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // modular route imports
-import apiRoutes from './routes/api/index.js';
-import shopRoutes from './routes/shop-routes.js';
+import apiRoutes from './routes/index.js';
+// import shopRoutes from './routes/api/shop-routes.js';
 
 // import database connection
 // const sequelize = require("./config/database.js");
@@ -44,7 +40,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // to parse incoming req bod
 
 // using modular route files
 app.use('/api', apiRoutes);
-app.use(shopRoutes);
 
 app.use('*', (req, res, next) =>
   // in deployment we send index.html for all additional paths not defined by our express routes
