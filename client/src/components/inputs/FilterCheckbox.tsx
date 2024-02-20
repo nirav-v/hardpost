@@ -11,16 +11,9 @@ type FilterCheckboxProps = {
 function FilterCheckbox({ itemData, setFilteredItems }: FilterCheckboxProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // searchParams object doesn't show any iterable param values, so spreading it into array gives get nested array of [key, value] query params
-  // e.g [['category', 'decks'], ['category', 'wheels']]
-  const paramsArray = [...searchParams];
-
-  // create array of only param values to be used for filtering and items state, and providing default value to checkbox component
+  // create array of only category param values to be used for filtering and items state, and providing default value to checkbox component
   // e.g ['decks', 'wheels']
-  const filterChoices: string[] = [];
-  for (let param of paramsArray) {
-    filterChoices.push(param[1]);
-  }
+  const filterChoices = searchParams.getAll('category');
 
   useEffect(() => {
     // console.log("params array", paramsArray);

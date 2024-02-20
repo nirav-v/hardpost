@@ -24,7 +24,11 @@ function ShopPage() {
   return (
     <div>
       <FilterCheckbox setFilteredItems={setFilteredItems} itemData={itemData} />
-      <SearchBar itemData={itemData} setFilteredItems={setFilteredItems} />
+      <SearchBar
+        itemData={itemData}
+        filteredItems={filteredItems}
+        setFilteredItems={setFilteredItems}
+      />
       {filteredItems.length ? (
         <ProductGrid>
           {filteredItems.map(item => (
