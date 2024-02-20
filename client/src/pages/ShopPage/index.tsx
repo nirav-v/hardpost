@@ -4,6 +4,7 @@ import { ProductCard } from './ProductCard';
 import { ProductGrid } from './ProductGrid.js';
 import { useState } from 'react';
 import { useItemsQuery } from '../../hooks/useItemsQuery';
+import SearchBar from '../../components/inputs/SearchBar.js';
 
 function ShopPage() {
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
@@ -23,6 +24,7 @@ function ShopPage() {
   return (
     <div>
       <FilterCheckbox setFilteredItems={setFilteredItems} itemData={itemData} />
+      <SearchBar itemData={itemData} setFilteredItems={setFilteredItems} />
       {filteredItems.length ? (
         <ProductGrid>
           {filteredItems.map(item => (
