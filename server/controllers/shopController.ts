@@ -15,3 +15,7 @@ export const getItemById = async (req: Request, res: Response) => {
   const item = await Item.findByPk(req.params.itemId);
   res.status(200).json(item);
 };
+
+export const getItemBySearchParam = async (req: Request, res: Response) => {
+  console.log(req.params);
+};
