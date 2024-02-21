@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { Item } from '../types/ItemTypes';
-import { userApi } from '../api/userApi';
+import { Item } from '../../types/ItemTypes';
+import { userApi } from '../../api/userApi';
 
 export const useUserItemsQuery = () => {
   return useQuery<Item[]>({

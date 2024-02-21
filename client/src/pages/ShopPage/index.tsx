@@ -3,7 +3,7 @@ import { Item } from '../../types/ItemTypes.js';
 import { ProductCard } from './ProductCard';
 import { ProductGrid } from './ProductGrid.js';
 import { useState } from 'react';
-import { useItemsQuery } from '../../hooks/useItemsQuery';
+import { useItemsQuery } from '../../hooks/queries/useItemsQuery';
 import SearchBar from '../../components/inputs/SearchBar.js';
 
 function ShopPage() {

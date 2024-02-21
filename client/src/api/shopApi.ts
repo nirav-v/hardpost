@@ -4,8 +4,7 @@ export const shopApi = {
   getAllItems: async () => {
     try {
       const response = await fetch('/api/shop');
-      const data = await response.json();
-      return data;
+      return response.json();
     } catch (error) {
       console.log(error);
     }
@@ -15,6 +14,15 @@ export const shopApi = {
     const { url, options } = endpoints.addItem;
     try {
       const response = await fetch(url, options(body));
+      return response.json();
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getItemBySearch: async (searchTerm: string | null) => {
+    try {
+      const response = await fetch(`/api/shop/search/${searchTerm}`);
       return response.json();
     } catch (error) {
       console.log(error);

@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import formatTimestamp from '../../util/formatTimestamp';
 import { Order } from '../../types/OrderType';
-import { useOrdersQuery } from '../../hooks/useOrdersQuery';
+import { useOrdersQuery } from '../../hooks/queries/useOrdersQuery';
 
 function OrdersPage() {
   const { data: orders, isPending, isError } = useOrdersQuery();

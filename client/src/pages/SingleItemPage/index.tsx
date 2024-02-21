@@ -13,7 +13,7 @@ import {
   ButtonGroup,
 } from '@chakra-ui/react';
 import { Item } from '../../types/ItemTypes';
-import { useItemsQuery } from '../../hooks/useItemsQuery';
+import { useItemsQuery } from '../../hooks/queries/useItemsQuery';
 
 const SingleItemPage = function () {
   // const [items, setItems] = useItemsContext();

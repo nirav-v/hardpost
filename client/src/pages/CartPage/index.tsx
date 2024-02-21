@@ -14,7 +14,7 @@ import { CartItem } from './CartItem';
 import { CartOrderSummary } from './CartOrderSummary';
 import { useCartContext } from '../../context/CartContext';
 import { loadStripe } from '@stripe/stripe-js';
-import { useCartQuery } from '../../hooks/useCartQuery';
+import { useCartQuery } from '../../hooks/queries/useCartQuery';
 
 function CartPage() {
   console.log('cart page render');
