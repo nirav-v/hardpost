@@ -12,6 +12,6 @@ router.get('/shop', getShopItems);
 router.get('/shop/:itemId', getItemById);
 
 // get item by search query param
-router.get(':/search', getItemBySearchParam);
+router.get('/shop/search/:searchTerm', getItemBySearchParam);
 
 export default router;

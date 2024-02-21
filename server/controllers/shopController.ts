@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Item, User } from '../models/index.js';
+import { Op } from 'sequelize';
 
 export const getShopItems = async (req: Request, res: Response) => {
   try {
@@ -17,5 +18,16 @@ export const getItemById = async (req: Request, res: Response) => {
 };
 
 export const getItemBySearchParam = async (req: Request, res: Response) => {
-  console.log(req.params);
+  const { searchTerm } = req.params;
+
+  const items = await Item.findAll({
+    where: {
+      [Op.or]: [
+        { name: { [Op.like]: `%${searchTerm}%` } },
+        { description: { [Op.like]: `%${searchTerm}%` } },
+      ],
+    },
+  });
+
+  res.json({ items });
 };

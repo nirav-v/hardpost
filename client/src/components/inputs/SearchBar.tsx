@@ -1,6 +1,7 @@
 import React from 'react';
 import { Item } from '../../types/ItemTypes';
 import { useSearchParams } from 'react-router-dom';
+import { Box, Input } from '@chakra-ui/react';
 
 type SearchBarProps = {
   filteredItems: Item[];
@@ -30,11 +31,13 @@ export default function SearchBar({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        onChange={e => setSearchParams({ search: e.target.value })}
-        type="text"
-      />
-    </form>
+    <Box display={'flex'} justifyContent={'center'}>
+      <form onSubmit={handleSubmit}>
+        <Input
+          onChange={e => setSearchParams({ search: e.target.value })}
+          type="text"
+        />
+      </form>
+    </Box>
   );
 }
