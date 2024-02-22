@@ -14,7 +14,7 @@ function FilterCheckbox({ itemData, setFilteredItems }: FilterCheckboxProps) {
   // create array of only category param values to be used for filtering and items state, and providing default value to checkbox component
   // e.g ['decks', 'wheels']
   const filterChoices = searchParams.getAll('category');
-  console.log('filter choices', filterChoices);
+
   useEffect(() => {
     // console.log("params array", paramsArray);
     // console.log("filter choices", filterChoices);

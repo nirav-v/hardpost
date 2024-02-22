@@ -3,7 +3,6 @@ import { Item } from '../../types/ItemTypes';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Box, Button, Input, shouldForwardProp } from '@chakra-ui/react';
 import { useSearchItemsQuery } from '../../hooks/queries/useSearchItemsQuery';
-import { shopApi } from '../../api/shopApi';
 
 type SearchBarProps = {
   filteredItems: Item[];
@@ -19,22 +18,21 @@ export default function SearchBar({
   const [search, setSearch] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const searchTerm = searchParams.get('search');
-  const searchItems = useSearchItemsQuery(searchTerm);
-  // console.log(searchTerm);
-  // console.log(
-  //   'useSearchItemsQuery on page load',
-  //   searchItems.data
-  //   // 'filtered items state ',
-  //   // filteredItems
-  // );
+  const searchResults = useSearchItemsQuery(searchTerm);
+  const [errorText, setErrorText] = useState('');
+
+  // if invalid search with no results, render error message
+  useEffect(() => {
+    if (searchResults.data?.length) {
+      setErrorText('');
+      setFilteredItems(searchResults.data);
+    }
+    if (searchTerm && !searchResults.data?.length)
+      setErrorText('sorry we could not find any items for that search');
+  }, [searchResults.data]);
 
   useEffect(() => {
-    if (searchItems.data?.length) setFilteredItems(searchItems.data);
-  }, [searchItems.data]);
-
-  useEffect(() => {
-    if (!searchTerm) setFilteredItems(itemData);
-    searchItems.refetch();
+    searchResults.refetch();
   }, [searchTerm]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,23 +44,23 @@ export default function SearchBar({
   };
 
   return (
-    <Box display={'flex'} justifyContent={'center'}>
+    <Box display={'flex'} flexDirection="column" alignItems={'center'}>
       <form onSubmit={handleSubmit}>
         <Input
           onChange={e => setSearch(e.target.value)}
           type="text"
           placeholder="search for items"
         />
-        <Button type="submit">submit</Button>
-
-        <Button
-          onClick={() => {
-            setSearchParams({});
-            location.reload();
-          }}>
-          Reset
-        </Button>
       </form>
+      <Button type="submit">submit</Button>
+      <Button
+        onClick={() => {
+          setSearchParams({});
+          location.reload();
+        }}>
+        Reset
+      </Button>
+      <p>{errorText}</p>
     </Box>
   );
 }

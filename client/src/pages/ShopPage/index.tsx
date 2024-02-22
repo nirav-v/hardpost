@@ -7,9 +7,9 @@ import { useItemsQuery } from '../../hooks/queries/useItemsQuery';
 import SearchBar from '../../components/inputs/SearchBar.js';
 
 function ShopPage() {
-  const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   // request items from api then sort returned data
   const { isPending, isError, data: itemData } = useItemsQuery();
+  const [filteredItems, setFilteredItems] = useState<Item[]>([]);
 
   if (itemData)
     itemData.sort((item2, item1) => {
