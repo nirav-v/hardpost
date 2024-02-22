@@ -27,7 +27,8 @@ export const getItemBySearchParam = async (req: Request, res: Response) => {
         { description: { [Op.like]: `%${searchTerm}%` } },
       ],
     },
+    include: User,
   });
 
-  res.json({ items });
+  res.json(items);
 };

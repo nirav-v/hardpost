@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Item } from '../../types/ItemTypes';
 import { useSearchParams } from 'react-router-dom';
-import { Box, Input } from '@chakra-ui/react';
+import { Box, Input, shouldForwardProp } from '@chakra-ui/react';
 import { useSearchItemsQuery } from '../../hooks/queries/useSearchItemsQuery';
+import { shopApi } from '../../api/shopApi';
 
 type SearchBarProps = {
   filteredItems: Item[];
@@ -20,23 +21,24 @@ export default function SearchBar({
   const searchTerm = searchParams.get('search');
   const searchItems = useSearchItemsQuery(searchTerm);
 
-  console.log('useSearchItemsQuery on page load', searchItems.data);
+  console.log(
+    'useSearchItemsQuery on page load',
+    searchItems.data
+    // 'filtered items state ',
+    // filteredItems
+  );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (searchItems.data?.length) setFilteredItems(searchItems.data);
+  }, [searchItems.data]);
 
-    setSearchParams({ search });
-    console.log(searchTerm);
+  useEffect(() => {
     searchItems.refetch();
-    console.log('useSearchItemsQuery ', searchItems.data);
-    // if (!search?.length) return setFilteredItems(itemData);
-    // const searchRegex = new RegExp(search, 'gi');
-    // console.log(searchRegex);
-    // const matchingItems = filteredItems.filter(item =>
-    //   searchRegex.test(item.name)
-    // );
-    // console.log(matchingItems);
-    // setFilteredItems(matchingItems);
+  }, [searchTerm]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearchParams(prev => ({ ...prev, search }));
   };
 
   return (
