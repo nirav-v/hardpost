@@ -54,7 +54,7 @@ function FilterCheckbox({ itemData, setFilteredItems }: FilterCheckboxProps) {
   return (
     <CheckboxGroup
       colorScheme="green"
-      defaultValue={filterChoices}
+      value={filterChoices}
       onChange={handleFilterChange}>
       <Stack
         p={4}

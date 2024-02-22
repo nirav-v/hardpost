@@ -56,7 +56,6 @@ export default function SearchBar({
       <Button
         onClick={() => {
           setSearchParams({});
-          location.reload();
         }}>
         Reset
       </Button>
