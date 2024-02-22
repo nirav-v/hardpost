@@ -14,7 +14,7 @@ function FilterCheckbox({ itemData, setFilteredItems }: FilterCheckboxProps) {
   // create array of only category param values to be used for filtering and items state, and providing default value to checkbox component
   // e.g ['decks', 'wheels']
   const filterChoices = searchParams.getAll('category');
-
+  console.log('filter choices', filterChoices);
   useEffect(() => {
     // console.log("params array", paramsArray);
     // console.log("filter choices", filterChoices);
@@ -32,13 +32,30 @@ function FilterCheckbox({ itemData, setFilteredItems }: FilterCheckboxProps) {
     setFilteredItems(itemData ? itemData : []);
   }, [filterChoices.length, itemData]);
 
+  const handleFilterChange = (choices: string[]) => {
+    setSearchParams(searchParams => {
+      // append all non-existing filter choices to category params
+      choices.forEach(choice => {
+        if (!searchParams.has('category', choice)) {
+          searchParams.append('category', choice);
+        }
+      });
+      // go through current search params and delete and category values that are no longer in checkbox choices
+      const choiceSet = new Set(choices);
+      searchParams.forEach(param => {
+        if (!choiceSet.has(param)) {
+          searchParams.delete('category', param);
+        }
+      });
+      return searchParams;
+    });
+  };
+
   return (
     <CheckboxGroup
       colorScheme="green"
       defaultValue={filterChoices}
-      onChange={(choices: string[]) => {
-        setSearchParams({ category: choices });
-      }}>
+      onChange={handleFilterChange}>
       <Stack
         p={4}
         justifyContent="center"
