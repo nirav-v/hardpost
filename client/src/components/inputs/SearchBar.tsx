@@ -3,6 +3,7 @@ import { Item } from '../../types/ItemTypes';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Box, Button, Input, shouldForwardProp } from '@chakra-ui/react';
 import { useSearchItemsQuery } from '../../hooks/queries/useSearchItemsQuery';
+import FilterCheckbox from './FilterCheckbox';
 
 type SearchBarProps = {
   filteredItems: Item[];
@@ -21,16 +22,17 @@ export default function SearchBar({
   const searchResults = useSearchItemsQuery(searchTerm);
   const [errorText, setErrorText] = useState('');
 
-  // if invalid search with no results, render error message
   useEffect(() => {
     if (searchResults.data?.length) {
       setErrorText('');
       setFilteredItems(searchResults.data);
     }
+    // if invalid search with no results, render error message
     if (searchTerm && !searchResults.data?.length)
       setErrorText('sorry we could not find any items for that search');
   }, [searchResults.data]);
 
+  // ensure we refetch and update search results every time the search param changes
   useEffect(() => {
     searchResults.refetch();
   }, [searchTerm]);
@@ -45,20 +47,33 @@ export default function SearchBar({
 
   return (
     <Box display={'flex'} flexDirection="column" alignItems={'center'}>
+      <FilterCheckbox
+        filteredItems={filteredItems}
+        setFilteredItems={setFilteredItems}
+        itemData={itemData}
+        searchResults={searchResults}
+      />
       <form onSubmit={handleSubmit}>
         <Input
+          value={search}
           onChange={e => setSearch(e.target.value)}
           type="text"
           placeholder="search for items"
         />
+        <Box>
+          <Button type="submit" colorScheme="facebook">
+            submit
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchParams({});
+              setSearch('');
+            }}
+            colorScheme="gray">
+            reset
+          </Button>
+        </Box>
       </form>
-      <Button type="submit">submit</Button>
-      <Button
-        onClick={() => {
-          setSearchParams({});
-        }}>
-        Reset
-      </Button>
       <p>{errorText}</p>
     </Box>
   );

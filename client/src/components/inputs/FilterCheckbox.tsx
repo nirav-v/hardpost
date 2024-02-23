@@ -2,13 +2,21 @@ import { Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react';
 import { Item } from '../../types/ItemTypes';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { UseQueryResult } from '@tanstack/react-query';
 
 type FilterCheckboxProps = {
   itemData: Item[];
+  filteredItems: Item[];
   setFilteredItems: React.Dispatch<React.SetStateAction<Item[]>>;
+  searchResults: UseQueryResult<Item[], Error>;
 };
 
-function FilterCheckbox({ itemData, setFilteredItems }: FilterCheckboxProps) {
+function FilterCheckbox({
+  itemData,
+  filteredItems,
+  setFilteredItems,
+  searchResults,
+}: FilterCheckboxProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // create array of only category param values to be used for filtering and items state, and providing default value to checkbox component
@@ -16,10 +24,8 @@ function FilterCheckbox({ itemData, setFilteredItems }: FilterCheckboxProps) {
   const filterChoices = searchParams.getAll('category');
 
   useEffect(() => {
-    // console.log("params array", paramsArray);
-    // console.log("filter choices", filterChoices);
     if (filterChoices.length && itemData) {
-      // get filtered array of items with matching category
+      //update the filtered items based on category url params
 
       const updatedItems = itemData.filter(item =>
         filterChoices.includes(item.category)
@@ -29,9 +35,18 @@ function FilterCheckbox({ itemData, setFilteredItems }: FilterCheckboxProps) {
       return;
     }
 
+    // // when the last filter is unchecked, reset the filtered items to either the last search if there is a search param or the full item data
+    if (searchResults.data?.length) {
+      setFilteredItems(searchResults.data);
+      return;
+    }
+    // god this is so fucking messy
     setFilteredItems(itemData ? itemData : []);
-  }, [filterChoices.length, itemData]);
 
+    // whenever any of these dependencies change we need to update the filtered items
+  }, [filterChoices.length, itemData, searchResults.data]);
+
+  // solely responsible for mapping checkbox choices to the search params
   const handleFilterChange = (choices: string[]) => {
     setSearchParams(searchParams => {
       // append all non-existing filter choices to category params

@@ -23,7 +23,11 @@ function ShopPage() {
 
   return (
     <div>
-      <FilterCheckbox setFilteredItems={setFilteredItems} itemData={itemData} />
+      {/* <FilterCheckbox
+        filteredItems={filteredItems}
+        setFilteredItems={setFilteredItems}
+        itemData={itemData}
+      /> */}
       <SearchBar
         itemData={itemData}
         filteredItems={filteredItems}
