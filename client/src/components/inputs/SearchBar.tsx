@@ -47,12 +47,6 @@ export default function SearchBar({
 
   return (
     <Box display={'flex'} flexDirection="column" alignItems={'center'}>
-      <FilterCheckbox
-        filteredItems={filteredItems}
-        setFilteredItems={setFilteredItems}
-        itemData={itemData}
-        searchResults={searchResults}
-      />
       <form onSubmit={handleSubmit}>
         <Input
           value={search}
@@ -60,7 +54,8 @@ export default function SearchBar({
           type="text"
           placeholder="search for items"
         />
-        <Box>
+
+        <Box display={'flex'} justifyContent={'space-evenly'} p="3">
           <Button type="submit" colorScheme="facebook">
             submit
           </Button>
@@ -75,6 +70,12 @@ export default function SearchBar({
         </Box>
       </form>
       <p>{errorText}</p>
+      <FilterCheckbox
+        filteredItems={filteredItems}
+        setFilteredItems={setFilteredItems}
+        itemData={itemData}
+        searchResults={searchResults}
+      />
     </Box>
   );
 }
