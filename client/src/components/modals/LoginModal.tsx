@@ -12,15 +12,15 @@ export default function LoginModal() {
     <>
       {!loggedIn && (
         <div>
-          <Container centerContent>
-            {Auth.returningUser() ? null : <WelcomeModal />}
-            <ButtonModal
-              chakraColor={'teal'}
-              buttonContent="Log In"
-              cypress="login-btn">
-              <LoginDisplay setLoggedIn={setLoggedIn} />
-            </ButtonModal>
-          </Container>
+          {/* <Container centerContent> */}
+          {Auth.returningUser() ? null : <WelcomeModal />}
+          <ButtonModal
+            chakraColor={'teal'}
+            buttonContent="Log In"
+            cypress="login-btn">
+            <LoginDisplay setLoggedIn={setLoggedIn} />
+          </ButtonModal>
+          {/* </Container> */}
         </div>
       )}
     </>

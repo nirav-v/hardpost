@@ -81,6 +81,8 @@ function NavBar({ loggedIn }: NavBarProps) {
     <>
       <Flex justifyContent="right" mr={2}>
         <ColorModeBtn />
+        {/* login button */}
+        <LoginModal />
         {/* conditionally render log out button */}
         <LogoutButton>Logout</LogoutButton>
       </Flex>
@@ -150,8 +152,6 @@ function NavBar({ loggedIn }: NavBarProps) {
           </Box>
         ) : null}
       </Box>
-      {/* login button */}
-      <LoginModal />
     </>
   );
 }

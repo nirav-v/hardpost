@@ -25,11 +25,7 @@ export default function ButtonModal({
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button
-        colorScheme={chakraColor}
-        onClick={onOpen}
-        m={4}
-        data-cy={cypress}>
+      <Button colorScheme={chakraColor} onClick={onOpen} data-cy={cypress}>
         {buttonContent}
       </Button>
 
