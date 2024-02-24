@@ -12,7 +12,6 @@ export default function LoginModal() {
     <>
       {!loggedIn && (
         <div>
-          {/* <Container centerContent> */}
           {Auth.returningUser() ? null : <WelcomeModal />}
           <ButtonModal
             chakraColor={'teal'}
@@ -20,7 +19,6 @@ export default function LoginModal() {
             cypress="login-btn">
             <LoginDisplay setLoggedIn={setLoggedIn} />
           </ButtonModal>
-          {/* </Container> */}
         </div>
       )}
     </>

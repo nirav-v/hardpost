@@ -55,7 +55,7 @@ const itemData = [
     description:
       'Size 8 in Mens. Skated these for a day so slight kickflip wear on right toe. ',
     imagePath:
-      'https://public-hardpost-bucket.s3.amazonaws.com/cons-fastbreak.jpege1a1c40b27b2d309bd22509d8a8a9593b63fcae103617d80e4b75e3d80b955db',
+      'https://public-hardpost-bucket.s3.amazonaws.com/cons-fastbreak.jpegf4175c70510132ff1e3654deb322c0e771ab5b7a449ae77295fe7121674412a6',
     sold: false,
     userId: 1,
   },

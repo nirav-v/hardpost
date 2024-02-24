@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Item } from '../../types/ItemTypes';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Box, Button, Input, shouldForwardProp } from '@chakra-ui/react';
+import { Box, Button, Input, Text, shouldForwardProp } from '@chakra-ui/react';
 import { useSearchItemsQuery } from '../../hooks/queries/useSearchItemsQuery';
 import FilterCheckbox from './FilterCheckbox';
 
@@ -30,7 +30,7 @@ export default function SearchBar({
     // if invalid search with no results, render error message
     if (searchTerm && !searchResults.data?.length)
       setErrorText('sorry we could not find any items for that search');
-  }, [searchResults.data]);
+  }, [searchResults.data, searchTerm]);
 
   // ensure we refetch and update search results every time the search param changes
   useEffect(() => {
@@ -56,20 +56,18 @@ export default function SearchBar({
         />
 
         <Box display={'flex'} justifyContent={'space-evenly'} p="3">
-          <Button type="submit" colorScheme="facebook">
-            submit
-          </Button>
+          <Button type="submit">submit</Button>
           <Button
             onClick={() => {
               setSearchParams({});
               setSearch('');
-            }}
-            colorScheme="gray">
+              setErrorText('');
+            }}>
             reset
           </Button>
         </Box>
       </form>
-      <p>{errorText}</p>
+      <Text color={'red'}>{errorText}</Text>
       <FilterCheckbox
         filteredItems={filteredItems}
         setFilteredItems={setFilteredItems}
