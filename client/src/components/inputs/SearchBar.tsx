@@ -21,16 +21,23 @@ export default function SearchBar({
   const searchTerm = searchParams.get('search');
   const searchResults = useSearchItemsQuery(searchTerm);
   const [errorText, setErrorText] = useState('');
+  console.log(searchTerm, searchResults, errorText);
 
   useEffect(() => {
     if (searchResults.data?.length) {
       setErrorText('');
       setFilteredItems(searchResults.data);
     }
-    // if invalid search with no results, render error message
-    if (searchTerm && !searchResults.data?.length)
+    // if search term receives data response with no results inside
+    if (
+      searchTerm &&
+      !searchResults.isFetching &&
+      !searchResults.data?.length
+    ) {
+      console.log(searchResults.data);
       setErrorText('sorry we could not find any items for that search');
-  }, [searchResults.data, searchTerm]);
+    }
+  }, [searchResults.data?.length, searchTerm]);
 
   // ensure we refetch and update search results every time the search param changes
   useEffect(() => {
