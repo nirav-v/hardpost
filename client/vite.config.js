@@ -6,6 +6,7 @@ export default defineConfig({
   build: {
     outDir: 'clientBuild',
   },
+
   plugins: [react()],
   server: {
     proxy: {
