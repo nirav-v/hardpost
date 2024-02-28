@@ -11,6 +11,5 @@ jobs:
           node-version: '14'
       - run: npm install & cd client && npm install & cd server && npm install
       - run: cd client && npm run build
-      - run: cp -R server/.env server/dist/.env
       - run: cp -R server/package.json server/dist/package.json
       - run: cp -R client/dist server/dist/dist
