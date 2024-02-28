@@ -20,7 +20,7 @@ import { webhookMiddleware } from './controllers/webhook.js';
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static('dist'));
+app.use(express.static('clientBuild'));
 
 app.use(cors()); //allow for client side requests without getting CORS error
 
