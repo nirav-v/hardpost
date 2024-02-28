@@ -1,12 +1,15 @@
 name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: heroku deployment setup
 on: [push]
 jobs:
-  hello:
+  deployment-setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-      - run: echo "whats up from gh action"
+      - run: cd client && npm run build
+      - run: cp -R server/.env server/dist/.env
+      - run: cp -R server/package.json server/dist/package.json
+      - run: cp -R client/dist server/dist/dist
