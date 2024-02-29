@@ -71,7 +71,10 @@ function NavBar({ loggedIn }: NavBarProps) {
           <FaShoppingCart />
         </Text>
         <Text fontSize={'15px'} pt={0}>
-          <Tag>{cart.length} items in cart</Tag>
+          <Tag>
+            {cart.length}
+            {cart.length === 1 ? ' item' : ' items'} in cart
+          </Tag>
         </Text>
       </Box>
     </NavLink>
