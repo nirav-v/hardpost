@@ -7,13 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // modular route imports
 import apiRoutes from './routes/index.js';
-// import shopRoutes from './routes/api/shop-routes.js';
 
 // import database connection
-// const sequelize = require("./config/database.js");
 import sequelize from './config/database.js';
 // import models to map to db tables
-// const { User, Cart, Order, Item } = require("./models");
 import { User, Cart, Order, Item } from './models/index.js';
 import { webhookMiddleware } from './controllers/webhook.js';
 
@@ -35,7 +32,7 @@ app.post(
   webhookMiddleware
 );
 
-app.use(express.json()); // needed to send json req.body in insomnia post requests
+app.use(express.json()); // needed to send json req.body in post requests
 app.use(bodyParser.urlencoded({ extended: true })); // to parse incoming req body
 
 // using modular route files
