@@ -16,10 +16,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.static('clientBuild'));
 app.use(cors()); //allow for client side requests without getting CORS error
-app.use(express.static(path.join(__dirname, 'public')));
-// serving files from images folder
-app.use('/images', express.static(path.join(__dirname, 'images')));
-// Stripe webhook route - must go before express.json() middleware below
+// app.use(express.static(path.join(__dirname, 'public')));
+// // serving files from images folder
+// app.use('/images', express.static(path.join(__dirname, 'images')));
+// Stripe webhook route - must go before express.json() middleware below to receive body as Buffer
 app.post('/webhook', bodyParser.raw({ type: 'application/json' }), webhookMiddleware);
 app.use(express.json()); // needed to send json req.body in post requests
 app.use(bodyParser.urlencoded({ extended: true })); // to parse incoming req body

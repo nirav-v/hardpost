@@ -21,11 +21,7 @@ app.use(express.static('clientBuild'));
 
 app.use(cors()); //allow for client side requests without getting CORS error
 
-app.use(express.static(path.join(__dirname, 'public')));
-// serving files from images folder
-app.use('/images', express.static(path.join(__dirname, 'images')));
-
-// Stripe webhook route - must go before express.json() middleware below
+// Stripe webhook route - must go before express.json() middleware below to receive body as Buffer
 app.post(
   '/webhook',
   bodyParser.raw({ type: 'application/json' }),
