@@ -1,19 +1,7 @@
 import { Request, Response } from 'express';
 import { Cart, Item, User } from '../models/index.js';
 import jwt from 'jsonwebtoken';
-
-// util function for verifying the items from users local storage cart before adding them to cart in database
-export const checkIfCartItemExists = (cartItem: Item, items: Item[]) => {
-  //  check this case: for each local cart item added, we also have to check if its id still exists in the database as the owner may have already deleted it
-  for (const item of items) {
-    if (item.id === cartItem.id) {
-      // return true if the cartItem exists in the database
-      return true;
-    }
-  }
-  // only return false after checking every item
-  return false;
-};
+import { checkItemExists, validateLocalCartItems } from '../util/cartUtil.js';
 
 export const signUpUser = async (req: Request, res: Response) => {
   try {
@@ -39,20 +27,21 @@ export const signUpUser = async (req: Request, res: Response) => {
     const userCart = await newUser.createCart();
 
     // add items to the users cart
-    const addCartItems: Promise<void>[] = [];
-    const items = await Item.findAll();
+    const dbItems = await Item.findAll();
+    const validCartItems = validateLocalCartItems({
+      localCart,
+      dbItems,
+      loggedInUser: newUser,
+    });
 
-    for (const cartItem of localCart) {
-      const validCartItem = checkIfCartItemExists(req.body.cart, items);
+    const cartPromises: Promise<void>[] = [];
 
-      if (validCartItem) {
-        // build array of db promises
-        addCartItems.push(userCart.addItem(cartItem.id));
-      }
-    }
-
+    validCartItems.forEach(
+      // build array of db promises for adding valid items to cart
+      cartItem => cartPromises.push(userCart.addItem(cartItem.id))
+    );
     // wait for all items to be added to the users cart
-    await Promise.all(addCartItems);
+    await Promise.all(cartPromises);
 
     // create jwt
     const token = jwt.sign(
@@ -72,6 +61,7 @@ export const signUpUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, cart: localCart } = req.body;
+    console.log(JSON.stringify(req.body, null, 2));
     // check db for matching username
     const existingUser = await User.findOne({
       where: {
@@ -101,24 +91,22 @@ export const loginUser = async (req: Request, res: Response) => {
 
     const userCart = await existingUser.getCart();
 
-    const addCartItems: Promise<void>[] = [];
+    const dbItems = await Item.findAll();
 
-    const items = await Item.findAll();
+    const validCartItems = validateLocalCartItems({
+      localCart,
+      dbItems,
+      loggedInUser: existingUser,
+    });
 
-    for (const cartItem of localCart) {
-      // avoid adding the users own items to their cart
-      if (cartItem.userId !== existingUser.id) continue;
+    const cartPromises: Promise<void>[] = [];
 
-      const validCartItem = checkIfCartItemExists(localCart, items);
-
-      if (validCartItem) {
-        // build array of db promises
-        addCartItems.push(userCart.addItem(cartItem.id));
-      }
-    }
-
+    validCartItems.forEach(
+      // build array of db promises for adding valid items to cart
+      cartItem => cartPromises.push(userCart.addItem(cartItem.id))
+    );
     // wait for all items to be added to the users cart
-    await Promise.all(addCartItems);
+    await Promise.all(cartPromises);
 
     return res.status(200).json(token);
   } catch (error) {
