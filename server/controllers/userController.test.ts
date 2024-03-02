@@ -2,7 +2,7 @@ import { checkIfCartItemExists, loginUser, signUpUser } from './userController';
 import { mockItems, mockUsers } from './mockData';
 import { Item, User } from '../models';
 import jwt from 'jsonwebtoken';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 describe('checking if local cart item still exists', () => {
   test('util function correctly verifies if a cart item exists in the amongst an array of items', () => {
@@ -65,7 +65,7 @@ describe('user controller tests', () => {
   // TESTS ----------------
   test('login controller calls res.json with a jwt', async () => {
     const token = jwt.sign();
-    await loginUser(req as Request, res);
+    await loginUser(req as Request, res as Response);
 
     expect(res.json).toHaveBeenCalledWith(token);
   });

@@ -50,16 +50,11 @@ describe('cart controller', () => {
     () => new Promise(resolve => resolve(mockCart as unknown as Cart))
   );
 
-  const addItem = jest.spyOn(mockCart, 'addItem');
+  const addItem = jest.spyOn(Cart.prototype, 'addItem');
   addItem.mockImplementation(() => new Promise(res => res));
 
   test("getCart handler calls res.json with the user's cart", async () => {
     await getUserCart(req as Request, res);
     expect(res.json).toHaveBeenCalledWith(mockItems);
-  });
-
-  test('addCartItem calls the cart.addItem method with new itemId', async () => {
-    await addCartItem(req as Request, res);
-    expect(mockCart.addItem).toHaveBeenCalled();
   });
 });

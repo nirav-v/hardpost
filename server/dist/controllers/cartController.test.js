@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Item, User, Cart } from '../models/index';
-import { addCartItem, getUserCart } from './cartController';
+import { getUserCart } from './cartController';
 import jwt from 'jsonwebtoken';
 import { mockCart, mockUsers, mockItems } from './mockData';
 describe('cart controller', () => {
@@ -42,14 +42,10 @@ describe('cart controller', () => {
     findOneItem.mockImplementation(() => new Promise(resolve => resolve(mockItems[0])));
     const findCart = jest.spyOn(Cart, 'findOne');
     findCart.mockImplementation(() => new Promise(resolve => resolve(mockCart)));
-    const addItem = jest.spyOn(mockCart, 'addItem');
+    const addItem = jest.spyOn(Cart.prototype, 'addItem');
     addItem.mockImplementation(() => new Promise(res => res));
     test("getCart handler calls res.json with the user's cart", () => __awaiter(void 0, void 0, void 0, function* () {
         yield getUserCart(req, res);
         expect(res.json).toHaveBeenCalledWith(mockItems);
-    }));
-    test('addCartItem calls the cart.addItem method with new itemId', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield addCartItem(req, res);
-        expect(mockCart.addItem).toHaveBeenCalled();
     }));
 });

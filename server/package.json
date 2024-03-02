@@ -4,7 +4,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "jest",
+    "test": "tsc --allowJs && jest",
     "start": "node dist/server.js",
     "start-server": "killall node || true && npm start"
   },
