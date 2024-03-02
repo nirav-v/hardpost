@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Item from '../models/Item.js';
-import { getItemById, getShopItems } from './shopController.js';
+import Item from '../models/Item';
+import { getItemById, getShopItems } from './shopController';
 import { mockItems } from './mockData';
 describe('Item controller logic', () => {
     const req = {};

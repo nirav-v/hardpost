@@ -2,18 +2,29 @@ import { checkIfCartItemExists, loginUser, signUpUser } from './userController';
 import { mockItems, mockUsers } from './mockData';
 import { Item, User } from '../models';
 import jwt from 'jsonwebtoken';
+import { Request } from 'express';
 
 describe('checking if local cart item still exists', () => {
   test('util function correctly verifies if a cart item exists in the amongst an array of items', () => {
     const localCartItem = mockItems[0];
 
-    expect(checkIfCartItemExists(localCartItem, mockItems)).toBe(true);
+    expect(
+      checkIfCartItemExists(
+        localCartItem as unknown as Item,
+        mockItems as unknown as Item[]
+      )
+    ).toBe(true);
   });
 
   test('util function returns false if passed an item not in the items array', () => {
     const invalidCartItem = { ...mockItems[0], id: 34532985734957 };
 
-    expect(checkIfCartItemExists(invalidCartItem, mockItems)).toBe(false);
+    expect(
+      checkIfCartItemExists(
+        invalidCartItem as unknown as Item,
+        mockItems as unknown as Item[]
+      )
+    ).toBe(false);
   });
 });
 
@@ -21,7 +32,7 @@ describe('user controller tests', () => {
   beforeEach(() => {
     jest
       .spyOn(User, 'findOne')
-      .mockImplementation(() => new Promise(res => res(mockUsers[0])));
+      .mockImplementation(() => new Promise(res => res(mockUsers[0] as User)));
 
     jest
       .spyOn(User, 'create')
@@ -31,7 +42,9 @@ describe('user controller tests', () => {
 
     jest
       .spyOn(Item, 'findAll')
-      .mockImplementation(() => new Promise(res => res(mockItems)));
+      .mockImplementation(
+        () => new Promise(res => res(mockItems as unknown as Item[]))
+      );
   });
 
   // MOCKS -----------
@@ -52,14 +65,14 @@ describe('user controller tests', () => {
   // TESTS ----------------
   test('login controller calls res.json with a jwt', async () => {
     const token = jwt.sign();
-    await loginUser(req, res);
+    await loginUser(req as Request, res);
 
     expect(res.json).toHaveBeenCalledWith(token);
   });
 
   test('sign up controller calls res.json with a jwt', async () => {
     const token = jwt.sign();
-    await signUpUser(req, res);
+    await signUpUser(req as Request, res);
     expect(res.json).toHaveBeenCalledWith(token);
   });
 

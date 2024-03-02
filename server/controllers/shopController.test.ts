@@ -1,6 +1,7 @@
-import Item from '../models/Item.js';
-import { getItemById, getShopItems } from './shopController.js';
+import Item from '../models/Item';
+import { getItemById, getShopItems } from './shopController';
 import { mockItems } from './mockData';
+import { Request } from 'express';
 
 describe('Item controller logic', () => {
   const req = {};
@@ -13,7 +14,7 @@ describe('Item controller logic', () => {
 
     Item.findAll = jest.fn().mockResolvedValue(mockItems);
 
-    await getShopItems(req, res);
+    await getShopItems(req as Request, res);
 
     expect(res.json).toHaveBeenCalledWith(mockItems);
   });
@@ -28,7 +29,7 @@ describe('Item controller logic', () => {
       return new Promise((res, rej) => res(foundItem));
     });
 
-    await getItemById(req, res);
+    await getItemById(req as unknown as Request, res);
 
     expect(res.json).toHaveBeenCalledWith(foundItem);
   });

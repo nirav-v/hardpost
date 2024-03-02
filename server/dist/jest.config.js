@@ -1,3 +1,7 @@
-export default {
-    testPathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/"],
+const config = {
+    verbose: true,
+    moduleNameMapper: {
+        '^(\\.\\.?\\/.+)\\.js$': '$1',
+    },
 };
+export default config;
