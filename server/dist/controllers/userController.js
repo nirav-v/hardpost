@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Item, User } from '../models/index.js';
 import jwt from 'jsonwebtoken';
-import { checkItemExists, validateLocalCartItems } from '../util/cartUtil.js';
+import { validateLocalCartItems } from '../util/cartUtil.js';
 export const signUpUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { username, email, password, cart: localCart } = req.body;
@@ -30,17 +30,18 @@ export const signUpUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
         // create a cart to associate with the new user
         const userCart = yield newUser.createCart();
         // add items to the users cart
-        const addCartItems = [];
-        const items = yield Item.findAll();
-        for (const cartItem of localCart) {
-            const validCartItem = checkItemExists(cartItem, items);
-            if (validCartItem) {
-                // build array of db promises
-                addCartItems.push(userCart.addItem(cartItem.id));
-            }
-        }
+        const dbItems = yield Item.findAll();
+        const validCartItems = validateLocalCartItems({
+            localCart,
+            dbItems,
+            loggedInUser: newUser,
+        });
+        const cartPromises = [];
+        validCartItems.forEach(
+        // build array of db promises for adding valid items to cart
+        cartItem => cartPromises.push(userCart.addItem(cartItem.id)));
         // wait for all items to be added to the users cart
-        yield Promise.all(addCartItems);
+        yield Promise.all(cartPromises);
         // create jwt
         const token = jwt.sign({ username, email, userId: newUser.id }, process.env.JWT_SECRET, {
             expiresIn: '24h',
@@ -82,12 +83,12 @@ export const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, functio
             dbItems,
             loggedInUser: existingUser,
         });
-        const addCartItems = [];
+        const cartPromises = [];
         validCartItems.forEach(
         // build array of db promises for adding valid items to cart
-        cartItem => addCartItems.push(userCart.addItem(cartItem.id)));
+        cartItem => cartPromises.push(userCart.addItem(cartItem.id)));
         // wait for all items to be added to the users cart
-        yield Promise.all(addCartItems);
+        yield Promise.all(cartPromises);
         return res.status(200).json(token);
     }
     catch (error) {

@@ -9,16 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { User } from '../models/index.js';
 import Stripe from 'stripe';
-import Auth from '../util/serverAuth.js';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2023-08-16',
 });
 export const createStripCheckoutSession = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-    const loggedInUser = yield User.findOne({ where: { email: payload.email } });
+    const loggedInUser = yield User.findOne({
+        where: { email: res.locals.user.email },
+    });
     if (!loggedInUser) {
         res.status(404).json({
-            error: `could not find user account matching with email ${payload.email}`,
+            error: `could not find user account matching with email ${res.locals.user.email}`,
         });
         return;
     }
@@ -45,19 +45,18 @@ export const createStripCheckoutSession = (req, res) => __awaiter(void 0, void 0
         mode: 'payment',
         success_url: `${domain}/orders`,
         cancel_url: `${domain}?canceled=true`,
-        customer_email: payload.email,
+        customer_email: res.locals.user.email,
     });
     res.json({ id: session.id });
 });
 export const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
         const loggedInUser = yield User.findOne({
-            where: { email: payload.email },
+            where: { email: res.locals.user.email },
         });
         if (!loggedInUser) {
             res.status(404).json({
-                error: `could not find user account matching with email ${payload.email}`,
+                error: `could not find user account matching with email ${res.locals.user.email}`,
             });
             return;
         }
@@ -77,13 +76,12 @@ export const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, funct
 });
 export const getUserOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
         const loggedInUser = yield User.findOne({
-            where: { email: payload.email },
+            where: { email: res.locals.user.email },
         });
         if (!loggedInUser) {
             res.status(404).json({
-                error: `could not find user account matching with email ${payload.email}`,
+                error: `could not find user account matching with email ${res.locals.user.email}`,
             });
             return;
         }

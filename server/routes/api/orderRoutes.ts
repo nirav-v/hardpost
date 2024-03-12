@@ -9,6 +9,7 @@ import {
 import Item from '../../models/Item.js';
 import User from '../../models/User.js';
 import { fulfillOrder } from '../../util/fulfillOrder.js';
+import { checkToken } from '../../util/serverAuth.js';
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 let stripe: Stripe;
@@ -22,11 +23,11 @@ const router = Router();
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-router.post('/create-checkout-session', createStripCheckoutSession);
+router.post('/create-checkout-session', checkToken, createStripCheckoutSession);
 
-router.get('/orders', getUserOrders);
+router.get('/orders', checkToken, getUserOrders);
 
-router.post('/create-order', createOrder);
+router.post('/create-order', checkToken, createOrder);
 
 // module.exports = router;
 export default router;

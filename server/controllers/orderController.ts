@@ -1,6 +1,6 @@
 import { User, Item } from '../models/index.js';
 import Stripe from 'stripe';
-import Auth from '../util/serverAuth.js';
+
 import { NextFunction, Request, Response } from 'express';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -23,13 +23,13 @@ export const createStripCheckoutSession = async (
   req: Request,
   res: Response
 ) => {
-  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-
-  const loggedInUser = await User.findOne({ where: { email: payload.email } });
+  const loggedInUser = await User.findOne({
+    where: { email: res.locals.user.email },
+  });
 
   if (!loggedInUser) {
     res.status(404).json({
-      error: `could not find user account matching with email ${payload.email}`,
+      error: `could not find user account matching with email ${res.locals.user.email}`,
     });
     return;
   }
@@ -60,7 +60,7 @@ export const createStripCheckoutSession = async (
     mode: 'payment',
     success_url: `${domain}/orders`,
     cancel_url: `${domain}?canceled=true`,
-    customer_email: payload.email,
+    customer_email: res.locals.user.email,
   });
 
   res.json({ id: session.id });
@@ -68,15 +68,13 @@ export const createStripCheckoutSession = async (
 
 export const createOrder = async (req: Request, res: Response) => {
   try {
-    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-
     const loggedInUser = await User.findOne({
-      where: { email: payload.email },
+      where: { email: res.locals.user.email },
     });
 
     if (!loggedInUser) {
       res.status(404).json({
-        error: `could not find user account matching with email ${payload.email}`,
+        error: `could not find user account matching with email ${res.locals.user.email}`,
       });
       return;
     }
@@ -97,15 +95,13 @@ export const createOrder = async (req: Request, res: Response) => {
 
 export const getUserOrders = async (req: Request, res: Response) => {
   try {
-    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-
     const loggedInUser = await User.findOne({
-      where: { email: payload.email },
+      where: { email: res.locals.user.email },
     });
 
     if (!loggedInUser) {
       res.status(404).json({
-        error: `could not find user account matching with email ${payload.email}`,
+        error: `could not find user account matching with email ${res.locals.user.email}`,
       });
       return;
     }

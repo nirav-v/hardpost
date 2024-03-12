@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import Stripe from 'stripe';
 import { createOrder, createStripCheckoutSession, getUserOrders, } from '../../controllers/orderController.js';
+import { checkToken } from '../../util/serverAuth.js';
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 let stripe;
 if (stripeSecretKey) {
@@ -10,8 +11,8 @@ if (stripeSecretKey) {
 }
 const router = Router();
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-router.post('/create-checkout-session', createStripCheckoutSession);
-router.get('/orders', getUserOrders);
-router.post('/create-order', createOrder);
+router.post('/create-checkout-session', checkToken, createStripCheckoutSession);
+router.get('/orders', checkToken, getUserOrders);
+router.post('/create-order', checkToken, createOrder);
 // module.exports = router;
 export default router;

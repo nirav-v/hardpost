@@ -1,20 +1,17 @@
-// const jwt = require("jsonwebtoken");
-import jwt from "jsonwebtoken";
-const Auth = {
-    verifyToken: (headers, secret) => {
-        try {
-            if (!headers.authorization)
-                return {
-                    unauthorized: "no token provided in headers, please log in first",
-                };
-            const token = headers.authorization.split(" ")[1];
-            const payload = jwt.verify(token, secret);
-            return payload;
+import jwt from 'jsonwebtoken';
+export const checkToken = (req, res, next) => {
+    try {
+        if (!req.headers.authorization) {
+            return res.json({ msg: 'no token provided in authorization headers' });
         }
-        catch (err) {
-            console.log(err);
-        }
-    },
+        const token = req.headers.authorization.split(' ')[1];
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        console.log(token, payload);
+        res.locals.user = payload;
+        next();
+    }
+    catch (err) {
+        console.log(err);
+        res.json(err);
+    }
 };
-// module.exports = Auth;
-export default Auth;

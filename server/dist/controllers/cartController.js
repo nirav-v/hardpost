@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Cart, Item, User } from '../models/index.js';
 import jwt from 'jsonwebtoken';
-import Auth from '../util/serverAuth.js';
 export const getUserCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!req.headers.authorization)
@@ -20,26 +19,23 @@ export const getUserCart = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const payload = jwt.verify(token, process.env.JWT_SECRET);
         // console.log("payload: ", payload);
         const loggedInUser = yield User.findOne({
-            where: { email: payload.email },
+            where: { email: res.locals.user.email },
         });
-        if (loggedInUser) {
-            const cart = yield loggedInUser.getCart();
-            const cartItems = yield cart.getItems(); //magic method from many to many association between Cart and Item
-            // console.log(cartItems);
-            res.json(cartItems);
-        }
-        else {
-            res.send('not logged in');
-        }
+        if (!loggedInUser)
+            return res.json({ msg: 'could not find a user with that email' });
+        const cart = yield loggedInUser.getCart();
+        const cartItems = yield cart.getItems(); //magic method from many to many association between Cart and Item
+        // console.log(cartItems);
+        res.json(cartItems);
     }
     catch (err) {
         console.log(err);
     }
 });
 export const addCartItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
+    // const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
     const loggedInUser = yield User.findOne({
-        where: { email: payload.email },
+        where: { email: res.locals.user.email },
     });
     const cart = yield Cart.findOne({
         where: {
@@ -57,8 +53,9 @@ export const addCartItem = (req, res) => __awaiter(void 0, void 0, void 0, funct
     res.redirect('/api/cart');
 });
 export const deleteCartItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-    const loggedInUser = yield User.findOne({ where: { email: payload.email } });
+    const loggedInUser = yield User.findOne({
+        where: { email: res.locals.user.email },
+    });
     const itemId = req.body.itemId;
     const cart = yield (loggedInUser === null || loggedInUser === void 0 ? void 0 : loggedInUser.getCart()); // get the users cart
     const cartItems = yield (cart === null || cart === void 0 ? void 0 : cart.getItems({ where: { id: itemId } })); // get items from user's cart matching the req body id - returns array of matching items

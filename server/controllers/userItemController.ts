@@ -1,5 +1,5 @@
 import { Item, User } from '../models/index.js';
-import Auth from '../util/serverAuth.js';
+
 import { uploadFile } from '../util/S3.js';
 import { Request, Response } from 'express';
 
@@ -10,9 +10,8 @@ export const uploadItem = async (
   console.log('req.file', req.file); // multer adds image data as file field on req object
 
   try {
-    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
     const loggedInUser = await User.findOne({
-      where: { email: payload.email },
+      where: { email: res.locals.user.email },
     });
 
     // upload file using the util function from s3 sdk
@@ -57,9 +56,9 @@ export const editItem = async (req: Request, res: Response) => {
 };
 
 export const deleteItem = async (req: Request, res: Response) => {
-  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-
-  const loggedInUser = await User.findOne({ where: { email: payload.email } });
+  const loggedInUser = await User.findOne({
+    where: { email: res.locals.user.email },
+  });
   // get all items of the logged in user and find one where the id is in the req.body
   const userItems = await loggedInUser?.getItems();
 
@@ -78,8 +77,9 @@ export const deleteItem = async (req: Request, res: Response) => {
 };
 
 export const getUserItems = async (req: Request, res: Response) => {
-  const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-  const loggedInUser = await User.findOne({ where: { email: payload.email } });
+  const loggedInUser = await User.findOne({
+    where: { email: res.locals.user.email },
+  });
   // find all items that have a userId matching req.session.userId
   const userItems = await Item.findAll({
     where: { userId: loggedInUser?.id },

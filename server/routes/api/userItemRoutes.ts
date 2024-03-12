@@ -7,6 +7,7 @@ import {
 } from '../../controllers/userItemController.js';
 
 import multer from 'multer';
+import { checkToken } from '../../util/serverAuth.js';
 const router = Router();
 
 const fileFilter = (req, file, cb) => {
@@ -22,14 +23,14 @@ const fileFilter = (req, file, cb) => {
 };
 const upload = multer({ storage: multer.memoryStorage(), fileFilter });
 
-router.get('/get-items', getUserItems);
+router.get('/get-items', checkToken, getUserItems);
 
 // use multer middleware for parsing and storing files
-router.post('/add-item', upload.single('image'), uploadItem);
+router.post('/add-item', checkToken, upload.single('image'), uploadItem);
 
-router.post('/edit-item', editItem);
+router.post('/edit-item', checkToken, editItem);
 
-router.post('/delete-item', deleteItem);
+router.post('/delete-item', checkToken, deleteItem);
 
 // module.exports = router;
 export default router;

@@ -8,14 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Item, User } from '../models/index.js';
-import Auth from '../util/serverAuth.js';
 import { uploadFile } from '../util/S3.js';
 export const uploadItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('req.file', req.file); // multer adds image data as file field on req object
     try {
-        const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
         const loggedInUser = yield User.findOne({
-            where: { email: payload.email },
+            where: { email: res.locals.user.email },
         });
         // upload file using the util function from s3 sdk
         const uploadedFile = yield uploadFile(req.file);
@@ -56,8 +54,9 @@ export const editItem = (req, res) => __awaiter(void 0, void 0, void 0, function
     res.json(updatedItem);
 });
 export const deleteItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-    const loggedInUser = yield User.findOne({ where: { email: payload.email } });
+    const loggedInUser = yield User.findOne({
+        where: { email: res.locals.user.email },
+    });
     // get all items of the logged in user and find one where the id is in the req.body
     const userItems = yield (loggedInUser === null || loggedInUser === void 0 ? void 0 : loggedInUser.getItems());
     const { itemId } = req.body;
@@ -72,8 +71,9 @@ export const deleteItem = (req, res) => __awaiter(void 0, void 0, void 0, functi
     res.send('cannot find item with that id');
 });
 export const getUserItems = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = Auth.verifyToken(req.headers, process.env.JWT_SECRET);
-    const loggedInUser = yield User.findOne({ where: { email: payload.email } });
+    const loggedInUser = yield User.findOne({
+        where: { email: res.locals.user.email },
+    });
     // find all items that have a userId matching req.session.userId
     const userItems = yield Item.findAll({
         where: { userId: loggedInUser === null || loggedInUser === void 0 ? void 0 : loggedInUser.id },
