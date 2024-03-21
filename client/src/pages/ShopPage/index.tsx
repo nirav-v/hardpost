@@ -1,9 +1,8 @@
-import FilterCheckbox from '../../components/inputs/FilterCheckbox.js';
 import { Item } from '../../types/ItemTypes.js';
 import { ProductCard } from './ProductCard';
 import { ProductGrid } from './ProductGrid.js';
 import { useState } from 'react';
-import { useItemsQuery } from '../../hooks/queries/useItemsQuery';
+import { useItemsQuery } from '../../hooks/queries';
 import SearchBar from '../../components/inputs/SearchBar.js';
 
 function ShopPage() {

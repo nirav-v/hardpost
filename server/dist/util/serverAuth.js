@@ -4,6 +4,7 @@ export const checkToken = (req, res, next) => {
         if (!req.headers.authorization) {
             return res.json({ msg: 'no token provided in authorization headers' });
         }
+        // token sent in format: `Bearer <token>`
         const token = req.headers.authorization.split(' ')[1];
         const payload = jwt.verify(token, process.env.JWT_SECRET);
         if (!payload) {

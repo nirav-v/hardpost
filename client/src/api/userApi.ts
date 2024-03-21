@@ -40,6 +40,19 @@ export const userApi = {
     }
   },
 
+  getProfile: async () => {
+    try {
+      const response = await fetch('/api/user/profile', {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      });
+      if (response.ok) return response.json();
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   deleteUserItem: async (itemId: number) => {
     try {
       await fetch('/api/delete-item', {

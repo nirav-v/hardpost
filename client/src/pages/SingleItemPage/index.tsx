@@ -13,7 +13,7 @@ import {
   ButtonGroup,
 } from '@chakra-ui/react';
 import { Item } from '../../types/ItemTypes';
-import { useItemsQuery } from '../../hooks/queries/useItemsQuery';
+import { useItemsQuery } from '../../hooks/queries';
 
 const SingleItemPage = function () {
   // const [items, setItems] = useItemsContext();
@@ -30,7 +30,7 @@ const SingleItemPage = function () {
 
   if (isError || !item)
     return (
-      <Text textAlign="center">
+      <Text textAlign='center'>
         {' '}
         something went wrong with loading this item
       </Text>
@@ -38,25 +38,25 @@ const SingleItemPage = function () {
 
   return (
     <Center>
-      <Card maxW="sm">
+      <Card maxW='sm'>
         <CardBody>
           <Image
             src={item.imagePath}
             alt={`${item.name} image`}
-            borderRadius="lg"
+            borderRadius='lg'
           />
-          <Stack mt="6" spacing="3">
+          <Stack mt='6' spacing='3'>
             <Text>@{item.user.username}</Text>
-            <Heading size="md">{item.name}</Heading>
+            <Heading size='md'>{item.name}</Heading>
             <Text>{item.description}</Text>
-            <Text color="blue.600" fontSize="2xl">
+            <Text color='blue.600' fontSize='2xl'>
               ${item.price}
             </Text>
           </Stack>
         </CardBody>
         <Divider />
         <CardFooter>
-          <ButtonGroup spacing="2">
+          <ButtonGroup spacing='2'>
             <AddCartButton item={item} />
           </ButtonGroup>
         </CardFooter>

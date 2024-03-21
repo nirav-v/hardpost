@@ -14,7 +14,7 @@ import { CartItem } from './CartItem';
 import { CartOrderSummary } from './CartOrderSummary';
 import { useCartContext } from '../../context/CartContext';
 import { loadStripe } from '@stripe/stripe-js';
-import { useCartQuery } from '../../hooks/queries/useCartQuery';
+import { useCartQuery } from '../../hooks/queries';
 
 function CartPage() {
   console.log('cart page render');
@@ -55,7 +55,7 @@ function CartPage() {
             base: '3xl',
             lg: '7xl',
           }}
-          mx="auto"
+          mx='auto'
           px={{
             base: '4',
             md: '8',
@@ -83,12 +83,12 @@ function CartPage() {
                 base: '8',
                 md: '10',
               }}
-              flex="2">
-              <Heading fontSize="2xl" fontWeight="extrabold">
+              flex='2'>
+              <Heading fontSize='2xl' fontWeight='extrabold'>
                 Shopping Cart ({cart.length} items)
               </Heading>
 
-              <Stack spacing="6">
+              <Stack spacing='6'>
                 {cart?.map(item => {
                   return (
                     <CartItem
@@ -100,16 +100,16 @@ function CartPage() {
               </Stack>
             </Stack>
 
-            <Flex direction="column" align="center" flex="1">
+            <Flex direction='column' align='center' flex='1'>
               <CartOrderSummary
                 cart={cart}
                 onCheckoutSubmit={handleCheckoutSubmit}
               />
-              <HStack mt="6" fontWeight="semibold">
+              <HStack mt='6' fontWeight='semibold'>
                 <p>or</p>
                 <Link
                   as={ReactRouterLink}
-                  to="/"
+                  to='/'
                   color={mode('blue.500', 'blue.200')}>
                   Continue shopping
                 </Link>

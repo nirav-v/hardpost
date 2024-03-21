@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Item } from '../../types/ItemTypes';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Box, Button, Input, Text, shouldForwardProp } from '@chakra-ui/react';
-import { useSearchItemsQuery } from '../../hooks/queries/useSearchItemsQuery';
+import { useSearchItemsQuery } from '../../hooks/queries';
 import FilterCheckbox from './FilterCheckbox';
 
 type SearchBarProps = {
@@ -53,17 +53,17 @@ export default function SearchBar({
   };
 
   return (
-    <Box display={'flex'} flexDirection="column" alignItems={'center'}>
+    <Box display={'flex'} flexDirection='column' alignItems={'center'}>
       <form onSubmit={handleSubmit}>
         <Input
           value={search}
           onChange={e => setSearch(e.target.value)}
-          type="text"
-          placeholder="search for items"
+          type='text'
+          placeholder='search for items'
         />
 
-        <Box display={'flex'} justifyContent={'space-evenly'} p="3">
-          <Button type="submit">submit</Button>
+        <Box display={'flex'} justifyContent={'space-evenly'} p='3'>
+          <Button type='submit'>submit</Button>
           <Button
             onClick={() => {
               setSearchParams({});

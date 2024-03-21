@@ -12,6 +12,7 @@ import AddItemForm from './components/forms/AddItemForm1';
 import OrdersPage from './pages/OrdersPage/index.tsx';
 import ErrorPage from './pages/ErrorPage/index.tsx';
 import UserItems from './pages/UserItemsPage/index.tsx';
+import ProfilePage from './pages/ProfilePage/index.tsx';
 import UserProvider from './context/UserContext.tsx';
 
 // 2. Add your color mode config
@@ -54,6 +55,14 @@ const routes = [
         element: (
           <ProtectedRoute>
             <UserItems />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'profile',
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
           </ProtectedRoute>
         ),
       },

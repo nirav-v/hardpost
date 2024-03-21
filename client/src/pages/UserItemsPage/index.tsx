@@ -1,19 +1,14 @@
-import { Image, Button, Box, Center, Heading } from '@chakra-ui/react';
+import { Button, Center, Heading } from '@chakra-ui/react';
 import { ProductGrid } from '../ShopPage/ProductGrid';
-import { useUserItemsQuery } from '../../hooks/queries/useUserItemsQuery';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { userApi } from '../../api/userApi';
+import { useUserItemsQuery } from '../../hooks/queries';
 import { ProductCard } from '../ShopPage/ProductCard';
+import { useDeleteItemMutation } from '../../hooks/mutations';
 
 function UserItems() {
-  const queryClient = useQueryClient();
   // fetching all out user's items from db
   const userItems = useUserItemsQuery();
   // mutation to delete user items from db and refetch afterwards
-  const deleteUserItem = useMutation({
-    mutationFn: (itemId: number) => userApi.deleteUserItem(itemId),
-    onSuccess: () => queryClient.invalidateQueries(),
-  });
+  const deleteUserItem = useDeleteItemMutation();
 
   // sort items in place by available items first
   userItems.data?.sort((item2, item1) => {
@@ -24,7 +19,6 @@ function UserItems() {
   const handleRemoveItemClick = async (itemId: number) => {
     // grab the item id and send a fetch request to the delete-item route
     deleteUserItem.mutate(itemId);
-    // fetchItems();
   };
 
   return (
@@ -36,15 +30,15 @@ function UserItems() {
               <ProductCard item={item} />
               <Button
                 onClick={() => handleRemoveItemClick(item.id)}
-                colorScheme="red"
-                size="xs">
+                colorScheme='red'
+                size='xs'>
                 Delete Item
               </Button>
             </div>
           ))}
         </ProductGrid>
       ) : (
-        <Center height="100px">
+        <Center height='100px'>
           <Heading>You haven't posted any items yet</Heading>
         </Center>
       )}
