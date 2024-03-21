@@ -113,3 +113,17 @@ export const loginUser = async (req: Request, res: Response) => {
     console.error(error);
   }
 };
+
+export const getProfile = async (req: Request, res: Response) => {
+  try {
+    // get logged in user's data
+    const user = await User.findOne({
+      where: { id: res.locals.user.userId },
+      include: [Cart, Item],
+    });
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};

@@ -1,8 +1,12 @@
-# <p align="center">[<img style="height: 200px; width: 200px;" src="./client/src/images/Hardpost-logos_transparent.png">](https://hardpost-f79ecee5b44d.herokuapp.com/)</p>
+<!-- # <p align="center">[<img style="height: 200px; width: 200px;" src="./client/src/images/Hardpost-logos_transparent.png">](https://hardpost-f79ecee5b44d.herokuapp.com/)</p> -->
 
-## <h2 align="center"> An online marketplace to buy, sell, and trade skateboarding items. </h2>
+# <h1 align="center" style="color: red; font-family: 'Times New Roman', serif">Hardpost</h1>
 
-### <p align="center"> [deployed site](https://hardpost-f79ecee5b44d.herokuapp.com/) </p>
+## <h2 align="center" style="font-family: 'Times New Roman', serif;"> An online marketplace to buy, sell, and trade skateboarding items. </h2>
+
+<a href="https://www.hardpost-shop.com/"><img src="./readme-screenshots/homepage.png"></a>
+
+### <p align="center"> [deployed site](https://www.hardpost-shop.com/) </p>
 
 ## <p align="center">Motivation
 
@@ -36,6 +40,12 @@ The concept is straightforward. Skateboarders can create an account and make pos
 
 </p>
 
+## <p align="center">Usage
+
+- Navigate to the landing page where you can browse items and add them to your cart
+- Because the app is still in test mode sign up with a dummy email address and password to checkout and simulate a purchase of your items in the cart
+- Feel free to post test items along with an image (you can delete them as well)
+
 ## <p align="center">Testing
 
 - For unit testing, run 'npm run test' in both client and server folders individually (runs jest tests).
@@ -43,7 +53,7 @@ The concept is straightforward. Skateboarders can create an account and make pos
 
 ## <p align="center"> Relational Database Design
 
-<img src="./hardpost-ERD.png">
+<img src="./readme-screenshots/hardpost-ERD.jpg">
 
 ## <p align="center"> steps for running locally
 

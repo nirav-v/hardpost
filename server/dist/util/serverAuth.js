@@ -6,7 +6,9 @@ export const checkToken = (req, res, next) => {
         }
         const token = req.headers.authorization.split(' ')[1];
         const payload = jwt.verify(token, process.env.JWT_SECRET);
-        console.log(token, payload);
+        if (!payload) {
+            res.json({ err: 'could not verify the token provided' });
+        }
         res.locals.user = payload;
         next();
     }

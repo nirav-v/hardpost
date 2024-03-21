@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { Item, User } from '../models/index.js';
+import { Cart, Item, User } from '../models/index.js';
 import jwt from 'jsonwebtoken';
 import { validateLocalCartItems } from '../util/cartUtil.js';
 export const signUpUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -93,5 +93,19 @@ export const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     catch (error) {
         console.error(error);
+    }
+});
+export const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // get logged in user's data
+        const user = yield User.findOne({
+            where: { id: res.locals.user.userId },
+            include: [Cart, Item],
+        });
+        res.json(user);
+    }
+    catch (error) {
+        console.log(error);
+        res.json(error);
     }
 });
