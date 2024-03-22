@@ -14,7 +14,7 @@ import { User, Cart, Order, Item } from './models/index.js';
 import { webhookMiddleware } from './controllers/webhook.js';
 const app = express();
 const port = process.env.PORT || 3000;
-app.use(express.static('clientBuild'));
+app.use(express.static('../../client/clientBuild'));
 app.use(cors()); //allow for client side requests without getting CORS error
 // Stripe webhook route - must go before express.json() middleware below to receive body as Buffer
 app.post('/webhook', bodyParser.raw({ type: 'application/json' }), webhookMiddleware);
