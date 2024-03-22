@@ -83,6 +83,11 @@ function LoginForm({
             boxShadow={{ base: 'none', sm: 'md' }}
             borderRadius={{ base: 'none', sm: 'xl' }}>
             <Stack spacing='6'>
+              <Text fontWeight={'black'} py={1.5} width={'100%'}>
+                {' '}
+                Test user credentials filled out below
+              </Text>
+
               <Stack spacing='5'>
                 <EmailInput
                   value={email}
@@ -91,6 +96,7 @@ function LoginForm({
                   }
                 />
                 <PasswordInput
+                  label='Password'
                   name='password'
                   value={password}
                   handleChange={event => setPassword(event.currentTarget.value)}

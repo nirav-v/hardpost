@@ -21,7 +21,7 @@ export default function PasswordInput({
   handleChange,
   label,
 }: PasswordInputProps) {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const handleClick = () => setShow(!show);
 
   return (
@@ -32,14 +32,14 @@ export default function PasswordInput({
           name={name}
           value={value}
           onChange={handleChange}
-          mb="8px"
-          pr="4.5rem"
+          mb='8px'
+          pr='4.5rem'
           type={show ? 'text' : 'password'}
-          placeholder="Enter password"
-          data-cy="password-input"
+          placeholder='Enter password'
+          data-cy='password-input'
         />
-        <InputRightElement width="4.5rem">
-          <Button h="1.75rem" size="sm" onClick={handleClick}>
+        <InputRightElement width='4.5rem'>
+          <Button h='1.75rem' size='sm' onClick={handleClick}>
             {show ? 'Hide' : 'Show'}
           </Button>
         </InputRightElement>

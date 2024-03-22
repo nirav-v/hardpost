@@ -92,13 +92,13 @@ function addItemForm() {
         <Fragment>
           <h3>Uploading your item - please do not refresh or close the page</h3>
           <ProgressBar
-            height="80"
-            width="80"
-            ariaLabel="progress-bar-loading"
+            height='80'
+            width='80'
+            ariaLabel='progress-bar-loading'
             wrapperStyle={{}}
-            wrapperClass="progress-bar-wrapper"
-            borderColor="#F4442E"
-            barColor="#51E5FF"
+            wrapperClass='progress-bar-wrapper'
+            borderColor='#F4442E'
+            barColor='#51E5FF'
           />
         </Fragment>
       ) : (
@@ -106,14 +106,14 @@ function addItemForm() {
           {/* replacement form below */}
           <form onSubmit={event => handleSubmit(event)}>
             <Container
-              maxW="lg"
+              maxW='lg'
               py={{ base: '12', md: '16' }}
               px={{ base: '0', sm: '8' }}>
-              <Stack spacing="8">
-                <Stack spacing="6">
-                  <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
-                    <Center height="50px">
-                      <Text fontSize="4xl">
+              <Stack spacing='8'>
+                <Stack spacing='6'>
+                  <Stack spacing={{ base: '2', md: '3' }} textAlign='center'>
+                    <Center height='50px'>
+                      <Text fontSize='4xl' fontFamily={'initial'}>
                         Fill out your item's info below
                       </Text>
                     </Center>
@@ -125,68 +125,68 @@ function addItemForm() {
                   bg={{ base: 'transparent', sm: 'bg.surface' }}
                   boxShadow={{ base: 'none', sm: 'md' }}
                   borderRadius={{ base: 'none', sm: 'xl' }}>
-                  <Stack spacing="6">
-                    <Stack spacing="2">
+                  <Stack spacing='6'>
+                    <Stack spacing='2'>
                       <FormLabel>Item Name</FormLabel>
                       <Input
-                        type="text"
-                        name="name"
+                        type='text'
+                        name='name'
                         value={formState.name}
                         onChange={handleChange}
                       />
                       <FormLabel>Price USD $</FormLabel>
                       <Input
-                        type="number"
-                        name="price"
+                        type='number'
+                        name='price'
                         value={formState.price}
                         onChange={handleChange}
                       />
 
                       <FormLabel>Category</FormLabel>
                       <Select
-                        name="category"
-                        placeholder="Select Category"
+                        name='category'
+                        placeholder='Select Category'
                         onChange={
                           handleChange as unknown as React.ChangeEventHandler<HTMLSelectElement>
                         }>
-                        <option name="category" value="decks">
+                        <option name='category' value='decks'>
                           decks
                         </option>
-                        <option name="category" value="shoes">
+                        <option name='category' value='shoes'>
                           shoes
                         </option>
-                        <option name="category" value="trucks">
+                        <option name='category' value='trucks'>
                           trucks
                         </option>
-                        <option name="category" value="wheels">
+                        <option name='category' value='wheels'>
                           wheels
                         </option>
-                        <option name="category" value="pants">
+                        <option name='category' value='pants'>
                           pants
                         </option>
-                        <option name="category" value="other">
+                        <option name='category' value='other'>
                           other
                         </option>
                       </Select>
                       <FormLabel>Tell us about item you're selling</FormLabel>
                       <Input
-                        type="text"
-                        name="description"
+                        type='text'
+                        name='description'
                         value={formState.description}
                         onChange={handleChange}
                       />
                       <FormLabel>Upload an Image</FormLabel>
                       {/* from react docs for file inputs: In React, an <input type="file" /> is always an uncontrolled component because its value can only be set by a user, and not programmatically. */}
                       <input
-                        type="file"
-                        id="image"
-                        name="image"
-                        accept="image/*"
-                        defaultValue=""
+                        type='file'
+                        id='image'
+                        name='image'
+                        accept='image/*'
+                        defaultValue=''
                         ref={imageInput}
                       />
                     </Stack>
-                    <HStack justify="space-between">
+                    <HStack justify='space-between'>
                       {/* <Checkbox defaultChecked>Remember me</Checkbox>
                     {!loginSuccess && (
                       <p style={{ color: "red" }}>Incorrect credentials</p>
@@ -195,8 +195,8 @@ function addItemForm() {
                       Forgot password?
                     </Button> */}
                     </HStack>
-                    <Stack spacing="6">
-                      <Button type="submit" colorScheme="green">
+                    <Stack spacing='6'>
+                      <Button type='submit' colorScheme='green'>
                         Post Item
                       </Button>
                       <HStack>

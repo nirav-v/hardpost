@@ -14,6 +14,7 @@ import {
 import formatTimestamp from '../../util/formatTimestamp';
 import { Order } from '../../types/OrderType';
 import { useOrdersQuery } from '../../hooks/queries';
+import Auth from '../../util/auth';
 
 function OrdersPage() {
   const { data: orders, isPending, isError } = useOrdersQuery();
@@ -30,6 +31,9 @@ function OrdersPage() {
 
   return (
     <div>
+      <Heading fontFamily={'mono'} marginTop={8} textAlign={'center'}>
+        Hi there {Auth.getPayload()?.username}!
+      </Heading>
       {orders?.length ? (
         <List spacing={5}>
           <Center height='100px'>
