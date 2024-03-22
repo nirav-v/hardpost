@@ -8,7 +8,6 @@
   },
   "scripts": {
     "start": "cd server/dist && node server.js",
-    "build": "cd client && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "kill": "killall node",
     "server": "cd server && tsc --allowJs && cd dist && node server.js",
