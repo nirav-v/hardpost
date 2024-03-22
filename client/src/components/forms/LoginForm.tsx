@@ -14,6 +14,7 @@ import EmailInput from '../inputs/EmailInput';
 import Auth from '../../util/auth';
 import { userApi } from '../../api/userApi';
 import { Item } from '../../types/ItemTypes';
+import ButtonModal from '../modals/ButtonModal';
 
 type LoginFormProps = {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,8 +27,8 @@ function LoginForm({
   showSignUpForm,
   setShowSignUpForm,
 }: LoginFormProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('testUser@mail.com');
+  const [password, setPassword] = useState('password123');
 
   const [loginSuccess, setLoginSuccess] = useState(true);
 
@@ -53,19 +54,19 @@ function LoginForm({
   return (
     <form onSubmit={handleSubmit}>
       <Container
-        maxW="lg"
+        maxW='lg'
         py={{ base: '12', md: '16' }}
         px={{ base: '0', sm: '8' }}>
-        <Stack spacing="8">
-          <Stack spacing="6">
-            <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+        <Stack spacing='8'>
+          <Stack spacing='6'>
+            <Stack spacing={{ base: '2', md: '3' }} textAlign='center'>
               <Heading size={{ base: 'xs', md: 'sm' }}>
                 Log in to your account
               </Heading>
-              <Text color="fg.muted">
+              <Text color='fg.muted'>
                 Don't have an account?{' '}
                 <Button
-                  type="button"
+                  type='button'
                   onClick={event => {
                     event.preventDefault();
                     setShowSignUpForm(!showSignUpForm);
@@ -81,38 +82,43 @@ function LoginForm({
             bg={{ base: 'transparent', sm: 'bg.surface' }}
             boxShadow={{ base: 'none', sm: 'md' }}
             borderRadius={{ base: 'none', sm: 'xl' }}>
-            <Stack spacing="6">
-              <Stack spacing="5">
+            <Stack spacing='6'>
+              <Stack spacing='5'>
                 <EmailInput
+                  value={email}
                   handleEmailChange={event =>
                     setEmail(event.currentTarget.value)
                   }
                 />
                 <PasswordInput
-                  name="password"
+                  name='password'
                   value={password}
                   handleChange={event => setPassword(event.currentTarget.value)}
                 />
               </Stack>
-              <HStack justify="space-between">
+              <HStack justify='space-between'>
                 {/* <Checkbox defaultChecked>Remember me</Checkbox> */}
                 {!loginSuccess && (
                   <p style={{ color: 'red' }}>Incorrect credentials</p>
                 )}
-                <Button variant="text" size="sm">
-                  Forgot password?
-                </Button>
+                <ButtonModal
+                  buttonContent='Forgot password?'
+                  chakraColor={'white'}
+                  cypress='forgot-password-btn'>
+                  <Text padding={3}>
+                    {' '}
+                    We're still working on implementing password recovery. Since
+                    the app is still in testing, just create another dummy
+                    account for now
+                  </Text>
+                </ButtonModal>
               </HStack>
-              <Stack spacing="6">
-                <Button type="submit" colorScheme="cyan">
+              <Stack spacing='6'>
+                <Button type='submit' colorScheme='cyan'>
                   Log in
                 </Button>
                 <HStack>
                   <Divider />
-                  {/* <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-                    or continue with
-                  </Text>
-                  <Divider /> */}
                 </HStack>
               </Stack>
             </Stack>

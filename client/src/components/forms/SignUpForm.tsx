@@ -82,26 +82,26 @@ function SignUpForm({
   return (
     <form onSubmit={handleSubmit}>
       <Container
-        maxW="lg"
+        maxW='lg'
         py={{ base: '12', md: '16' }}
         px={{ base: '0', sm: '8' }}>
-        <Stack spacing="8">
-          <Stack spacing="6">
-            <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+        <Stack spacing='8'>
+          <Stack spacing='6'>
+            <Stack spacing={{ base: '2', md: '3' }} textAlign='center'>
               <Heading size={{ base: 'xs', md: 'sm' }}>Welcome</Heading>
-              <Text fontSize="md">
+              <Text fontSize='md'>
                 Please create an account, or simply browse items below
               </Text>
 
-              <Text color="fg.muted">
+              <Text color='fg.muted'>
                 Already have an account?{' '}
                 <Button
-                  type="button"
+                  type='button'
                   onClick={event => {
                     event.preventDefault();
                     setShowSignUpForm(!showSignUpForm);
                   }}
-                  data-cy="showLoginForm-btn">
+                  data-cy='showLoginForm-btn'>
                   Log in
                 </Button>
               </Text>
@@ -113,40 +113,37 @@ function SignUpForm({
             bg={{ base: 'transparent', sm: 'bg.surface' }}
             boxShadow={{ base: 'none', sm: 'md' }}
             borderRadius={{ base: 'none', sm: 'xl' }}>
-            <Stack spacing="6">
-              <Stack spacing="5">
+            <Stack spacing='6'>
+              <Stack spacing='5'>
                 <EmailInput
                   handleEmailChange={event => handleInputChange(event)}
                 />
                 <FormLabel>Username: </FormLabel>
                 <Input
-                  type="text"
-                  name="username"
-                  placeholder="username"
-                  mb="8px"
+                  type='text'
+                  name='username'
+                  placeholder='username'
+                  mb='8px'
                   value={username}
                   onChange={event => handleInputChange(event)}
                 />
                 <PasswordInput
-                  name="password"
+                  name='password'
+                  label='Password'
                   value={password}
                   handleChange={event => handleInputChange(event)}
                 />
                 <PasswordInput
-                  name="confirmPassword"
+                  name='confirmPassword'
+                  label='Confirm Password'
                   value={confirmPassword}
                   handleChange={event => handleInputChange(event)}
                 />
               </Stack>
-              <HStack justify="space-between">
-                {/* <Checkbox defaultChecked>Remember me</Checkbox> */}
-                <Button variant="text" size="sm">
-                  Forgot password?
-                </Button>
-              </HStack>
-              <Stack spacing="6">
-                <Text color="red">{errorMessage}</Text>
-                <Button type="submit" colorScheme="cyan">
+
+              <Stack spacing='6'>
+                <Text color='red'>{errorMessage}</Text>
+                <Button type='submit' colorScheme='cyan'>
                   Sign Up
                 </Button>
                 <HStack>

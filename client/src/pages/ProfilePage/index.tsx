@@ -12,5 +12,9 @@ export default function ProfilePage() {
     profile.isError
   );
 
-  return <div>ProfilePage</div>;
+  if (profile.isLoading) return <div>Loading...</div>;
+
+  if (profile.isError) return <div>Error...</div>;
+
+  return <div>{/* display name,  */}</div>;
 }
