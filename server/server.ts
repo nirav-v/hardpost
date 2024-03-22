@@ -37,7 +37,7 @@ app.use('/api', apiRoutes);
 app.use('*', (req, res, next) =>
   // in deployment we send index.html for all additional paths not defined by our express routes
   // react router pushes different paths to window url
-  res.sendFile(path.join(__dirname, 'clientBuild', 'index.html'))
+  res.sendFile(path.join(__dirname, '../../client/clientBuild', 'index.html'))
 );
 
 // see available magic methods on User instances based on the model associations we defined
