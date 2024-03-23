@@ -12,7 +12,7 @@
     "kill": "killall node",
     "server": "cd server && tsc --allowJs && cd dist && node server.js",
     "dev": "concurrently \"cd server && tsc --allowJs && cd dist && nodemon server.js\"  \"cd client && npm run dev\"",
-    "seed": "cd server/dist && node seeds.js"
+    "seed": "cd server/dist && npm install && node seeds.js"
   },
   "keywords": [],
   "author": "",
