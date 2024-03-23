@@ -1,8 +1,15 @@
 <!-- # <p align="center">[<img style="height: 200px; width: 200px;" src="./client/src/images/Hardpost-logos_transparent.png">](https://hardpost-f79ecee5b44d.herokuapp.com/)</p> -->
 
-# <h1 align="center" style="color: red; font-family: 'Times New Roman', serif">Hardpost</h1>
+# <a href="https://www.hardpost-shop.com/"><h1 align="center" style="color: red; font-family: 'Times New Roman', serif">Hardpost</h1></a>
 
 ## <h2 align="center" style="font-family: 'Times New Roman', serif;"> An online marketplace to buy, sell, and trade skateboarding items. </h2>
+
+
+
+
+https://github.com/nirav-v/hardpost/assets/98481913/9d4970d9-6652-47f3-941f-16d9499f6f8f
+
+
 
 <a href="https://www.hardpost-shop.com/"><img src="./readme-screenshots/homepage.png"></a>
 
