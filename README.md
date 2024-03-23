@@ -8,7 +8,10 @@
 
 ### <p align="center"> [deployed site](https://www.hardpost-shop.com/) </p>
 
-https://github.com/nirav-v/hardpost/assets/98481913/64ca087a-1409-4092-af9b-4352056153c1
+
+https://github.com/nirav-v/hardpost/assets/98481913/6d67cfb5-7e15-43ed-a087-3f351bd9314a
+
+
 
 ## <p align="center">Motivation
 
