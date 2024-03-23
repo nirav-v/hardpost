@@ -4,10 +4,10 @@
 
 ## <h2 align="center" style="font-family: 'Times New Roman', serif;"> An online marketplace to buy, sell, and trade skateboarding items. </h2>
 
-<div style="display: flex; justify-content: center">https://github.com/nirav-v/hardpost/assets/98481913/3c82a223-e04f-4dee-836a-005ec2ce5fba</div>
+<div style="display: flex; justify-content: center"></div>
 
 
-
+https://github.com/nirav-v/hardpost/assets/98481913/3c82a223-e04f-4dee-836a-005ec2ce5fba
 
 
 ### <p align="center"> [deployed site](https://www.hardpost-shop.com/) </p>
