@@ -6,11 +6,9 @@
 
 <div style="display: flex; justify-content: center"></div>
 
-
-https://github.com/nirav-v/hardpost/assets/98481913/3c82a223-e04f-4dee-836a-005ec2ce5fba
-
-
 ### <p align="center"> [deployed site](https://www.hardpost-shop.com/) </p>
+
+https://github.com/nirav-v/hardpost/assets/98481913/64ca087a-1409-4092-af9b-4352056153c1
 
 ## <p align="center">Motivation
 
